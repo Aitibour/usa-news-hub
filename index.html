@@ -8,639 +8,175 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles-section.css" />
 </head>
-<body>
+<body data-section="">
+  <div id="site-header"></div>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <span class="top-bar-date" id="currentDate"></span>
-      <div class="top-bar-links">
-        <a href="#">Subscribe</a>
-        <a href="#">E-Edition</a>
-        <a href="#">Sign In</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo">
-        <span class="logo-stars">★★★</span>
-        <div class="logo-text">
-          <span class="logo-usa">USA</span>
-          <span class="logo-news">NEWS HUB</span>
-        </div>
-        <span class="logo-stars">★★★</span>
-      </div>
-      <div class="header-search">
-        <input type="text" placeholder="Search stories, topics…" />
-        <button class="search-btn" aria-label="Search">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </button>
-      </div>
-      <div class="header-actions">
-        <button class="btn-subscribe">Subscribe</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Nav -->
-  <nav class="main-nav">
-    <div class="container nav-inner">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
-      <ul class="nav-list" id="navList">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#politics">Politics</a></li>
-        <li><a href="#business">Business</a></li>
-        <li><a href="#sports">Sports</a></li>
-        <li><a href="#tech">Technology</a></li>
-        <li><a href="#health">Health</a></li>
-        <li><a href="#world">World</a></li>
-        <li><a href="#entertainment">Entertainment</a></li>
-        <li><a href="#opinion">Opinion</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Breaking News Ticker -->
-  <div class="breaking-bar">
-    <div class="container breaking-inner">
-      <span class="breaking-label">BREAKING</span>
-      <div class="ticker-wrap">
-        <div class="ticker">
-          <span>Congress reaches bipartisan agreement on infrastructure spending bill &nbsp;•&nbsp;</span>
-          <span>Federal Reserve signals potential rate adjustments ahead of Q3 &nbsp;•&nbsp;</span>
-          <span>Hurricane watch issued for Gulf Coast as Category 3 storm approaches &nbsp;•&nbsp;</span>
-          <span>Supreme Court to hear landmark case on digital privacy rights &nbsp;•&nbsp;</span>
-          <span>NASA's Artemis mission sets new date for lunar return &nbsp;•&nbsp;</span>
-          <span>NYSE closes at record high amid strong earnings reports &nbsp;•&nbsp;</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content -->
   <main class="main-content">
     <div class="container">
 
       <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero-lead">
-          <div class="hero-card hero-main">
-            <div class="hero-img-wrap">
-              <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=900&q=80" alt="U.S. Capitol" />
-              <span class="hero-category-tag">Politics</span>
-            </div>
-            <div class="hero-body">
-              <h1 class="hero-title">Senate Passes Sweeping Climate and Energy Bill in Historic Late-Night Vote</h1>
-              <p class="hero-excerpt">In a dramatic session that stretched past midnight, senators approved the most ambitious domestic climate legislation in a generation, allocating $500 billion toward clean energy infrastructure and emissions reduction programs.</p>
-              <div class="hero-meta">
-                <span class="author">By Sarah Mitchell</span>
-                <span class="dot">•</span>
-                <time>June 6, 2026</time>
-                <span class="dot">•</span>
-                <span>8 min read</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-side">
-            <div class="hero-card hero-secondary">
-              <div class="hero-img-wrap">
-                <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Wall Street" />
-                <span class="hero-category-tag tag-business">Business</span>
-              </div>
-              <div class="hero-body">
-                <h2 class="hero-title-sm">Dow Jones Surges 800 Points as Tech Giants Post Record Quarterly Earnings</h2>
-                <div class="hero-meta">
-                  <span class="author">By James Chen</span>
-                  <span class="dot">•</span>
-                  <time>June 6, 2026</time>
-                </div>
-              </div>
-            </div>
-            <div class="hero-card hero-secondary">
-              <div class="hero-img-wrap">
-                <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=80" alt="Healthcare" />
-                <span class="hero-category-tag tag-health">Health</span>
-              </div>
-              <div class="hero-body">
-                <h2 class="hero-title-sm">FDA Approves Breakthrough Alzheimer's Drug in Fast-Track Decision</h2>
-                <div class="hero-meta">
-                  <span class="author">By Dr. Linda Park</span>
-                  <span class="dot">•</span>
-                  <time>June 5, 2026</time>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section class="hero-section" id="hero-section">
+        <div class="hero-lead" id="hero-lead"><!-- rendered by JS --></div>
       </section>
 
       <!-- Content + Sidebar -->
       <div class="content-sidebar-layout">
-
-        <!-- Main Feed -->
-        <div class="content-feed">
-
-          <!-- Politics Section -->
-          <section class="section-block" id="politics">
-            <div class="section-header">
-              <h2 class="section-title"><span class="section-accent politics-accent">Politics</span></h2>
-              <a href="#" class="see-all">See All →</a>
-            </div>
-            <div class="news-grid">
-              <article class="news-card card-featured">
-                <div class="card-img-wrap">
-                  <img src="https://images.unsplash.com/photo-1555374018-13a8994ab246?w=700&q=80" alt="White House" />
-                </div>
-                <div class="card-body">
-                  <span class="card-tag politics-tag">Politics</span>
-                  <h3 class="card-title">White House Unveils Comprehensive Immigration Reform Framework Ahead of Midterms</h3>
-                  <p class="card-excerpt">The administration released a detailed blueprint addressing border security, pathways to citizenship, and workforce visas, sparking immediate debate on Capitol Hill.</p>
-                  <div class="card-meta">
-                    <span>By Robert Vasquez</span>
-                    <time>June 6, 2026</time>
-                  </div>
-                </div>
-              </article>
-              <div class="news-list">
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1503551723145-6c040742065b?w=300&q=80" alt="Congress" /></div>
-                  <div class="list-body">
-                    <span class="card-tag politics-tag">Politics</span>
-                    <h4>House Committee Advances Voting Rights Expansion Act Amid Partisan Divide</h4>
-                    <time>June 6, 2026</time>
-                  </div>
-                </article>
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=300&q=80" alt="Governor" /></div>
-                  <div class="list-body">
-                    <span class="card-tag politics-tag">Politics</span>
-                    <h4>Governors of Seven States Form Coalition to Address Water Rights Crisis</h4>
-                    <time>June 5, 2026</time>
-                  </div>
-                </article>
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=300&q=80" alt="Senate" /></div>
-                  <div class="list-body">
-                    <span class="card-tag politics-tag">Politics</span>
-                    <h4>Senate Judiciary Confirms Three Federal Judges in Rare Bipartisan Vote</h4>
-                    <time>June 5, 2026</time>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </section>
-
-          <!-- Business Section -->
-          <section class="section-block" id="business">
-            <div class="section-header">
-              <h2 class="section-title"><span class="section-accent business-accent">Business</span></h2>
-              <a href="#" class="see-all">See All →</a>
-            </div>
-            <div class="cards-row">
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=500&q=80" alt="Business" /></div>
-                <div class="card-body">
-                  <span class="card-tag business-tag">Business</span>
-                  <h3 class="card-title-sm">Apple Reports Record $120B Revenue, Plans $50B Buyback Program</h3>
-                  <div class="card-meta"><span>By Kevin Hart</span><time>June 6, 2026</time></div>
-                </div>
-              </article>
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&q=80" alt="Tech Business" /></div>
-                <div class="card-body">
-                  <span class="card-tag business-tag">Business</span>
-                  <h3 class="card-title-sm">Amazon Expands Same-Day Delivery Network to 200 New U.S. Cities</h3>
-                  <div class="card-meta"><span>By Priya Nair</span><time>June 5, 2026</time></div>
-                </div>
-              </article>
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80" alt="Economy" /></div>
-                <div class="card-body">
-                  <span class="card-tag business-tag">Business</span>
-                  <h3 class="card-title-sm">U.S. Unemployment Falls to 3.1%, Lowest Level Since Pre-Pandemic Era</h3>
-                  <div class="card-meta"><span>By Maria Gonzalez</span><time>June 5, 2026</time></div>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <!-- Markets Strip -->
-          <div class="markets-strip">
-            <div class="markets-label">MARKETS</div>
-            <div class="markets-tickers">
-              <div class="market-item up">
-                <span class="m-name">DOW</span>
-                <span class="m-val">42,841</span>
-                <span class="m-chg">+1.92%</span>
-              </div>
-              <div class="market-item up">
-                <span class="m-name">S&P 500</span>
-                <span class="m-val">5,612</span>
-                <span class="m-chg">+1.47%</span>
-              </div>
-              <div class="market-item down">
-                <span class="m-name">NASDAQ</span>
-                <span class="m-val">18,230</span>
-                <span class="m-chg">-0.38%</span>
-              </div>
-              <div class="market-item up">
-                <span class="m-name">OIL</span>
-                <span class="m-val">$74.22</span>
-                <span class="m-chg">+0.81%</span>
-              </div>
-              <div class="market-item down">
-                <span class="m-name">GOLD</span>
-                <span class="m-val">$2,418</span>
-                <span class="m-chg">-0.22%</span>
-              </div>
-              <div class="market-item up">
-                <span class="m-name">BTC</span>
-                <span class="m-val">$98,540</span>
-                <span class="m-chg">+3.14%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tech Section -->
-          <section class="section-block" id="tech">
-            <div class="section-header">
-              <h2 class="section-title"><span class="section-accent tech-accent">Technology</span></h2>
-              <a href="#" class="see-all">See All →</a>
-            </div>
-            <div class="news-grid">
-              <article class="news-card card-featured">
-                <div class="card-img-wrap">
-                  <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=700&q=80" alt="AI Technology" />
-                </div>
-                <div class="card-body">
-                  <span class="card-tag tech-tag">Technology</span>
-                  <h3 class="card-title">AI Regulation Bill Advances in Senate as Big Tech Companies Split on Support</h3>
-                  <p class="card-excerpt">A landmark artificial intelligence governance framework cleared a Senate committee vote, with provisions covering transparency requirements, liability standards, and safety testing for frontier models.</p>
-                  <div class="card-meta">
-                    <span>By Alex Johnson</span>
-                    <time>June 6, 2026</time>
-                  </div>
-                </div>
-              </article>
-              <div class="news-list">
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=300&q=80" alt="Tech" /></div>
-                  <div class="list-body">
-                    <span class="card-tag tech-tag">Technology</span>
-                    <h4>SpaceX Launches Second Crewed Commercial Station Mission</h4>
-                    <time>June 6, 2026</time>
-                  </div>
-                </article>
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=300&q=80" alt="Robotics" /></div>
-                  <div class="list-body">
-                    <span class="card-tag tech-tag">Technology</span>
-                    <h4>New Quantum Computing Breakthrough Could Revolutionize Drug Discovery</h4>
-                    <time>June 5, 2026</time>
-                  </div>
-                </article>
-                <article class="news-list-item">
-                  <div class="list-img"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80" alt="Cybersecurity" /></div>
-                  <div class="list-body">
-                    <span class="card-tag tech-tag">Technology</span>
-                    <h4>CISA Issues Critical Alert Over Widespread Infrastructure Cyberattack</h4>
-                    <time>June 5, 2026</time>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </section>
-
-          <!-- Sports Section -->
-          <section class="section-block" id="sports">
-            <div class="section-header">
-              <h2 class="section-title"><span class="section-accent sports-accent">Sports</span></h2>
-              <a href="#" class="see-all">See All →</a>
-            </div>
-            <div class="cards-row">
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=500&q=80" alt="Sports" /></div>
-                <div class="card-body">
-                  <span class="card-tag sports-tag">Sports</span>
-                  <h3 class="card-title-sm">U.S. Soccer Clinches World Cup Qualifying Spot With Dramatic Last-Minute Goal</h3>
-                  <div class="card-meta"><span>By Tony Rivers</span><time>June 6, 2026</time></div>
-                </div>
-              </article>
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500&q=80" alt="Basketball" /></div>
-                <div class="card-body">
-                  <span class="card-tag sports-tag">Sports</span>
-                  <h3 class="card-title-sm">NBA Finals: Celtics Force Game 7 in Overtime Thriller at TD Garden</h3>
-                  <div class="card-meta"><span>By Marcus Webb</span><time>June 5, 2026</time></div>
-                </div>
-              </article>
-              <article class="news-card-sm">
-                <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=500&q=80" alt="Baseball" /></div>
-                <div class="card-body">
-                  <span class="card-tag sports-tag">Sports</span>
-                  <h3 class="card-title-sm">Yankees' Ace Pitcher Throws Perfect Game for First Time in Five Years</h3>
-                  <div class="card-meta"><span>By Diana Cole</span><time>June 5, 2026</time></div>
-                </div>
-              </article>
-            </div>
-          </section>
-
-        </div>
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-
-          <!-- Trending -->
-          <div class="sidebar-widget trending-widget">
-            <h3 class="widget-title"><span>Trending Now</span></h3>
-            <ol class="trending-list">
-              <li>
-                <span class="trend-num">01</span>
-                <div class="trend-body">
-                  <a href="#">Senate Climate Vote Draws Record Public Comment</a>
-                  <time>2h ago</time>
-                </div>
-              </li>
-              <li>
-                <span class="trend-num">02</span>
-                <div class="trend-body">
-                  <a href="#">Gas Prices Fall Below $3 Nationwide for First Time</a>
-                  <time>4h ago</time>
-                </div>
-              </li>
-              <li>
-                <span class="trend-num">03</span>
-                <div class="trend-body">
-                  <a href="#">Major Hurricane Threatens Florida Gulf Coast</a>
-                  <time>5h ago</time>
-                </div>
-              </li>
-              <li>
-                <span class="trend-num">04</span>
-                <div class="trend-body">
-                  <a href="#">Supreme Court Agrees to Hear AI Copyright Case</a>
-                  <time>6h ago</time>
-                </div>
-              </li>
-              <li>
-                <span class="trend-num">05</span>
-                <div class="trend-body">
-                  <a href="#">NBA MVP Announces Retirement After 18 Seasons</a>
-                  <time>8h ago</time>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          <!-- Newsletter -->
-          <div class="sidebar-widget newsletter-widget">
-            <div class="newsletter-icon">✉</div>
-            <h3>Daily Briefing</h3>
-            <p>Top stories delivered to your inbox every morning at 6 AM.</p>
-            <input type="email" placeholder="Enter your email" />
-            <button class="btn-newsletter">Subscribe Free</button>
-          </div>
-
-          <!-- Opinion Section -->
-          <div class="sidebar-widget opinion-widget" id="opinion">
-            <h3 class="widget-title"><span>Opinion</span></h3>
-            <div class="opinion-list">
-              <article class="opinion-item">
-                <div class="opinion-author-img"><img src="https://i.pravatar.cc/60?img=11" alt="Columnist" /></div>
-                <div class="opinion-body">
-                  <h4><a href="#">America's Infrastructure Crisis Is a National Security Issue</a></h4>
-                  <span>Patricia Bloom</span>
-                </div>
-              </article>
-              <article class="opinion-item">
-                <div class="opinion-author-img"><img src="https://i.pravatar.cc/60?img=32" alt="Columnist" /></div>
-                <div class="opinion-body">
-                  <h4><a href="#">Why the Fed's Cautious Approach Is the Right Call</a></h4>
-                  <span>David Nguyen</span>
-                </div>
-              </article>
-              <article class="opinion-item">
-                <div class="opinion-author-img"><img src="https://i.pravatar.cc/60?img=44" alt="Columnist" /></div>
-                <div class="opinion-body">
-                  <h4><a href="#">The Real Cost of America's Addiction to Cheap Goods</a></h4>
-                  <span>Carla Steiner</span>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <!-- Weather -->
-          <div class="sidebar-widget weather-widget">
-            <h3 class="widget-title"><span>Weather</span></h3>
-            <div class="weather-cities">
-              <div class="weather-row">
-                <span class="city">New York</span>
-                <span class="weather-icon">⛅</span>
-                <span class="temp">76°F</span>
-              </div>
-              <div class="weather-row">
-                <span class="city">Los Angeles</span>
-                <span class="weather-icon">☀️</span>
-                <span class="temp">85°F</span>
-              </div>
-              <div class="weather-row">
-                <span class="city">Chicago</span>
-                <span class="weather-icon">🌧</span>
-                <span class="temp">62°F</span>
-              </div>
-              <div class="weather-row">
-                <span class="city">Miami</span>
-                <span class="weather-icon">⛈</span>
-                <span class="temp">91°F</span>
-              </div>
-              <div class="weather-row">
-                <span class="city">Dallas</span>
-                <span class="weather-icon">☀️</span>
-                <span class="temp">98°F</span>
-              </div>
-            </div>
-          </div>
-
-        </aside>
+        <div class="content-feed" id="main-feed"><!-- rendered by JS --></div>
+        <aside class="sidebar" id="sidebar-area"></aside>
       </div>
 
-      <!-- World Section -->
-      <section class="section-block full-width-section" id="world">
-        <div class="section-header">
-          <h2 class="section-title"><span class="section-accent world-accent">World</span></h2>
-          <a href="#" class="see-all">See All →</a>
-        </div>
-        <div class="cards-row four-col">
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?w=400&q=80" alt="World" /></div>
-            <div class="card-body">
-              <span class="card-tag world-tag">World</span>
-              <h3 class="card-title-sm">G7 Leaders Agree on New Framework to Combat Global Inflation</h3>
-              <div class="card-meta"><time>June 6, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?w=400&q=80" alt="Europe" /></div>
-            <div class="card-body">
-              <span class="card-tag world-tag">World</span>
-              <h3 class="card-title-sm">NATO Approves Expansion of Eastern Flank Defense Capabilities</h3>
-              <div class="card-meta"><time>June 5, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80" alt="Asia" /></div>
-            <div class="card-body">
-              <span class="card-tag world-tag">World</span>
-              <h3 class="card-title-sm">India Surpasses China as World's Largest Solar Energy Producer</h3>
-              <div class="card-meta"><time>June 5, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=400&q=80" alt="Middle East" /></div>
-            <div class="card-body">
-              <span class="card-tag world-tag">World</span>
-              <h3 class="card-title-sm">UN Peace Talks Resume After Six-Month Impasse in Historic Meeting</h3>
-              <div class="card-meta"><time>June 4, 2026</time></div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- Entertainment Section -->
-      <section class="section-block full-width-section" id="entertainment">
-        <div class="section-header">
-          <h2 class="section-title"><span class="section-accent entertainment-accent">Entertainment</span></h2>
-          <a href="#" class="see-all">See All →</a>
-        </div>
-        <div class="cards-row four-col">
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80" alt="Entertainment" /></div>
-            <div class="card-body">
-              <span class="card-tag entertainment-tag">Entertainment</span>
-              <h3 class="card-title-sm">Academy Awards Announce Surprise Changes to Best Picture Eligibility Rules</h3>
-              <div class="card-meta"><time>June 6, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80" alt="Music" /></div>
-            <div class="card-body">
-              <span class="card-tag entertainment-tag">Entertainment</span>
-              <h3 class="card-title-sm">Taylor Swift's Eras Tour Breaks All-Time Concert Revenue Record at $2.1B</h3>
-              <div class="card-meta"><time>June 5, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400&q=80" alt="TV" /></div>
-            <div class="card-body">
-              <span class="card-tag entertainment-tag">Entertainment</span>
-              <h3 class="card-title-sm">Emmy Nominations Dominated by Streaming Platforms for Third Year Running</h3>
-              <div class="card-meta"><time>June 5, 2026</time></div>
-            </div>
-          </article>
-          <article class="news-card-sm">
-            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80" alt="Movies" /></div>
-            <div class="card-body">
-              <span class="card-tag entertainment-tag">Entertainment</span>
-              <h3 class="card-title-sm">Marvel's New Epic Opens to $400M Worldwide in Record-Breaking Weekend</h3>
-              <div class="card-meta"><time>June 4, 2026</time></div>
-            </div>
-          </article>
-        </div>
-      </section>
+      <!-- Full-width sections -->
+      <div id="full-width-sections"><!-- rendered by JS --></div>
 
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <div class="footer-logo">
-            <span class="logo-stars">★★★</span>
-            <div class="logo-text">
-              <span class="logo-usa">USA</span>
-              <span class="logo-news">NEWS HUB</span>
+  <div id="site-footer"></div>
+
+  <script src="data/articles.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script>
+  // ---- Render Homepage ----
+  (async function() {
+    // Fetch any AI-generated articles and merge
+    let aiArticles = [];
+    try {
+      const r = await fetch('/.netlify/functions/get-articles?limit=8');
+      if (r.ok) { const d = await r.json(); aiArticles = d.articles || []; }
+    } catch(e) {}
+
+    const allArticles = [...aiArticles, ...ARTICLES_DB];
+    allArticles.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    // Hero
+    const [h1, h2, h3] = allArticles;
+    const heroLead = document.getElementById('hero-lead');
+    heroLead.innerHTML = `
+      <div class="hero-card hero-main" onclick="goArticle('${h1.slug}')" style="cursor:pointer">
+        <div class="hero-img-wrap">
+          <img src="${h1.image}" alt="${h1.title}" loading="eager"/>
+          <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${capitalize(h1.section)}</span>
+        </div>
+        <div class="hero-body">
+          <h1 class="hero-title">${h1.title}</h1>
+          <p class="hero-excerpt">${h1.excerpt}</p>
+          <div class="hero-meta">
+            <span class="author">${h1.author}</span>
+            <span class="dot">•</span>
+            <time>${formatDate(h1.date)}</time>
+            <span class="dot">•</span>
+            <span>${h1.readTime||5} min read</span>
+            ${h1.aiGenerated ? '<span class="ai-label">✦ AI</span>' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="hero-side">
+        ${[h2,h3].filter(Boolean).map(a => `
+        <div class="hero-card hero-secondary" onclick="goArticle('${a.slug}')" style="cursor:pointer">
+          <div class="hero-img-wrap">
+            <img src="${a.image}" alt="${a.title}" loading="lazy"/>
+            <span class="hero-category-tag" style="background:${SECTION_COLORS[a.section]}">${capitalize(a.section)}</span>
+          </div>
+          <div class="hero-body">
+            <h2 class="hero-title-sm">${a.title}</h2>
+            <div class="hero-meta">
+              <span class="author">${a.author}</span>
+              <span class="dot">•</span>
+              <time>${formatDate(a.date)}</time>
+              ${a.aiGenerated ? '<span class="ai-label">✦ AI</span>' : ''}
             </div>
           </div>
-          <p>Your trusted source for breaking news, in-depth reporting, and analysis on politics, business, technology, and culture across America and beyond.</p>
-          <div class="social-links">
-            <a href="#" aria-label="Twitter/X">𝕏</a>
-            <a href="#" aria-label="Facebook">f</a>
-            <a href="#" aria-label="Instagram">📷</a>
-            <a href="#" aria-label="YouTube">▶</a>
+        </div>`).join('')}
+      </div>`;
+
+    // Main feed — one block per section
+    const FEED_SECTIONS = ['politics','business','technology','sports'];
+    const feed = document.getElementById('main-feed');
+    let feedHTML = '';
+
+    for (const sec of FEED_SECTIONS) {
+      const arts = allArticles.filter(a => a.section === sec);
+      if (!arts.length) continue;
+      const color = SECTION_COLORS[sec];
+      const [feat, ...rest] = arts;
+
+      feedHTML += `
+      <section class="section-block">
+        <div class="section-header">
+          <h2 class="section-title"><span class="section-accent" style="background:${color}">${capitalize(sec)}</span></h2>
+          <a href="${sec}.html" class="see-all">See All →</a>
+        </div>
+        <div class="news-grid">
+          <article class="news-card card-featured" onclick="goArticle('${feat.slug}')">
+            <div class="card-img-wrap"><img src="${feat.image}" alt="${feat.title}" loading="lazy"/></div>
+            <div class="card-body">
+              <span class="card-tag" style="background:${color}">${capitalize(sec)}</span>
+              <h3 class="card-title">${feat.title}</h3>
+              <p class="card-excerpt">${feat.excerpt}</p>
+              <div class="card-meta"><span>${feat.author}</span><time>${formatDate(feat.date)}</time></div>
+            </div>
+          </article>
+          <div class="news-list">
+            ${rest.slice(0,3).map(a => renderListItem(a)).join('')}
           </div>
         </div>
-        <div class="footer-cols">
-          <div class="footer-col">
-            <h4>Sections</h4>
-            <ul>
-              <li><a href="#politics">Politics</a></li>
-              <li><a href="#business">Business</a></li>
-              <li><a href="#tech">Technology</a></li>
-              <li><a href="#sports">Sports</a></li>
-              <li><a href="#health">Health</a></li>
-              <li><a href="#world">World</a></li>
-            </ul>
+      </section>`;
+
+      // Markets strip after business
+      if (sec === 'business') {
+        feedHTML += `
+        <div class="markets-strip">
+          <div class="markets-label">MARKETS</div>
+          <div class="markets-tickers">
+            <div class="market-item up"><span class="m-name">DOW</span><span class="m-val">42,841</span><span class="m-chg">+1.92%</span></div>
+            <div class="market-item up"><span class="m-name">S&P 500</span><span class="m-val">5,612</span><span class="m-chg">+1.47%</span></div>
+            <div class="market-item down"><span class="m-name">NASDAQ</span><span class="m-val">18,230</span><span class="m-chg">-0.38%</span></div>
+            <div class="market-item up"><span class="m-name">OIL</span><span class="m-val">$74.22</span><span class="m-chg">+0.81%</span></div>
+            <div class="market-item down"><span class="m-name">GOLD</span><span class="m-val">$2,418</span><span class="m-chg">-0.22%</span></div>
+            <div class="market-item up"><span class="m-name">BTC</span><span class="m-val">$98,540</span><span class="m-chg">+3.14%</span></div>
           </div>
-          <div class="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Advertise</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">Press Room</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Subscribe</h4>
-            <ul>
-              <li><a href="#">Daily Newsletter</a></li>
-              <li><a href="#">Breaking Alerts</a></li>
-              <li><a href="#">Weekend Edition</a></li>
-              <li><a href="#">RSS Feeds</a></li>
-              <li><a href="#">Podcast</a></li>
-            </ul>
-          </div>
+        </div>`;
+      }
+    }
+    feed.innerHTML = feedHTML;
+
+    // Full-width sections
+    const FW_SECTIONS = ['world','health','entertainment','opinion'];
+    const fwEl = document.getElementById('full-width-sections');
+    let fwHTML = '';
+
+    for (const sec of FW_SECTIONS) {
+      const arts = allArticles.filter(a => a.section === sec).slice(0,4);
+      if (!arts.length) continue;
+      const color = SECTION_COLORS[sec];
+      fwHTML += `
+      <section class="section-block full-width-section">
+        <div class="section-header">
+          <h2 class="section-title"><span class="section-accent" style="background:${color}">${capitalize(sec)}</span></h2>
+          <a href="${sec}.html" class="see-all">See All →</a>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 USA News Hub. All rights reserved.</span>
-        <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Cookie Settings</a>
-          <a href="#">Accessibility</a>
+        <div class="cards-row four-col">
+          ${arts.map(a => renderCard(a,'sm')).join('')}
         </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Set current date
-    const d = new Date();
-    document.getElementById('currentDate').textContent = d.toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-
-    // Mobile nav toggle
-    document.getElementById('navToggle').addEventListener('click', () => {
-      document.getElementById('navList').classList.toggle('open');
-    });
-
-    // Smooth scroll for anchors
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
+      </section>`;
+    }
+    fwEl.innerHTML = fwHTML;
+  })();
   </script>
+  <style>
+    .ai-label {
+      background: linear-gradient(135deg, #7C3AED, #2563EB);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: .5px;
+    }
+  </style>
 </body>
 </html>

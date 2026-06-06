@@ -1,0 +1,63 @@
+/* Section & Article page supplemental styles */
+
+.section-page-header {
+  padding: 28px 0 20px;
+  border-bottom: 3px solid var(--accent, #C8102E);
+  margin-bottom: 32px;
+}
+.section-page-header h1 {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.section-page-header p {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.no-articles { color: var(--muted); padding: 40px 0; text-align: center; font-size: 16px; }
+
+/* Section pills in sidebar */
+.widget-title-plain {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+.section-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pill {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--c) 12%, white);
+  color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, transparent);
+  transition: background .15s;
+}
+.pill:hover {
+  background: color-mix(in srgb, var(--c) 20%, white);
+  color: var(--c);
+}
+
+/* AI badge in trending */
+.ai-generated .ai-badge {
+  font-size: 10px !important;
+  background: linear-gradient(135deg, #7C3AED, #2563EB);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0;
+  min-width: auto;
+}
+.ai-generated .trend-body time { color: #7C3AED; }

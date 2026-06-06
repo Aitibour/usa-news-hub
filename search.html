@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search — USA News Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles-section.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="main-content">
+    <div class="container">
+      <div class="section-page-header">
+        <h1>🔍 Search Results</h1>
+        <p id="search-summary"></p>
+      </div>
+      <div id="search-results" class="cards-row four-col" style="margin-top:24px"></div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    const q = new URLSearchParams(window.location.search).get('q') || '';
+    document.title = `Search: ${q} — USA News Hub`;
+    document.getElementById('search-summary').textContent = q ? `Results for: "${q}"` : 'Enter a search term above.';
+    if (q) {
+      const lower = q.toLowerCase();
+      const results = ARTICLES_DB.filter(a =>
+        a.title.toLowerCase().includes(lower) ||
+        a.excerpt.toLowerCase().includes(lower) ||
+        (a.tags || []).some(t => t.toLowerCase().includes(lower))
+      );
+      const container = document.getElementById('search-results');
+      if (results.length) {
+        container.innerHTML = results.map(a => renderCard(a, 'sm')).join('');
+      } else {
+        container.innerHTML = '<p>No articles found matching your search.</p>';
+      }
+    }
+  </script>
+</body>
+</html>

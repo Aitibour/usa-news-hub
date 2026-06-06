@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sports — USA News Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles-section.css" />
+</head>
+<body data-section="sports">
+  <div id="site-header"></div>
+  <main class="main-content">
+    <div class="container">
+      <div class="section-page-header" style="--accent:#EA580C">
+        <h1>🏆 Sports</h1>
+        <p>In-depth Sports coverage from across America and around the world.</p>
+      </div>
+      <div class="content-sidebar-layout">
+        <div id="section-articles"></div>
+        <aside class="sidebar" id="sidebar-area"></aside>
+      </div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script>renderSectionPage('sports');</script>
+</body>
+</html>
