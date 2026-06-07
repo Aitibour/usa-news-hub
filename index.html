@@ -11,9 +11,8 @@
   <link rel="dns-prefetch" href="https://picsum.photos" />
   <link rel="dns-prefetch" href="https://api.open-meteo.com" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="styles-section.css" />
-</head>
+  <link rel="stylesheet" href="styles-all.css" />
+  </head>
 <body data-section="">
   <div id="site-header"></div>
 
@@ -39,14 +38,14 @@
 
   <div id="site-footer"></div>
 
-  <script src="data/articles.js"></script>
+  <script src="data/articles-meta.js"></script>
   <script src="js/images.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/sidebar.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/sidebar.js" defer></script>
   <script>
   // ---- Render Homepage ----
-  (async function() {
+  document.addEventListener('DOMContentLoaded', async function() {
     // Fetch any AI-generated articles and merge
     let aiArticles = [];
     try {
@@ -54,7 +53,7 @@
       if (r.ok) { const d = await r.json(); aiArticles = d.articles || []; }
     } catch(e) {}
 
-    const allArticles = [...aiArticles, ...ARTICLES_DB];
+    const allArticles = [...aiArticles, ...(typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META)];
     allArticles.sort((a,b) => new Date(b.date) - new Date(a.date));
 
     // Hero
@@ -168,7 +167,7 @@
       </section>`;
     }
     fwEl.innerHTML = fwHTML;
-  })();
+  });
   </script>
 </body>
 </html>
