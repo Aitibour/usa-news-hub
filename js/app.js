@@ -239,13 +239,9 @@ function renderSectionContent(container, allArticles, sectionId, color, page) {
     </div>`;
   }
 
-  // Pagination controls
+  // Pagination — numbered buttons only
   if (totalPages > 1) {
     const base = `${sectionId}.html`;
-    const prevUrl = safePage > 1 ? `${base}?page=${safePage - 1}` : null;
-    const nextUrl = safePage < totalPages ? `${base}?page=${safePage + 1}` : null;
-
-    // Page number buttons — show at most 5 around current
     let pageButtons = '';
     const lo = Math.max(1, safePage - 2);
     const hi = Math.min(totalPages, safePage + 2);
@@ -255,12 +251,7 @@ function renderSectionContent(container, allArticles, sectionId, color, page) {
     }
     if (hi < totalPages) pageButtons += `<span class="pg-ellipsis">…</span><a href="${base}?page=${totalPages}" class="pg-btn">${totalPages}</a>`;
 
-    html += `
-    <nav class="pagination" aria-label="Page navigation">
-      ${prevUrl ? `<a href="${prevUrl}" class="pg-btn pg-prev">← Previous</a>` : `<span class="pg-btn pg-disabled">← Previous</span>`}
-      <div class="pg-numbers">${pageButtons}</div>
-      ${nextUrl ? `<a href="${nextUrl}" class="pg-btn pg-next">Next →</a>` : `<span class="pg-btn pg-disabled">Next →</span>`}
-    </nav>`;
+    html += `<nav class="pagination" aria-label="Page navigation">${pageButtons}</nav>`;
   }
 
   container.innerHTML = html;
