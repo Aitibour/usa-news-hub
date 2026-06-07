@@ -14,7 +14,7 @@
   <main class="main-content">
     <div class="container">
       <div class="section-page-header">
-        <h1>🔍 Search Results</h1>
+        <h1>🔎 Search Results</h1>
         <p id="search-summary"></p>
       </div>
       <div id="search-results" class="cards-row four-col" style="margin-top:24px"></div>
@@ -27,7 +27,7 @@
   <script src="js/nav.js"></script>
   <script>
     const q = new URLSearchParams(window.location.search).get('q') || '';
-    document.title = `Search: ${q} — USA News Hub`;
+    document.title = `🔎 Search: ${q} — AmericaPulse.live`;
     document.getElementById('search-summary').textContent = q ? `Results for: "${q}"` : 'Enter a search term above.';
     if (q) {
       const lower = q.toLowerCase();
@@ -40,7 +40,7 @@
       if (results.length) {
         container.innerHTML = results.map(a => renderCard(a, 'sm')).join('');
       } else {
-        container.innerHTML = '<p>No articles found matching your search.</p>';
+        container.innerHTML = '<p style="padding:24px;color:#888">😔 No articles found matching your search. Try different keywords.</p>';
       }
     }
   </script>

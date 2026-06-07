@@ -5,7 +5,7 @@
 
   el.innerHTML = `
     <div class="sidebar-widget trending-widget">
-      <h3 class="widget-title"><span>Trending Now</span></h3>
+      <h3 class="widget-title"><span>🔥 Trending Now</span></h3>
       <ol class="trending-list" id="trending-list">
         <li><span class="trend-num">—</span><div class="trend-body"><a href="#">Loading…</a></div></li>
       </ol>
@@ -27,9 +27,9 @@
     </div>
 
     <div class="sidebar-widget" style="padding:18px">
-      <h3 class="widget-title-plain">Browse Sections</h3>
+      <h3 class="widget-title-plain">📰 Browse Sections</h3>
       <div class="section-pills">
-        <a href="politics.html" class="pill" style="--c:#C8102E">🏛 Politics</a>
+        <a href="politics.html" class="pill" style="--c:#C8102E">🏛️ Politics</a>
         <a href="business.html" class="pill" style="--c:#0B6E4F">📈 Business</a>
         <a href="technology.html" class="pill" style="--c:#2563EB">💻 Technology</a>
         <a href="sports.html" class="pill" style="--c:#EA580C">🏆 Sports</a>
