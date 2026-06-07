@@ -46,87 +46,102 @@
   <script>
   // ---- Render Homepage ----
   document.addEventListener('DOMContentLoaded', async function() {
-    // Fetch any AI-generated articles and merge
-    let aiArticles = [];
+    const staticDB = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+
+    // Render immediately with static data
+    renderHomeFeed(staticDB);
+
+    // Fetch live AI articles in background, re-render if any arrive
     try {
-      const r = await fetch('/.netlify/functions/get-articles?limit=8');
-      if (r.ok) { const d = await r.json(); aiArticles = d.articles || []; }
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 3000);
+      const r = await fetch('/.netlify/functions/get-articles?limit=8', { signal: ctrl.signal });
+      clearTimeout(tid);
+      if (r.ok) {
+        const d = await r.json();
+        const aiArticles = d.articles || [];
+        if (aiArticles.length) {
+          const seen = new Set(staticDB.map(a => a.slug));
+          const newOnes = aiArticles.filter(a => !seen.has(a.slug));
+          if (newOnes.length) renderHomeFeed([...newOnes, ...staticDB]);
+        }
+      }
     } catch(e) {}
 
-    const allArticles = [...aiArticles, ...(typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META)];
-    allArticles.sort((a,b) => new Date(b.date) - new Date(a.date));
+    function renderHomeFeed(allArticles) {
+      allArticles = [...allArticles].sort((a,b) => new Date(b.date) - new Date(a.date));
 
-    // Hero
-    const [h1, h2, h3] = allArticles;
-    const heroLead = document.getElementById('hero-lead');
-    heroLead.innerHTML = `
-      <div class="hero-card hero-main" onclick="goArticle('${h1.slug}')" style="cursor:pointer">
-        <div class="hero-img-wrap">
-          <img src="${h1.image}" alt="${h1.title}" loading="eager"/>
-          <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${sectionLabel(h1.section)}</span>
-        </div>
-        <div class="hero-body">
-          <h1 class="hero-title">${h1.title}</h1>
-          <p class="hero-excerpt">${h1.excerpt}</p>
-          <div class="hero-meta">
-            <span class="author">${h1.author}</span>
-            <span class="dot">•</span>
-            <time>${formatDate(h1.date)}</time>
-            <span class="dot">•</span>
-            <span>${h1.readTime||5} min read</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-side">
-        ${[h2,h3].filter(Boolean).map(a => `
-        <div class="hero-card hero-secondary" onclick="goArticle('${a.slug}')" style="cursor:pointer">
+      // Hero
+      const [h1, h2, h3] = allArticles;
+      const heroLead = document.getElementById('hero-lead');
+      heroLead.innerHTML = `
+        <div class="hero-card hero-main" data-slug="${safeSlug(h1.slug)}" style="cursor:pointer">
           <div class="hero-img-wrap">
-            <img src="${a.image}" alt="${a.title}" loading="lazy"/>
-            <span class="hero-category-tag" style="background:${SECTION_COLORS[a.section]}">${sectionLabel(a.section)}</span>
+            <img src="${esc(h1.image)}" alt="${esc(h1.title)}" loading="eager"/>
+            <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${sectionLabel(h1.section)}</span>
           </div>
           <div class="hero-body">
-            <h2 class="hero-title-sm">${a.title}</h2>
+            <h1 class="hero-title">${esc(h1.title)}</h1>
+            <p class="hero-excerpt">${esc(h1.excerpt)}</p>
             <div class="hero-meta">
-              <span class="author">${a.author}</span>
+              <span class="author">${esc(h1.author)}</span>
               <span class="dot">•</span>
-              <time>${formatDate(a.date)}</time>
+              <time>${formatDate(h1.date)}</time>
+              <span class="dot">•</span>
+              <span>${h1.readTime||5} min read</span>
             </div>
           </div>
-        </div>`).join('')}
-      </div>`;
-
-    // Main feed — one block per section
-    const FEED_SECTIONS = ['politics','business','technology','sports'];
-    const feed = document.getElementById('main-feed');
-    let feedHTML = '';
-
-    for (const sec of FEED_SECTIONS) {
-      const arts = allArticles.filter(a => a.section === sec);
-      if (!arts.length) continue;
-      const color = SECTION_COLORS[sec];
-      const [feat, ...rest] = arts;
-
-      feedHTML += `
-      <section class="section-block">
-        <div class="section-header">
-          <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
-          <a href="${sec}.html" class="see-all">See All ➜</a>
         </div>
-        <div class="news-grid">
-          <article class="news-card card-featured" onclick="goArticle('${feat.slug}')">
-            <div class="card-img-wrap"><img src="${feat.image}" alt="${feat.title}" loading="lazy"/></div>
-            <div class="card-body">
-              <span class="card-tag" style="background:${color}">${capitalize(sec)}</span>
-              <h3 class="card-title">${feat.title}</h3>
-              <p class="card-excerpt">${feat.excerpt}</p>
-              <div class="card-meta"><span>${feat.author}</span><time>${formatDate(feat.date)}</time></div>
+        <div class="hero-side">
+          ${[h2,h3].filter(Boolean).map(a => `
+          <div class="hero-card hero-secondary" data-slug="${safeSlug(a.slug)}" style="cursor:pointer">
+            <div class="hero-img-wrap">
+              <img src="${esc(a.image)}" alt="${esc(a.title)}" loading="lazy"/>
+              <span class="hero-category-tag" style="background:${SECTION_COLORS[a.section]}">${sectionLabel(a.section)}</span>
             </div>
-          </article>
-          <div class="news-list">
-            ${rest.slice(0,3).map(a => renderListItem(a)).join('')}
+            <div class="hero-body">
+              <h2 class="hero-title-sm">${esc(a.title)}</h2>
+              <div class="hero-meta">
+                <span class="author">${esc(a.author)}</span>
+                <span class="dot">•</span>
+                <time>${formatDate(a.date)}</time>
+              </div>
+            </div>
+          </div>`).join('')}
+        </div>`;
+
+      // Main feed — one block per section
+      const FEED_SECTIONS = ['politics','business','technology','sports'];
+      const feed = document.getElementById('main-feed');
+      let feedHTML = '';
+
+      for (const sec of FEED_SECTIONS) {
+        const arts = allArticles.filter(a => a.section === sec);
+        if (!arts.length) continue;
+        const color = SECTION_COLORS[sec];
+        const [feat, ...rest] = arts;
+
+        feedHTML += `
+        <section class="section-block">
+          <div class="section-header">
+            <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
+            <a href="${sec}.html" class="see-all">See All ➜</a>
           </div>
-        </div>
-      </section>`;
+          <div class="news-grid">
+            <article class="news-card card-featured" data-slug="${safeSlug(feat.slug)}" style="cursor:pointer">
+              <div class="card-img-wrap"><img src="${esc(feat.image)}" alt="${esc(feat.title)}" loading="lazy"/></div>
+              <div class="card-body">
+                <span class="card-tag" style="background:${color}">${capitalize(sec)}</span>
+                <h3 class="card-title">${esc(feat.title)}</h3>
+                <p class="card-excerpt">${esc(feat.excerpt)}</p>
+                <div class="card-meta"><span>${esc(feat.author)}</span><time>${formatDate(feat.date)}</time></div>
+              </div>
+            </article>
+            <div class="news-list">
+              ${rest.slice(0,3).map(a => renderListItem(a)).join('')}
+            </div>
+          </div>
+        </section>`;
 
       // Markets strip after business
       if (sec === 'business') {
@@ -144,29 +159,30 @@
         </div>`;
       }
     }
-    feed.innerHTML = feedHTML;
+      feed.innerHTML = feedHTML;
 
-    // Full-width sections
-    const FW_SECTIONS = ['world','health','entertainment','opinion'];
-    const fwEl = document.getElementById('full-width-sections');
-    let fwHTML = '';
+      // Full-width sections
+      const FW_SECTIONS = ['world','health','entertainment','opinion'];
+      const fwEl = document.getElementById('full-width-sections');
+      let fwHTML = '';
 
-    for (const sec of FW_SECTIONS) {
-      const arts = allArticles.filter(a => a.section === sec).slice(0,4);
-      if (!arts.length) continue;
-      const color = SECTION_COLORS[sec];
-      fwHTML += `
-      <section class="section-block full-width-section">
-        <div class="section-header">
-          <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
-          <a href="${sec}.html" class="see-all">See All ➜</a>
-        </div>
-        <div class="cards-row four-col">
-          ${arts.map(a => renderCard(a,'sm')).join('')}
-        </div>
-      </section>`;
-    }
-    fwEl.innerHTML = fwHTML;
+      for (const sec of FW_SECTIONS) {
+        const arts = allArticles.filter(a => a.section === sec).slice(0,4);
+        if (!arts.length) continue;
+        const color = SECTION_COLORS[sec];
+        fwHTML += `
+        <section class="section-block full-width-section">
+          <div class="section-header">
+            <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
+            <a href="${sec}.html" class="see-all">See All ➜</a>
+          </div>
+          <div class="cards-row four-col">
+            ${arts.map(a => renderCard(a,'sm')).join('')}
+          </div>
+        </section>`;
+      }
+      fwEl.innerHTML = fwHTML;
+    } // end renderHomeFeed
   });
   </script>
 </body>
