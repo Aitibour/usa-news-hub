@@ -160,23 +160,17 @@ window.resolveArticleImage = function(article) {
   return `https://images.unsplash.com/photo-${pool[idx]}?w=900&q=80`;
 };
 
-// Patch ARTICLES_DB so every article has a unique image
+// Patch ARTICLES_DB: assign pool images only to articles that don't already have one.
+// Articles with inline image URLs keep their own image; only RSS-fetched articles
+// (which arrive without an image) get assigned from the pool using a hash.
 if (typeof ARTICLES_DB !== 'undefined') {
-  const usedImages = new Set();
   ARTICLES_DB.forEach(article => {
+    if (article.image && article.image.includes('unsplash.com/photo-')) return;
     const pool = IMAGE_POOL[article.section] || IMAGE_POOL.politics;
-    // Find the first image not already used
     let hash = 0;
-    const key = article.id || '';
+    const key = article.id || article.slug || '';
     for (let i = 0; i < key.length; i++) { hash = ((hash << 5) - hash) + key.charCodeAt(i); hash |= 0; }
-    let idx = Math.abs(hash) % pool.length;
-    let attempts = 0;
-    while (usedImages.has(pool[idx]) && attempts < pool.length) {
-      idx = (idx + 1) % pool.length;
-      attempts++;
-    }
-    const photoId = pool[idx];
-    usedImages.add(photoId);
-    article.image = `https://images.unsplash.com/photo-${photoId}?w=900&q=80`;
+    const idx = Math.abs(hash) % pool.length;
+    article.image = `https://images.unsplash.com/photo-${pool[idx]}?w=900&q=80`;
   });
 }
