@@ -243,8 +243,8 @@ function renderSectionContent(container, allArticles, sectionId, color, page) {
   if (totalPages > 1) {
     const base = `${sectionId}.html`;
     let pageButtons = '';
-    const lo = Math.max(1, safePage - 2);
-    const hi = Math.min(totalPages, safePage + 2);
+    const lo = Math.max(1, safePage - 4);
+    const hi = Math.min(totalPages, lo + 9);
     if (lo > 1) pageButtons += `<a href="${base}?page=1" class="pg-btn">1</a><span class="pg-ellipsis">…</span>`;
     for (let p = lo; p <= hi; p++) {
       pageButtons += `<a href="${base}?page=${p}" class="pg-btn${p === safePage ? ' pg-active' : ''}">${p}</a>`;
