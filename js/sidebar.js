@@ -7,7 +7,7 @@
     <div class="sidebar-widget trending-widget">
       <h3 class="widget-title"><span>Trending Now</span></h3>
       <ol class="trending-list" id="trending-list">
-        <li><span class="trend-num">—</span><div class="trend-body"><a href="#">Loading…</a></div></li>
+        <li><span class="trend-num" style="opacity:.3">01</span><div class="trend-body"><a href="#" style="color:#9ca3af">Loading stories…</a></div></li>
       </ol>
     </div>
 

@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AmericaPulse.live — Breaking News & Top Stories</title>
+  <meta name="description" content="AmericaPulse.live — Breaking news, politics, business, technology, sports, health, world affairs and entertainment." />
+  <meta name="theme-color" content="#0B1F3A" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://picsum.photos" />
+  <link rel="dns-prefetch" href="https://api.open-meteo.com" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles-section.css" />
@@ -71,7 +75,6 @@
             <time>${formatDate(h1.date)}</time>
             <span class="dot">•</span>
             <span>${h1.readTime||5} min read</span>
-            ${h1.aiGenerated ? '<span class="ai-label">✦ AI</span>' : ''}
           </div>
         </div>
       </div>
@@ -88,7 +91,6 @@
               <span class="author">${a.author}</span>
               <span class="dot">•</span>
               <time>${formatDate(a.date)}</time>
-              ${a.aiGenerated ? '<span class="ai-label">✦ AI</span>' : ''}
             </div>
           </div>
         </div>`).join('')}
@@ -168,16 +170,5 @@
     fwEl.innerHTML = fwHTML;
   })();
   </script>
-  <style>
-    .ai-label {
-      background: linear-gradient(135deg, #7C3AED, #2563EB);
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-      letter-spacing: .5px;
-    }
-  </style>
 </body>
 </html>
