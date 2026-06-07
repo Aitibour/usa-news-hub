@@ -2,15 +2,15 @@
 (function() {
   const active = document.body.dataset.section || '';
   const navItems = [
-    { id:'', label:'🏠 Home', href:'index.html' },
-    { id:'politics', label:'🏛️ Politics', href:'politics.html' },
-    { id:'business', label:'📈 Business', href:'business.html' },
-    { id:'technology', label:'💻 Technology', href:'technology.html' },
-    { id:'sports', label:'🏆 Sports', href:'sports.html' },
-    { id:'health', label:'🏥 Health', href:'health.html' },
-    { id:'world', label:'🌐 World', href:'world.html' },
-    { id:'entertainment', label:'🎬 Entertainment', href:'entertainment.html' },
-    { id:'opinion', label:'✍️ Opinion', href:'opinion.html' },
+    { id:'', label:'Home', href:'index.html' },
+    { id:'politics', label:'Politics', href:'politics.html' },
+    { id:'business', label:'Business', href:'business.html' },
+    { id:'technology', label:'Technology', href:'technology.html' },
+    { id:'sports', label:'Sports', href:'sports.html' },
+    { id:'health', label:'Health', href:'health.html' },
+    { id:'world', label:'World', href:'world.html' },
+    { id:'entertainment', label:'Entertainment', href:'entertainment.html' },
+    { id:'opinion', label:'Opinion', href:'opinion.html' },
   ];
 
   const navHTML = navItems.map(n =>
