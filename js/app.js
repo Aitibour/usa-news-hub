@@ -5,8 +5,7 @@ const SECTION_COLORS = {
   sports:'#EA580C', health:'#7C3AED', world:'#0891B2',
   entertainment:'#DB2777', opinion:'#92400E'
 };
-function sectionLabel(s) { return capitalize(s); } ${capitalize(s)}`;
-}
+function sectionLabel(s) { return capitalize(s); }
 
 // ---- Utilities ----
 function formatDate(dateStr) {
