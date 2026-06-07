@@ -16,60 +16,44 @@ const navHTML = navItems.map(n =>
 ).join('');
 const logoSVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 90" width="300" height="52" aria-label="AmericaPulse.live">
-<!-- American flag block -->
 <rect x="2" y="18" width="52" height="38" rx="3" fill="#0B1F3A"/>
-<!-- Flag stars field -->
 <rect x="2" y="18" width="22" height="20" fill="#0B1F3A"/>
-<!-- Stars -->
 <text x="5"  y="28" fill="white" font-size="5" font-family="sans-serif">★★★</text>
 <text x="5"  y="34" fill="white" font-size="5" font-family="sans-serif">★★★</text>
-<!-- Red stripes -->
 <rect x="24" y="18" width="30" height="4"  fill="#C8102E"/>
 <rect x="24" y="26" width="30" height="4"  fill="#C8102E"/>
 <rect x="24" y="34" width="30" height="4"  fill="#C8102E"/>
 <rect x="2"  y="38" width="52" height="4"  fill="#C8102E"/>
 <rect x="2"  y="46" width="52" height="4"  fill="#C8102E"/>
-<!-- White stripes -->
 <rect x="24" y="22" width="30" height="4"  fill="white"/>
 <rect x="24" y="30" width="30" height="4"  fill="white"/>
 <rect x="2"  y="42" width="52" height="4"  fill="white"/>
 <rect x="2"  y="50" width="52" height="4"  fill="white"/>
-<!-- Pulse / heartbeat line with NYC skyline embedded -->
-<!-- Base line -->
 <polyline points="58,40 72,40 76,40 79,26 82,54 85,26 88,40 96,40"
 fill="none" stroke="#C8102E" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
-<!-- City skyline silhouette -->
 <g fill="#0B1F3A" opacity="0.85">
-<!-- Empire State Building center -->
 <rect x="97" y="22" width="6"  height="28"/>
 <rect x="100" y="15" width="1.5" height="10"/>
-<!-- buildings left -->
 <rect x="86" y="30" width="10" height="20"/>
 <rect x="80" y="33" width="7"  height="17"/>
 <rect x="74" y="35" width="6"  height="15"/>
-<!-- buildings right -->
 <rect x="104" y="28" width="9"  height="22"/>
 <rect x="114" y="31" width="8"  height="19"/>
 <rect x="123" y="34" width="7"  height="16"/>
 <rect x="131" y="36" width="6"  height="14"/>
 </g>
-<!-- Pulse continues right -->
 <polyline points="140,40 152,40 155,40 158,26 161,54 164,26 167,40 178,40"
 fill="none" stroke="#C8102E" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
-<!-- Swoosh ribbon right -->
 <path d="M178,36 Q210,28 230,38 Q250,48 270,34" fill="none" stroke="#C8102E" stroke-width="3" stroke-linecap="round"/>
 <path d="M178,42 Q210,34 230,44 Q250,54 270,40" fill="none" stroke="#0B1F3A" stroke-width="2" stroke-linecap="round"/>
-<!-- Shooting star -->
 <polygon points="278,28  280,22  282,28  288,28  283,32  285,38  280,34  275,38  277,32  272,28"
 fill="#C8102E"/>
 <polygon points="278,28  280,23  282,28  287,28  283,31  285,37  280,33  275,37  277,31  273,28"
 fill="white" opacity="0.5"/>
-<!-- Text: AmericaPulse -->
 <text x="2" y="80" font-family="'Arial Black','Impact',sans-serif" font-size="22"
 font-weight="900" font-style="italic" fill="#0B1F3A" letter-spacing="-0.5">America</text>
 <text x="116" y="80" font-family="'Arial Black','Impact',sans-serif" font-size="22"
 font-weight="900" font-style="italic" fill="#C8102E" letter-spacing="-0.5">Pulse</text>
-<!-- .live badge -->
 <rect x="196" y="63" width="46" height="20" rx="4" fill="#0B1F3A"/>
 <text x="199" y="78" font-family="'Arial Black','Impact',sans-serif" font-size="14"
 font-weight="900" font-style="italic" fill="white" letter-spacing="0.5">.live</text>

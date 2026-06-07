@@ -240,9 +240,12 @@ return;
 }
 const color = SECTION_COLORS[article.section] || '#C8102E';
 document.title = `${esc(article.title)} — AmericaPulse.live`;
+const rawBody = article.body || '';
 const bodyHTML = article.aiGenerated
-? `<p>${esc(article.body || '')}</p>`
-: (article.body || '');
+? `<p>${esc(rawBody)}</p>`
+: rawBody.includes('<')
+  ? rawBody
+  : rawBody.split('\n').map(p => p ? `<p>${p}</p>` : '').join('');
 const sourceLine = (article.sourceName && safeUrl(article.sourceUrl) !== '#')
 ? `<a href="${safeUrl(article.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="source-link">Source: ${esc(article.sourceName)}</a>`
 : '';
