@@ -147,6 +147,8 @@ function renderListItem(article) {
   </article>`;
 }
 
+const PAGE_SIZE = 10; // articles per page (1 hero + 2 secondary + 7 grid)
+
 // ---- Section page renderer ----
 async function renderSectionPage(sectionId) {
   const container = document.getElementById('section-articles');
@@ -154,30 +156,36 @@ async function renderSectionPage(sectionId) {
   container.innerHTML = '<p class="loading-msg">Loading latest stories…</p>';
 
   const color = SECTION_COLORS[sectionId];
+  const page = Math.max(1, parseInt(new URLSearchParams(window.location.search).get('page') || '1', 10));
 
-  // Show static articles immediately, then merge live on top
   const staticArts = getArticlesBySection(sectionId);
   if (staticArts.length) {
-    renderSectionContent(container, staticArts, sectionId, color);
+    renderSectionContent(container, staticArts, sectionId, color, page);
   }
 
   const liveArts = await fetchLiveArticles(sectionId, 10);
   if (liveArts.length) {
     const articles = mergeArticles(staticArts, liveArts);
-    renderSectionContent(container, articles, sectionId, color);
+    renderSectionContent(container, articles, sectionId, color, page);
   }
 }
 
-function renderSectionContent(container, articles, sectionId, color) {
-  if (!articles.length) {
+function renderSectionContent(container, allArticles, sectionId, color, page) {
+  if (!allArticles.length) {
     container.innerHTML = '<p class="no-articles">No articles yet. Check back soon.</p>';
     return;
   }
 
-  const [feat, second, third, ...rest] = articles;
-  const featSlug   = safeSlug(feat.slug);
-  const featImg    = esc(resolveArticleImage(feat));
+  const totalPages = Math.ceil(allArticles.length / PAGE_SIZE);
+  const safePage   = Math.min(Math.max(1, page), totalPages);
+  const start      = (safePage - 1) * PAGE_SIZE;
+  const articles   = allArticles.slice(start, start + PAGE_SIZE);
 
+  const [feat, second, third, ...rest] = articles;
+  const featSlug = safeSlug(feat.slug);
+  const featImg  = esc(resolveArticleImage(feat));
+
+  // Hero — only on page 1 (or whenever this page's first article exists)
   let html = `<div class="hero-lead" style="margin-bottom:32px">
     <div class="hero-card hero-main" data-slug="${featSlug}" style="cursor:pointer">
       <div class="hero-img-wrap">
@@ -219,18 +227,44 @@ function renderSectionContent(container, articles, sectionId, color) {
     </div>
   </div>`;
 
+  // Archive grid — remaining articles on this page
   if (rest.length) {
     html += `
     <div class="section-header" style="margin-bottom:20px">
       <h2 class="section-title"><span class="section-accent" style="background:${color}">${capitalize(sectionId)} Archive</span></h2>
-      <span class="article-count">${articles.length} stories</span>
+      <span class="article-count">${allArticles.length} stories</span>
     </div>
     <div class="cards-row four-col" style="margin-bottom:32px">
       ${rest.map(a => renderCard(a, 'sm')).join('')}
     </div>`;
   }
 
+  // Pagination controls
+  if (totalPages > 1) {
+    const base = `${sectionId}.html`;
+    const prevUrl = safePage > 1 ? `${base}?page=${safePage - 1}` : null;
+    const nextUrl = safePage < totalPages ? `${base}?page=${safePage + 1}` : null;
+
+    // Page number buttons — show at most 5 around current
+    let pageButtons = '';
+    const lo = Math.max(1, safePage - 2);
+    const hi = Math.min(totalPages, safePage + 2);
+    if (lo > 1) pageButtons += `<a href="${base}?page=1" class="pg-btn">1</a><span class="pg-ellipsis">…</span>`;
+    for (let p = lo; p <= hi; p++) {
+      pageButtons += `<a href="${base}?page=${p}" class="pg-btn${p === safePage ? ' pg-active' : ''}">${p}</a>`;
+    }
+    if (hi < totalPages) pageButtons += `<span class="pg-ellipsis">…</span><a href="${base}?page=${totalPages}" class="pg-btn">${totalPages}</a>`;
+
+    html += `
+    <nav class="pagination" aria-label="Page navigation">
+      ${prevUrl ? `<a href="${prevUrl}" class="pg-btn pg-prev">← Previous</a>` : `<span class="pg-btn pg-disabled">← Previous</span>`}
+      <div class="pg-numbers">${pageButtons}</div>
+      ${nextUrl ? `<a href="${nextUrl}" class="pg-btn pg-next">Next →</a>` : `<span class="pg-btn pg-disabled">Next →</span>`}
+    </nav>`;
+  }
+
   container.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ---- Article detail page ----
