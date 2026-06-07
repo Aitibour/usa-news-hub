@@ -101,7 +101,7 @@ function renderCard(article, size = 'sm') {
     return `
     <article class="news-card card-featured" data-slug="${slug}" style="cursor:pointer">
       <div class="card-img-wrap">
-        <img src="${img}" alt="${esc(article.title)}" loading="lazy" />
+        <img src="${img}" alt="${esc(article.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
       </div>
       <div class="card-body">
         <span class="card-tag" style="background:${color}">${sectionLabel(article.section)}</span>
@@ -118,7 +118,7 @@ function renderCard(article, size = 'sm') {
   return `
   <article class="news-card-sm" data-slug="${slug}" style="cursor:pointer">
     <div class="card-img-wrap">
-      <img src="${img}" alt="${esc(article.title)}" loading="lazy" />
+      <img src="${img}" alt="${esc(article.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
     </div>
     <div class="card-body">
       <span class="card-tag" style="background:${color}">${capitalize(article.section)}</span>
@@ -138,7 +138,7 @@ function renderListItem(article) {
   const img   = safeUrl(rawImg) !== '#' ? esc(rawImg) : '';
   return `
   <article class="news-list-item" data-slug="${slug}" style="cursor:pointer">
-    <div class="list-img"><img src="${img}" alt="${esc(article.title)}" loading="lazy" /></div>
+    <div class="list-img"><img src="${img}" alt="${esc(article.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" /></div>
     <div class="list-body">
       <span class="card-tag" style="background:${color}">${capitalize(article.section)}</span>
       <h4>${esc(article.title)}</h4>
@@ -181,7 +181,7 @@ function renderSectionContent(container, articles, sectionId, color) {
   let html = `<div class="hero-lead" style="margin-bottom:32px">
     <div class="hero-card hero-main" data-slug="${featSlug}" style="cursor:pointer">
       <div class="hero-img-wrap">
-        <img src="${featImg}" alt="${esc(feat.title)}" loading="eager"/>
+        <img src="${featImg}" alt="${esc(feat.title)}" loading="eager" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
         <span class="hero-category-tag" style="background:${color}">${sectionLabel(sectionId)}</span>
       </div>
       <div class="hero-body">
@@ -203,7 +203,7 @@ function renderSectionContent(container, articles, sectionId, color) {
         return `
       <div class="hero-card hero-secondary" data-slug="${s}" style="cursor:pointer">
         <div class="hero-img-wrap">
-          <img src="${i}" alt="${esc(a.title)}" loading="lazy"/>
+          <img src="${i}" alt="${esc(a.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
           <span class="hero-category-tag" style="background:${color}">${sectionLabel(sectionId)}</span>
         </div>
         <div class="hero-body">
