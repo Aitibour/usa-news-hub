@@ -95,7 +95,8 @@ function mergeArticles(staticArts, liveArts) {
 function renderCard(article, size = 'sm') {
   const color = SECTION_COLORS[article.section] || '#C8102E';
   const slug  = safeSlug(article.slug);
-  const img   = safeUrl(article.image) !== '#' ? esc(article.image) : '';
+  const rawImg = resolveArticleImage(article);
+  const img   = safeUrl(rawImg) !== '#' ? esc(rawImg) : '';
   if (size === 'lg') {
     return `
     <article class="news-card card-featured" data-slug="${slug}" style="cursor:pointer">
@@ -133,7 +134,8 @@ function renderCard(article, size = 'sm') {
 function renderListItem(article) {
   const color = SECTION_COLORS[article.section] || '#C8102E';
   const slug  = safeSlug(article.slug);
-  const img   = safeUrl(article.image) !== '#' ? esc(article.image) : '';
+  const rawImg = resolveArticleImage(article);
+  const img   = safeUrl(rawImg) !== '#' ? esc(rawImg) : '';
   return `
   <article class="news-list-item" data-slug="${slug}" style="cursor:pointer">
     <div class="list-img"><img src="${img}" alt="${esc(article.title)}" loading="lazy" /></div>
@@ -174,7 +176,7 @@ function renderSectionContent(container, articles, sectionId, color) {
 
   const [feat, second, third, ...rest] = articles;
   const featSlug   = safeSlug(feat.slug);
-  const featImg    = safeUrl(feat.image) !== '#' ? esc(feat.image) : '';
+  const featImg    = esc(resolveArticleImage(feat));
 
   let html = `<div class="hero-lead" style="margin-bottom:32px">
     <div class="hero-card hero-main" data-slug="${featSlug}" style="cursor:pointer">
@@ -197,7 +199,7 @@ function renderSectionContent(container, articles, sectionId, color) {
     <div class="hero-side">
       ${[second, third].filter(Boolean).map(a => {
         const s = safeSlug(a.slug);
-        const i = safeUrl(a.image) !== '#' ? esc(a.image) : '';
+        const i = esc(resolveArticleImage(a));
         return `
       <div class="hero-card hero-secondary" data-slug="${s}" style="cursor:pointer">
         <div class="hero-img-wrap">
@@ -287,7 +289,7 @@ async function renderArticlePage() {
       </div>
     </div>
     <div class="article-hero-img">
-      <img src="${safeUrl(article.image) !== '#' ? esc(article.image) : ''}" alt="${esc(article.title)}" />
+      <img src="${esc(resolveArticleImage(article))}" alt="${esc(article.title)}" />
     </div>
     <div class="article-body">${bodyHTML}</div>
     <div class="article-tags">

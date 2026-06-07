@@ -11,7 +11,7 @@
   <link rel="dns-prefetch" href="https://picsum.photos" />
   <link rel="dns-prefetch" href="https://api.open-meteo.com" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles-all.css" />
+  <link rel="stylesheet" href="styles-all.min.css" />
   </head>
 <body data-section="">
   <div id="site-header"></div>
@@ -77,7 +77,7 @@
       heroLead.innerHTML = `
         <div class="hero-card hero-main" data-slug="${safeSlug(h1.slug)}" style="cursor:pointer">
           <div class="hero-img-wrap">
-            <img src="${esc(h1.image)}" alt="${esc(h1.title)}" loading="eager"/>
+            <img src="${esc(resolveArticleImage(h1))}" alt="${esc(h1.title)}" loading="eager"/>
             <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${sectionLabel(h1.section)}</span>
           </div>
           <div class="hero-body">
@@ -96,7 +96,7 @@
           ${[h2,h3].filter(Boolean).map(a => `
           <div class="hero-card hero-secondary" data-slug="${safeSlug(a.slug)}" style="cursor:pointer">
             <div class="hero-img-wrap">
-              <img src="${esc(a.image)}" alt="${esc(a.title)}" loading="lazy"/>
+              <img src="${esc(resolveArticleImage(a))}" alt="${esc(a.title)}" loading="lazy"/>
               <span class="hero-category-tag" style="background:${SECTION_COLORS[a.section]}">${sectionLabel(a.section)}</span>
             </div>
             <div class="hero-body">
@@ -129,7 +129,7 @@
           </div>
           <div class="news-grid">
             <article class="news-card card-featured" data-slug="${safeSlug(feat.slug)}" style="cursor:pointer">
-              <div class="card-img-wrap"><img src="${esc(feat.image)}" alt="${esc(feat.title)}" loading="lazy"/></div>
+              <div class="card-img-wrap"><img src="${esc(resolveArticleImage(feat))}" alt="${esc(feat.title)}" loading="lazy"/></div>
               <div class="card-body">
                 <span class="card-tag" style="background:${color}">${capitalize(sec)}</span>
                 <h3 class="card-title">${esc(feat.title)}</h3>
