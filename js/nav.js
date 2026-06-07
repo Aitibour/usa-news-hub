@@ -228,29 +228,44 @@
 
   // ── Modals ──────────────────────────────────────────────────
   const modalCSS = `
-    .ap-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center}
+    .ap-modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,31,58,.6);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
     .ap-modal-overlay.open{display:flex}
-    .ap-modal{background:#fff;border-radius:10px;padding:36px 32px;max-width:420px;width:90%;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.25)}
-    .ap-modal h2{margin:0 0 6px;font-size:22px;color:#0B1F3A}
-    .ap-modal p{margin:0 0 20px;color:#555;font-size:14px}
-    .ap-modal input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;margin-bottom:12px}
-    .ap-modal .btn-primary{width:100%;padding:11px;background:#C8102E;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer}
+    .ap-modal{background:#fff;border-radius:16px;padding:40px 36px 32px;max-width:440px;width:92%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.22)}
+    .ap-modal-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .ap-modal-icon svg{width:28px;height:28px}
+    .ap-modal h2{margin:0 0 6px;font-size:22px;font-weight:800;color:#0B1F3A;letter-spacing:-.3px}
+    .ap-modal>p{margin:0 0 22px;color:#6b7280;font-size:14px;line-height:1.5}
+    .ap-modal input,.ap-modal select,.ap-modal textarea{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none;transition:border-color .2s;font-family:inherit;color:#111}
+    .ap-modal input:focus,.ap-modal select:focus,.ap-modal textarea:focus{border-color:#C8102E}
+    .ap-modal .btn-primary{width:100%;padding:13px;background:#C8102E;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.2px;transition:background .2s}
     .ap-modal .btn-primary:hover{background:#a30d25}
-    .ap-modal .modal-close{position:absolute;top:12px;right:16px;font-size:22px;cursor:pointer;color:#888;background:none;border:none;line-height:1}
-    .ap-modal .modal-divider{text-align:center;color:#aaa;font-size:13px;margin:14px 0}
-    .ap-modal .btn-secondary{width:100%;padding:11px;background:#f4f4f4;color:#0B1F3A;border:1px solid #ddd;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px}
-    .ap-modal .modal-note{text-align:center;font-size:12px;color:#aaa;margin-top:14px}
-    .ap-modal .plan-card{border:1px solid #ddd;border-radius:8px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
-    .ap-modal .plan-card:hover,.ap-modal .plan-card.selected{border-color:#C8102E;background:#fff8f8}
-    .ap-modal .plan-card strong{display:block;font-size:16px;color:#0B1F3A}
-    .ap-modal .plan-card span{font-size:13px;color:#777}
-    .ap-modal .plan-price{float:right;font-weight:700;color:#C8102E;font-size:17px}
-    .edition-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-    .edition-card{border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;cursor:pointer;transition:border-color .2s}
-    .edition-card:hover{border-color:#C8102E;background:#fff8f8}
-    .edition-card .ed-icon{font-size:28px;margin-bottom:6px}
-    .edition-card strong{display:block;font-size:13px;color:#0B1F3A}
-    .edition-card span{font-size:11px;color:#888}
+    .ap-modal .modal-close{position:absolute;top:14px;right:16px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9ca3af;background:#f3f4f6;border:none;border-radius:50%;font-size:16px;line-height:1;transition:background .15s}
+    .ap-modal .modal-close:hover{background:#e5e7eb;color:#374151}
+    .ap-modal .modal-divider{display:flex;align-items:center;gap:10px;color:#d1d5db;font-size:12px;margin:16px 0;text-transform:uppercase;letter-spacing:.5px}
+    .ap-modal .modal-divider::before,.ap-modal .modal-divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
+    .ap-modal .btn-social{width:100%;padding:11px;background:#fff;color:#111;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:10px;transition:border-color .2s,background .2s}
+    .ap-modal .btn-social:hover{border-color:#9ca3af;background:#fafafa}
+    .ap-modal .btn-social svg{width:18px;height:18px;flex-shrink:0}
+    .ap-modal .modal-note{text-align:center;font-size:12px;color:#9ca3af;margin-top:16px}
+    .ap-modal .modal-note a{color:#C8102E;text-decoration:none}
+    .ap-modal .modal-note a:hover{text-decoration:underline}
+    .plan-card{border:1.5px solid #e5e7eb;border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .15s;display:flex;align-items:center;gap:12px}
+    .plan-card:hover,.plan-card.selected{border-color:#C8102E;background:#fff7f7}
+    .plan-card.selected .plan-radio{border-color:#C8102E;background:#C8102E}
+    .plan-radio{width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;flex-shrink:0;transition:.2s;display:flex;align-items:center;justify-content:center}
+    .plan-radio::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff}
+    .plan-info{flex:1}
+    .plan-info strong{display:block;font-size:14px;color:#0B1F3A;font-weight:700}
+    .plan-info span{font-size:12px;color:#6b7280}
+    .plan-price-tag{font-weight:800;color:#C8102E;font-size:16px;white-space:nowrap}
+    .plan-badge{font-size:10px;background:#0B6E4F;color:#fff;padding:2px 6px;border-radius:4px;margin-left:6px;font-weight:700;vertical-align:middle}
+    .edition-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+    .edition-card{border:1.5px solid #e5e7eb;border-radius:10px;padding:16px 12px;text-align:center;cursor:pointer;transition:border-color .2s,background .15s}
+    .edition-card:hover{border-color:#C8102E;background:#fff7f7}
+    .edition-card .ed-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;background:#f3f4f6}
+    .edition-card .ed-icon svg{width:22px;height:22px}
+    .edition-card strong{display:block;font-size:13px;color:#0B1F3A;font-weight:700}
+    .edition-card span{font-size:11px;color:#9ca3af}
   `;
   const styleEl = document.createElement('style');
   styleEl.textContent = modalCSS;
@@ -261,27 +276,39 @@
   <div class="ap-modal-overlay" id="subscribe-modal" onclick="if(event.target===this)closeModal('subscribe-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('subscribe-modal')">✕</button>
+      <div class="ap-modal-icon" style="background:#fff0f2">
+        <svg fill="none" stroke="#C8102E" stroke-width="2" viewBox="0 0 24 24"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"/><path d="M17 20v-8H7v8M7 4v4h8"/></svg>
+      </div>
       <h2>Subscribe to AmericaPulse</h2>
-      <p>Stay informed with unlimited access to breaking news and in-depth reporting.</p>
+      <p>Unlimited access to breaking news and in-depth reporting.</p>
       <div class="plan-card selected" onclick="selectPlan(this,'digital')">
-        <span class="plan-price">$9.99/mo</span>
-        <strong>Digital Access</strong>
-        <span>Unlimited articles, newsletters, mobile app</span>
+        <div class="plan-radio"></div>
+        <div class="plan-info">
+          <strong>Digital Access</strong>
+          <span>Unlimited articles, newsletters, mobile app</span>
+        </div>
+        <div class="plan-price-tag">$9.99<small style="font-size:11px;font-weight:500;color:#9ca3af">/mo</small></div>
       </div>
       <div class="plan-card" onclick="selectPlan(this,'annual')">
-        <span class="plan-price">$79/yr</span>
-        <strong>Annual Plan</strong>
-        <span>Save 34% — best value, cancel anytime</span>
+        <div class="plan-radio"></div>
+        <div class="plan-info">
+          <strong>Annual Plan <span class="plan-badge">SAVE 34%</span></strong>
+          <span>Best value — cancel anytime</span>
+        </div>
+        <div class="plan-price-tag">$79<small style="font-size:11px;font-weight:500;color:#9ca3af">/yr</small></div>
       </div>
       <div class="plan-card" onclick="selectPlan(this,'free')">
-        <span class="plan-price">Free</span>
-        <strong>Newsletter Only</strong>
-        <span>Daily briefing email, 5 free articles/month</span>
+        <div class="plan-radio"></div>
+        <div class="plan-info">
+          <strong>Newsletter Only</strong>
+          <span>Daily briefing email, 5 free articles/month</span>
+        </div>
+        <div class="plan-price-tag" style="color:#0B6E4F">Free</div>
       </div>
-      <br/>
-      <input type="email" id="sub-email" placeholder="Your email address" />
-      <button class="btn-primary" onclick="handleSubscribe()">Continue →</button>
-      <p class="modal-note">No credit card required for free plan. Cancel anytime.</p>
+      <br>
+      <input type="email" id="sub-email" placeholder="Enter your email address" />
+      <button class="btn-primary" onclick="handleSubscribe()">Continue &rarr;</button>
+      <p class="modal-note">No credit card required for free plan &nbsp;&bull;&nbsp; Cancel anytime</p>
     </div>
   </div>
 
@@ -289,15 +316,24 @@
   <div class="ap-modal-overlay" id="signin-modal" onclick="if(event.target===this)closeModal('signin-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('signin-modal')">✕</button>
+      <div class="ap-modal-icon" style="background:#eef2ff">
+        <svg fill="none" stroke="#2563EB" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
       <h2>Sign In</h2>
-      <p>Access your AmericaPulse account.</p>
+      <p>Welcome back to AmericaPulse.</p>
       <input type="email" id="si-email" placeholder="Email address" />
       <input type="password" id="si-pass" placeholder="Password" />
       <button class="btn-primary" onclick="handleSignIn()">Sign In</button>
       <div class="modal-divider">or continue with</div>
-      <button class="btn-secondary" onclick="handleSocialAuth('Google')">🔵 Continue with Google</button>
-      <button class="btn-secondary" onclick="handleSocialAuth('Apple')">🍎 Continue with Apple</button>
-      <p class="modal-note"><a href="#" onclick="openModal('subscribe-modal');closeModal('signin-modal');return false;" style="color:#C8102E">Create an account</a> &nbsp;·&nbsp; <a href="#" onclick="alert('Password reset email sent!');return false;" style="color:#888">Forgot password?</a></p>
+      <button class="btn-social" onclick="handleSocialAuth('Google')">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <button class="btn-social" onclick="handleSocialAuth('Apple')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.05 11.86c-.02-2.13 1.73-3.15 1.81-3.2-1-1.46-2.54-1.66-3.08-1.68-1.31-.13-2.56.77-3.23.77-.67 0-1.7-.75-2.8-.73-1.44.02-2.77.84-3.51 2.13-1.5 2.6-.38 6.44 1.07 8.55.71 1.04 1.56 2.2 2.67 2.16 1.07-.04 1.48-.7 2.77-.7 1.3 0 1.66.7 2.8.67 1.15-.02 1.88-1.06 2.58-2.1a9.6 9.6 0 001.18-2.43c-.03-.01-2.26-.87-2.26-3.44zm-2.12-6.32c.59-.71.98-1.7.87-2.69-.84.03-1.86.56-2.46 1.26-.54.62-.1 1.59.72 1.59.3 0 .6-.08.87-.16z"/></svg>
+        Continue with Apple
+      </button>
+      <p class="modal-note"><a href="#" onclick="openModal('subscribe-modal');closeModal('signin-modal');return false;">Create an account</a> &nbsp;&bull;&nbsp; <a href="#" onclick="alert('A password reset link has been sent to your email.');return false;" style="color:#9ca3af">Forgot password?</a></p>
     </div>
   </div>
 
@@ -305,32 +341,35 @@
   <div class="ap-modal-overlay" id="edition-modal" onclick="if(event.target===this)closeModal('edition-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('edition-modal')">✕</button>
-      <h2>📰 E-Edition</h2>
+      <div class="ap-modal-icon" style="background:#fff7ed">
+        <svg fill="none" stroke="#EA580C" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <h2>E-Edition</h2>
       <p>Read today's AmericaPulse in digital newspaper format.</p>
       <div class="edition-grid">
         <div class="edition-card" onclick="closeModal('edition-modal');openModal('signin-modal')">
-          <div class="ed-icon">📰</div>
+          <div class="ed-icon"><svg fill="none" stroke="#C8102E" stroke-width="2" viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></div>
           <strong>Today's Edition</strong>
           <span>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
         </div>
         <div class="edition-card" onclick="closeModal('edition-modal');openModal('signin-modal')">
-          <div class="ed-icon">📋</div>
+          <div class="ed-icon"><svg fill="none" stroke="#0B6E4F" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
           <strong>Weekend Edition</strong>
           <span>Full Sunday paper</span>
         </div>
         <div class="edition-card" onclick="closeModal('edition-modal');openModal('signin-modal')">
-          <div class="ed-icon">🗂️</div>
+          <div class="ed-icon"><svg fill="none" stroke="#2563EB" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h18M3 9h18M3 15h18M3 21h18"/></svg></div>
           <strong>Archive</strong>
           <span>Past 30 days</span>
         </div>
         <div class="edition-card" onclick="closeModal('edition-modal');openModal('signin-modal')">
-          <div class="ed-icon">⬇️</div>
+          <div class="ed-icon"><svg fill="none" stroke="#7C3AED" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v13M5 14l7 7 7-7M3 21h18"/></svg></div>
           <strong>Download PDF</strong>
           <span>Save for offline</span>
         </div>
       </div>
-      <button class="btn-primary" onclick="closeModal('edition-modal');openModal('signin-modal')">🔑 Sign In to Read →</button>
-      <p class="modal-note">E-Edition included with all paid subscriptions.</p>
+      <button class="btn-primary" onclick="closeModal('edition-modal');openModal('signin-modal')">Sign In to Read &rarr;</button>
+      <p class="modal-note">E-Edition included with all paid subscriptions</p>
     </div>
   </div>
 
