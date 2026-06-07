@@ -52,37 +52,9 @@ const SECTION_FEEDS = {
   ],
 };
 
-// Fallback images per section (used only if keyword image fetch fails)
-const SECTION_IMAGES = {
-  politics:      "https://images.unsplash.com/photo-1555374018-13a8994ab246?w=900&q=80",
-  business:      "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&q=80",
-  technology:    "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80",
-  sports:        "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=900&q=80",
-  health:        "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=900&q=80",
-  world:         "https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?w=900&q=80",
-  entertainment: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=900&q=80",
-  opinion:       "https://images.unsplash.com/photo-1503551723145-6c040742065b?w=900&q=80",
-};
-
-// Keyword → Unsplash photo ID pools (no API key, no duplicates across runs)
-// We rotate by day-of-year so each day gets a different image
-const UNSPLASH_POOLS = {
-  politics:      ["1555374018-13a8994ab246","1503551723145-6c040742065b","1605810230434-7631ac76ec81","1543286386-713bdd548da4","1529107386315-e1a2ed48a620"],
-  business:      ["1611532736597-de2d4265fba3","1460925895917-afdab827c52f","1504384308090-c894fdcc538d","1611974789855-9c2a0a7236a3","1559526324-4b87b5e36e44"],
-  technology:    ["1677442135703-1787eea5ce01","1486312338219-ce68d2c6f44d","1620712943543-bcc4688e7485","1518770660439-4636190af475","1550751827-4bd374c3f58b"],
-  sports:        ["1566577739112-5180d4bf9390","1546519638-68e109498ffc","1504450758481-7338eba7524a","1541534741688-7078f1b56a9b","1579952363873-27f3bade9f55"],
-  health:        ["1587854692152-cbe660dbde88","1559757148-5f50d97bb8f6","1576671081837-49000212a370","1505751172876-fa1923c5c528","1519824145371-1efc74edd2c8"],
-  world:         ["1523292562811-8fa7962a78c8","1577083552431-6e5fd01988ec","1524492412937-b28074a5d7da","1589254065878-42c9da997008","1451187580459-43490279c0fa"],
-  entertainment: ["1489599849927-2ee91cede3ba","1511671782779-c97d3d27a1d4","1574375927938-d5a98e8ffe85","1536440136628-849c177e76a1","1521967906867-14ec9d64bee8"],
-  opinion:       ["1503551723145-6c040742065b","1455849318743-b2233052fcff","1434030216411-0b793f4b6f1a","1471107191679-f26174d2d41e","1499750310107-5fef28a66643"],
-};
-
-// Pick a unique image for today using day-of-year rotation
-function pickDailyImage(section) {
-  const pool = UNSPLASH_POOLS[section] || UNSPLASH_POOLS.politics;
-  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-  const id = pool[dayOfYear % pool.length];
-  return `https://images.unsplash.com/photo-${id}?w=900&q=80`;
+// Generate a consistent picsum image from slug — no external CDN issues
+function pickImage(slug) {
+  return `https://picsum.photos/seed/${encodeURIComponent(slug)}/900/600`;
 }
 
 // Extract keywords from title to build a more relevant image query
@@ -117,18 +89,9 @@ function extractTag(xml, tag) {
   return "";
 }
 
-// Extract image from RSS item, fall back to unique daily Unsplash image
-function extractImage(item, section) {
-  const media = item.match(/media:content[^>]+url="([^"]+)"/i)
-    || item.match(/media:thumbnail[^>]+url="([^"]+)"/i)
-    || item.match(/<enclosure[^>]+url="([^"]+jpg[^"]*|[^"]+png[^"]*|[^"]+jpeg[^"]*)"/i)
-    || item.match(/<img[^>]+src="([^"]+)"/i);
-  // Use RSS image if present and not a 1x1 tracker pixel
-  if (media && media[1] && !media[1].includes("1x1") && media[1].length > 30) {
-    return media[1];
-  }
-  // Use daily-rotated Unsplash image so every article looks different
-  return pickDailyImage(section);
+// Always use picsum derived from slug — reliable, no hotlink/CSP issues
+function extractImage(item, slug) {
+  return pickImage(slug);
 }
 
 // Strip HTML tags from text
@@ -181,7 +144,6 @@ async function fetchFeed(url, section) {
       const link = extractTag(item, "link") || extractTag(item, "guid");
       const author = extractTag(item, "dc:creator") || extractTag(item, "author") || "News Desk";
       const pubDate = extractTag(item, "pubDate") || new Date().toISOString();
-      const image = extractImage(item, section);
 
       if (!title || title.length < 10) continue;
 
@@ -200,7 +162,7 @@ async function fetchFeed(url, section) {
         author: stripHtml(author).slice(0, 60) || "News Desk",
         date: today,
         section,
-        image,
+        image: pickImage(slug),
         tags: [section],
         readTime: Math.max(2, Math.ceil((content || description).split(" ").length / 200)),
         sourceUrl: link || url,
