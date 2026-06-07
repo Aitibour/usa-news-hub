@@ -61,3 +61,43 @@
   min-width: auto;
 }
 .ai-generated .trend-body time { color: #7C3AED; }
+
+/* ---- RSS/Live badge ---- */
+.rss-badge {
+  display: inline-block;
+  background: #16a34a;
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 6px;
+  animation: pulse-green 2s ease-in-out infinite;
+}
+.hero-live {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .6; }
+}
+
+/* Loading state */
+.loading-msg { color: var(--muted); padding: 48px 0; text-align: center; font-size: 16px; }
+
+/* Article count */
+.article-count { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+/* Source link */
+.source-link { font-size: 12px; color: var(--muted); text-decoration: underline; }
+.source-link:hover { color: var(--red); }
+
+/* Footer logo fix */
+.footer-logo-wrap svg { filter: brightness(0) invert(1); }
