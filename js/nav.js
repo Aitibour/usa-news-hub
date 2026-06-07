@@ -153,34 +153,34 @@
         </div>
         <div class="footer-cols">
           <div class="footer-col">
-            <h4>📰 Sections</h4>
+            <h4>Sections</h4>
             <ul>
-              <li><a href="politics.html">🏛️ Politics</a></li>
-              <li><a href="business.html">📈 Business</a></li>
-              <li><a href="technology.html">💻 Technology</a></li>
-              <li><a href="sports.html">🏆 Sports</a></li>
-              <li><a href="health.html">🏥 Health</a></li>
-              <li><a href="world.html">🌐 World</a></li>
-              <li><a href="entertainment.html">🎬 Entertainment</a></li>
-              <li><a href="opinion.html">✍️ Opinion</a></li>
+              <li><a href="politics.html">Politics</a></li>
+              <li><a href="business.html">Business</a></li>
+              <li><a href="technology.html">Technology</a></li>
+              <li><a href="sports.html">Sports</a></li>
+              <li><a href="health.html">Health</a></li>
+              <li><a href="world.html">World</a></li>
+              <li><a href="entertainment.html">Entertainment</a></li>
+              <li><a href="opinion.html">Opinion</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>🏢 Company</h4>
+            <h4>Company</h4>
             <ul>
-              <li><a href="#" onclick="openModal('about-modal');return false;">ℹ️ About Us</a></li>
-              <li><a href="#" onclick="openModal('careers-modal');return false;">💼 Careers</a></li>
-              <li><a href="#" onclick="openModal('advertise-modal');return false;">📣 Advertise</a></li>
-              <li><a href="#" onclick="openModal('contact-modal');return false;">✉️ Contact</a></li>
+              <li><a href="#" onclick="openModal('about-modal');return false;">About Us</a></li>
+              <li><a href="#" onclick="openModal('careers-modal');return false;">Careers</a></li>
+              <li><a href="#" onclick="openModal('advertise-modal');return false;">Advertise</a></li>
+              <li><a href="#" onclick="openModal('contact-modal');return false;">Contact</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>📬 Subscribe</h4>
+            <h4>Subscribe</h4>
             <ul>
-              <li><a href="#" onclick="openModal('subscribe-modal');return false;">📧 Daily Newsletter</a></li>
-              <li><a href="#" onclick="openModal('alerts-modal');return false;">🔔 Breaking Alerts</a></li>
-              <li><a href="#" onclick="openModal('rss-modal');return false;">📡 RSS Feeds</a></li>
-              <li><a href="#" onclick="openModal('podcast-modal');return false;">🎙️ Podcast</a></li>
+              <li><a href="#" onclick="openModal('subscribe-modal');return false;">Daily Newsletter</a></li>
+              <li><a href="#" onclick="openModal('alerts-modal');return false;">Breaking Alerts</a></li>
+              <li><a href="#" onclick="openModal('rss-modal');return false;">RSS Feeds</a></li>
+              <li><a href="#" onclick="openModal('podcast-modal');return false;">Podcast</a></li>
             </ul>
           </div>
         </div>
@@ -188,9 +188,9 @@
       <div class="footer-bottom">
         <span>© 2026 AmericaPulse.live — All rights reserved.</span>
         <div class="footer-legal">
-          <a href="#" onclick="openModal('privacy-modal');return false;">🔒 Privacy Policy</a>
-          <a href="#" onclick="openModal('terms-modal');return false;">📜 Terms of Service</a>
-          <a href="#" onclick="openModal('cookies-modal');return false;">🍪 Cookie Settings</a>
+          <a href="#" onclick="openModal('privacy-modal');return false;">Privacy Policy</a>
+          <a href="#" onclick="openModal('terms-modal');return false;">Terms of Service</a>
+          <a href="#" onclick="openModal('cookies-modal');return false;">Cookie Settings</a>
         </div>
       </div>
     </div>
@@ -377,16 +377,16 @@
   <div class="ap-modal-overlay" id="about-modal" onclick="if(event.target===this)closeModal('about-modal')">
     <div class="ap-modal" style="max-width:520px">
       <button class="modal-close" onclick="closeModal('about-modal')">✕</button>
-      <h2>ℹ️ About AmericaPulse</h2>
+      <h2>About AmericaPulse</h2>
       <p style="color:#333;line-height:1.7">AmericaPulse.live is a digital news publication covering the stories that shape America — from Capitol Hill to Main Street. Founded in 2020, we are committed to fast, fair, and factual journalism.</p>
       <p style="color:#333;line-height:1.7">Our team of reporters, editors, and analysts cover <strong>Politics, Business, Technology, Sports, Health, World Affairs, Entertainment,</strong> and <strong>Opinion</strong> — delivering breaking news and in-depth analysis 24/7.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:28px">📰</div><strong>400+</strong><div style="font-size:12px;color:#777">Original Articles</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:28px">🌎</div><strong>8</strong><div style="font-size:12px;color:#777">News Sections</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:28px">⚡</div><strong>Daily</strong><div style="font-size:12px;color:#777">Live Updates</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:28px">🆓</div><strong>Free</strong><div style="font-size:12px;color:#777">To Read</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:900;color:#C8102E">400+</div><div style="font-size:12px;color:#777;margin-top:2px">Original Articles</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:900;color:#0B1F3A">8</div><div style="font-size:12px;color:#777;margin-top:2px">News Sections</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:900;color:#0B6E4F">Daily</div><div style="font-size:12px;color:#777;margin-top:2px">Live Updates</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:900;color:#2563EB">Free</div><div style="font-size:12px;color:#777;margin-top:2px">To Read</div></div>
       </div>
-      <button class="btn-primary" onclick="closeModal('about-modal');openModal('contact-modal')">✉️ Get In Touch</button>
+      <button class="btn-primary" onclick="closeModal('about-modal');openModal('contact-modal')">Get In Touch</button>
     </div>
   </div>
 
@@ -394,21 +394,21 @@
   <div class="ap-modal-overlay" id="contact-modal" onclick="if(event.target===this)closeModal('contact-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('contact-modal')">✕</button>
-      <h2>✉️ Contact Us</h2>
+      <h2>Contact Us</h2>
       <p>We'd love to hear from you — tips, feedback, corrections, or partnerships.</p>
-      <input type="text" id="contact-name" placeholder="👤 Your name" />
-      <input type="email" id="contact-email" placeholder="📧 Your email" />
-      <select id="contact-subject" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;margin-bottom:12px;background:#fff">
-        <option value="">📌 Select subject…</option>
-        <option>📰 News Tip</option>
-        <option>✏️ Correction Request</option>
-        <option>🤝 Partnership / Advertising</option>
-        <option>💬 General Feedback</option>
-        <option>⚖️ Legal Inquiry</option>
+      <input type="text" id="contact-name" placeholder="Your name" />
+      <input type="email" id="contact-email" placeholder="Your email" />
+      <select id="contact-subject" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;margin-bottom:10px;background:#fff;color:#111">
+        <option value="">Select subject…</option>
+        <option>News Tip</option>
+        <option>Correction Request</option>
+        <option>Partnership / Advertising</option>
+        <option>General Feedback</option>
+        <option>Legal Inquiry</option>
       </select>
-      <textarea id="contact-msg" placeholder="Your message…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;min-height:100px;margin-bottom:12px;resize:vertical;font-family:inherit"></textarea>
-      <button class="btn-primary" onclick="handleContact()">📤 Send Message</button>
-      <p class="modal-note">📍 newsdesk@americapulse.live &nbsp;·&nbsp; Response within 24–48 hours</p>
+      <textarea id="contact-msg" placeholder="Your message…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;min-height:100px;margin-bottom:10px;resize:vertical;font-family:inherit;color:#111"></textarea>
+      <button class="btn-primary" onclick="handleContact()">Send Message</button>
+      <p class="modal-note">newsdesk@americapulse.live &nbsp;&bull;&nbsp; Response within 24–48 hours</p>
     </div>
   </div>
 
@@ -416,27 +416,27 @@
   <div class="ap-modal-overlay" id="careers-modal" onclick="if(event.target===this)closeModal('careers-modal')">
     <div class="ap-modal" style="max-width:500px">
       <button class="modal-close" onclick="closeModal('careers-modal')">✕</button>
-      <h2>💼 Join Our Team</h2>
+      <h2>Join Our Team</h2>
       <p>We're always looking for passionate journalists, editors, and digital media professionals.</p>
       <div style="margin-bottom:12px">
         <div style="border:1px solid #eee;border-radius:8px;padding:14px;margin-bottom:8px">
-          <strong>📝 Staff Reporter – Politics</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
+          <strong>Staff Reporter – Politics</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
           <div style="font-size:13px;color:#777;margin-top:4px">Washington D.C. · Full-time</div>
         </div>
         <div style="border:1px solid #eee;border-radius:8px;padding:14px;margin-bottom:8px">
-          <strong>💻 Tech Reporter</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
+          <strong>Tech Reporter</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
           <div style="font-size:13px;color:#777;margin-top:4px">Remote · Full-time</div>
         </div>
         <div style="border:1px solid #eee;border-radius:8px;padding:14px;margin-bottom:8px">
-          <strong>🎨 Multimedia Editor</strong><span style="float:right;font-size:12px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px">Closing Soon</span>
+          <strong>Multimedia Editor</strong><span style="float:right;font-size:12px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px">Closing Soon</span>
           <div style="font-size:13px;color:#777;margin-top:4px">New York · Full-time</div>
         </div>
         <div style="border:1px solid #eee;border-radius:8px;padding:14px">
-          <strong>📊 Data Journalist</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
+          <strong>Data Journalist</strong><span style="float:right;font-size:12px;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px">Open</span>
           <div style="font-size:13px;color:#777;margin-top:4px">Remote · Contract</div>
         </div>
       </div>
-      <button class="btn-primary" onclick="closeModal('careers-modal');openModal('contact-modal')">📤 Send Your Resume</button>
+      <button class="btn-primary" onclick="closeModal('careers-modal');openModal('contact-modal')">Send Your Resume</button>
     </div>
   </div>
 
@@ -444,15 +444,15 @@
   <div class="ap-modal-overlay" id="advertise-modal" onclick="if(event.target===this)closeModal('advertise-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('advertise-modal')">✕</button>
-      <h2>📣 Advertise with Us</h2>
+      <h2>Advertise with Us</h2>
       <p>Reach millions of engaged American news readers across desktop, mobile, and newsletters.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:24px">🖥️</div><strong>Display Ads</strong><div style="font-size:12px;color:#777">Banner & sidebar placements</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:24px">📧</div><strong>Newsletter Ads</strong><div style="font-size:12px;color:#777">Daily briefing sponsor</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:24px">✍️</div><strong>Sponsored Content</strong><div style="font-size:12px;color:#777">Native articles</div></div>
-        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:24px">📱</div><strong>Social Campaigns</strong><div style="font-size:12px;color:#777">Cross-platform reach</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><strong style="display:block;margin-bottom:4px">Display Ads</strong><div style="font-size:12px;color:#777">Banner & sidebar placements</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><strong style="display:block;margin-bottom:4px">Newsletter Ads</strong><div style="font-size:12px;color:#777">Daily briefing sponsor</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><strong style="display:block;margin-bottom:4px">Sponsored Content</strong><div style="font-size:12px;color:#777">Native articles</div></div>
+        <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><strong style="display:block;margin-bottom:4px">Social Campaigns</strong><div style="font-size:12px;color:#777">Cross-platform reach</div></div>
       </div>
-      <button class="btn-primary" onclick="closeModal('advertise-modal');openModal('contact-modal')">📩 Request Media Kit</button>
+      <button class="btn-primary" onclick="closeModal('advertise-modal');openModal('contact-modal')">Request Media Kit</button>
       <p class="modal-note">ads@americapulse.live · CPM rates from $4.50</p>
     </div>
   </div>
@@ -461,15 +461,15 @@
   <div class="ap-modal-overlay" id="alerts-modal" onclick="if(event.target===this)closeModal('alerts-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('alerts-modal')">✕</button>
-      <h2>🔔 Breaking Alerts</h2>
+      <h2>Breaking Alerts</h2>
       <p>Get notified the moment a major story breaks — before it's everywhere else.</p>
-      <input type="email" id="alerts-email" placeholder="📧 Your email address" />
+      <input type="email" id="alerts-email" placeholder="Your email address" />
       <div style="margin-bottom:12px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:8px;cursor:pointer"><input type="checkbox" checked style="width:auto"> 🔴 Breaking News</label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:8px;cursor:pointer"><input type="checkbox" checked style="width:auto"> 🏛️ Politics Alerts</label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="checkbox" style="width:auto"> 📈 Markets Alerts</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:8px;cursor:pointer"><input type="checkbox" checked style="width:auto"> Breaking News</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:8px;cursor:pointer"><input type="checkbox" checked style="width:auto"> Politics Alerts</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="checkbox" style="width:auto"> Markets Alerts</label>
       </div>
-      <button class="btn-primary" onclick="handleAlerts()">🔔 Enable Alerts</button>
+      <button class="btn-primary" onclick="handleAlerts()">Enable Alerts</button>
       <p class="modal-note">You can unsubscribe at any time. No spam, ever.</p>
     </div>
   </div>
@@ -478,14 +478,14 @@
   <div class="ap-modal-overlay" id="rss-modal" onclick="if(event.target===this)closeModal('rss-modal')">
     <div class="ap-modal" style="max-width:480px">
       <button class="modal-close" onclick="closeModal('rss-modal')">✕</button>
-      <h2>📡 RSS Feeds</h2>
+      <h2>RSS Feeds</h2>
       <p>Subscribe to AmericaPulse in your favorite RSS reader.</p>
       <div style="margin-bottom:8px">
-        ${['🏛️ Politics','📈 Business','💻 Technology','🏆 Sports','🏥 Health','🌐 World','🎬 Entertainment','✍️ Opinion'].map(s => {
-          const id = s.split(' ')[1].toLowerCase();
+        ${['Politics','Business','Technology','Sports','Health','World','Entertainment','Opinion'].map(s => {
+          const id = s.toLowerCase();
           return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #eee;border-radius:6px;margin-bottom:6px">
-            <span style="font-size:14px">${s}</span>
-            <button onclick="copyRSS('${id}')" style="font-size:12px;padding:4px 12px;background:#0B1F3A;color:#fff;border:none;border-radius:4px;cursor:pointer">📋 Copy</button>
+            <span style="font-size:14px;font-weight:500">${s}</span>
+            <button onclick="copyRSS('${id}')" style="font-size:12px;padding:4px 12px;background:#0B1F3A;color:#fff;border:none;border-radius:4px;cursor:pointer">Copy</button>
           </div>`;
         }).join('')}
       </div>
@@ -497,19 +497,19 @@
   <div class="ap-modal-overlay" id="podcast-modal" onclick="if(event.target===this)closeModal('podcast-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('podcast-modal')">✕</button>
-      <h2>🎙️ The AmericaPulse Podcast</h2>
+      <h2>The AmericaPulse Podcast</h2>
       <p>Daily audio briefings and in-depth conversations with the people shaping America.</p>
       <div style="background:#f8f8f8;border-radius:8px;padding:16px;margin-bottom:12px">
         <div style="font-size:13px;color:#888;margin-bottom:8px">LATEST EPISODE</div>
-        <strong style="font-size:15px">🎧 The State of American Democracy in 2026</strong>
+        <strong style="font-size:15px">The State of American Democracy in 2026</strong>
         <div style="font-size:13px;color:#777;margin-top:6px">42 min · Published today</div>
-        <button onclick="alert('🎙️ Audio player coming soon! Subscribe on your favorite platform below.')" style="margin-top:10px;padding:8px 18px;background:#C8102E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">▶️ Play Episode</button>
+        <button onclick="alert('Audio player coming soon. Subscribe on your favorite platform below.')" style="margin-top:10px;padding:8px 18px;background:#C8102E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">&#9654; Play Episode</button>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <a href="https://podcasts.apple.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px">🍎 Apple Podcasts</a>
-        <a href="https://open.spotify.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px">💚 Spotify</a>
-        <a href="https://podcasts.google.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px">🎵 Google Podcasts</a>
-        <a href="https://www.iheart.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px">❤️ iHeart Radio</a>
+        <a href="https://podcasts.apple.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px;font-weight:500">Apple Podcasts</a>
+        <a href="https://open.spotify.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px;font-weight:500">Spotify</a>
+        <a href="https://podcasts.google.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px;font-weight:500">Google Podcasts</a>
+        <a href="https://www.iheart.com" target="_blank" rel="noopener" style="display:block;text-align:center;padding:10px;background:#f8f8f8;border-radius:8px;text-decoration:none;color:#333;font-size:13px;font-weight:500">iHeart Radio</a>
       </div>
     </div>
   </div>
@@ -518,7 +518,7 @@
   <div class="ap-modal-overlay" id="privacy-modal" onclick="if(event.target===this)closeModal('privacy-modal')">
     <div class="ap-modal" style="max-width:560px;max-height:85vh;overflow-y:auto">
       <button class="modal-close" onclick="closeModal('privacy-modal')">✕</button>
-      <h2>🔒 Privacy Policy</h2>
+      <h2>Privacy Policy</h2>
       <p style="font-size:12px;color:#888">Last updated: January 1, 2026</p>
       <div style="font-size:14px;color:#333;line-height:1.7">
         <p><strong>Information We Collect</strong><br>We collect information you provide directly (email address for newsletters and subscriptions) and information collected automatically (browser type, pages visited, time spent on site) through cookies and analytics tools.</p>
@@ -535,7 +535,7 @@
   <div class="ap-modal-overlay" id="terms-modal" onclick="if(event.target===this)closeModal('terms-modal')">
     <div class="ap-modal" style="max-width:560px;max-height:85vh;overflow-y:auto">
       <button class="modal-close" onclick="closeModal('terms-modal')">✕</button>
-      <h2>📜 Terms of Service</h2>
+      <h2>Terms of Service</h2>
       <p style="font-size:12px;color:#888">Last updated: January 1, 2026</p>
       <div style="font-size:14px;color:#333;line-height:1.7">
         <p><strong>Acceptance of Terms</strong><br>By accessing AmericaPulse.live, you agree to these Terms of Service. If you do not agree, please do not use the site.</p>
@@ -552,23 +552,23 @@
   <div class="ap-modal-overlay" id="cookies-modal" onclick="if(event.target===this)closeModal('cookies-modal')">
     <div class="ap-modal">
       <button class="modal-close" onclick="closeModal('cookies-modal')">✕</button>
-      <h2>🍪 Cookie Settings</h2>
+      <h2>Cookie Settings</h2>
       <p>Control how AmericaPulse uses cookies on your device.</p>
       <div style="margin-bottom:12px">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:8px;margin-bottom:8px">
-          <div><strong>✅ Essential Cookies</strong><div style="font-size:12px;color:#777">Required for site functionality. Cannot be disabled.</div></div>
+          <div><strong>Essential Cookies</strong><div style="font-size:12px;color:#777">Required for site functionality. Cannot be disabled.</div></div>
           <span style="font-size:12px;color:#888">Always On</span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:8px;margin-bottom:8px">
-          <div><strong>📊 Analytics Cookies</strong><div style="font-size:12px;color:#777">Help us understand how readers use the site.</div></div>
+          <div><strong>Analytics Cookies</strong><div style="font-size:12px;color:#777">Help us understand how readers use the site.</div></div>
           <label style="position:relative;display:inline-block;width:44px;height:24px"><input type="checkbox" id="ck-analytics" checked style="width:auto;position:absolute;opacity:0"><span onclick="this.previousElementSibling.click()" style="position:absolute;inset:0;background:#C8102E;border-radius:12px;cursor:pointer;transition:.3s"></span></label>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:8px">
-          <div><strong>📣 Advertising Cookies</strong><div style="font-size:12px;color:#777">Enable personalized ad experiences.</div></div>
+          <div><strong>Advertising Cookies</strong><div style="font-size:12px;color:#777">Enable personalized ad experiences.</div></div>
           <label style="position:relative;display:inline-block;width:44px;height:24px"><input type="checkbox" id="ck-ads" style="width:auto;position:absolute;opacity:0"><span onclick="this.previousElementSibling.click()" style="position:absolute;inset:0;background:#ddd;border-radius:12px;cursor:pointer;transition:.3s"></span></label>
         </div>
       </div>
-      <button class="btn-primary" onclick="saveCookies()">💾 Save Preferences</button>
+      <button class="btn-primary" onclick="saveCookies()">Save Preferences</button>
     </div>
   </div>`;
 

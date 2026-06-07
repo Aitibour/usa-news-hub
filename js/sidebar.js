@@ -5,7 +5,7 @@
 
   el.innerHTML = `
     <div class="sidebar-widget trending-widget">
-      <h3 class="widget-title"><span>🔥 Trending Now</span></h3>
+      <h3 class="widget-title"><span>Trending Now</span></h3>
       <ol class="trending-list" id="trending-list">
         <li><span class="trend-num">—</span><div class="trend-body"><a href="#">Loading…</a></div></li>
       </ol>
@@ -20,23 +20,23 @@
     </div>
 
     <div class="sidebar-widget weather-widget">
-      <h3 class="widget-title"><span>☁ Weather</span></h3>
+      <h3 class="widget-title"><span>Weather</span></h3>
       <div class="weather-cities" id="weather-cities">
         <div class="weather-loading">Loading weather…</div>
       </div>
     </div>
 
     <div class="sidebar-widget" style="padding:18px">
-      <h3 class="widget-title-plain">📰 Browse Sections</h3>
+      <h3 class="widget-title-plain">Browse Sections</h3>
       <div class="section-pills">
-        <a href="politics.html" class="pill" style="--c:#C8102E">🏛️ Politics</a>
-        <a href="business.html" class="pill" style="--c:#0B6E4F">📈 Business</a>
-        <a href="technology.html" class="pill" style="--c:#2563EB">💻 Technology</a>
-        <a href="sports.html" class="pill" style="--c:#EA580C">🏆 Sports</a>
-        <a href="health.html" class="pill" style="--c:#7C3AED">🏥 Health</a>
-        <a href="world.html" class="pill" style="--c:#0891B2">🌐 World</a>
-        <a href="entertainment.html" class="pill" style="--c:#DB2777">🎬 Entertainment</a>
-        <a href="opinion.html" class="pill" style="--c:#92400E">✍️ Opinion</a>
+        <a href="politics.html" class="pill" style="--c:#C8102E">Politics</a>
+        <a href="business.html" class="pill" style="--c:#0B6E4F">Business</a>
+        <a href="technology.html" class="pill" style="--c:#2563EB">Technology</a>
+        <a href="sports.html" class="pill" style="--c:#EA580C">Sports</a>
+        <a href="health.html" class="pill" style="--c:#7C3AED">Health</a>
+        <a href="world.html" class="pill" style="--c:#0891B2">World</a>
+        <a href="entertainment.html" class="pill" style="--c:#DB2777">Entertainment</a>
+        <a href="opinion.html" class="pill" style="--c:#92400E">Opinion</a>
       </div>
     </div>`;
 
