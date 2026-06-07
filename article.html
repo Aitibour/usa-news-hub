@@ -8,9 +8,11 @@
   <link rel="dns-prefetch" href="https://picsum.photos" />
   <link rel="dns-prefetch" href="https://api.open-meteo.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="styles-all.min.css" />
-  </head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+</head>
 <body>
   <div id="site-header"></div>
   <main class="main-content">
@@ -25,11 +27,32 @@
     </div>
   </main>
   <div id="site-footer"></div>
-  <script src="data/articles.js"></script>
+
+  <!-- Meta DB (150 KB) for slug→section lookup; body loaded per-section below -->
+  <script src="data/articles-meta.js"></script>
   <script src="js/images.js"></script>
   <script src="js/app.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/sidebar.js" defer></script>
-  <script>renderArticlePage();</script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var slug = new URLSearchParams(window.location.search).get('slug') || '';
+    var meta = typeof ARTICLES_META !== 'undefined' ? ARTICLES_META : [];
+    var metaEntry = meta.find(function(a) { return a.slug === slug; });
+
+    if (!metaEntry) {
+      // AI-generated or unknown article — renderArticlePage will fetch from function
+      renderArticlePage();
+      return;
+    }
+
+    // Load only the one section file needed (~100 KB vs 811 KB)
+    var s = document.createElement('script');
+    s.src = 'data/articles-' + metaEntry.section + '.js';
+    s.onload = function() { renderArticlePage(); };
+    s.onerror = function() { renderArticlePage(); };
+    document.head.appendChild(s);
+  });
+  </script>
 </body>
 </html>
