@@ -88,9 +88,9 @@
     <div class="container top-bar-inner">
       <span class="top-bar-date" id="currentDate"></span>
       <div class="top-bar-links">
-        <a href="#">Subscribe</a>
-        <a href="#">E-Edition</a>
-        <a href="#">Sign In</a>
+        <a href="#" onclick="openModal('subscribe-modal');return false;">Subscribe</a>
+        <a href="#" onclick="openModal('edition-modal');return false;">E-Edition</a>
+        <a href="#" onclick="openModal('signin-modal');return false;">Sign In</a>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
         </button>
       </div>
       <div class="header-actions">
-        <button class="btn-subscribe">Subscribe</button>
+        <button class="btn-subscribe" onclick="openModal('subscribe-modal')">Subscribe</button>
       </div>
     </div>
   </header>
@@ -224,4 +224,157 @@
   if (!document.title.includes('AmericaPulse')) {
     document.title = document.title.replace('USA News Hub', 'AmericaPulse.live');
   }
+
+  // ── Modals ──────────────────────────────────────────────────
+  const modalCSS = `
+    .ap-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center}
+    .ap-modal-overlay.open{display:flex}
+    .ap-modal{background:#fff;border-radius:10px;padding:36px 32px;max-width:420px;width:90%;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+    .ap-modal h2{margin:0 0 6px;font-size:22px;color:#0B1F3A}
+    .ap-modal p{margin:0 0 20px;color:#555;font-size:14px}
+    .ap-modal input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:15px;margin-bottom:12px}
+    .ap-modal .btn-primary{width:100%;padding:11px;background:#C8102E;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer}
+    .ap-modal .btn-primary:hover{background:#a30d25}
+    .ap-modal .modal-close{position:absolute;top:12px;right:16px;font-size:22px;cursor:pointer;color:#888;background:none;border:none;line-height:1}
+    .ap-modal .modal-divider{text-align:center;color:#aaa;font-size:13px;margin:14px 0}
+    .ap-modal .btn-secondary{width:100%;padding:11px;background:#f4f4f4;color:#0B1F3A;border:1px solid #ddd;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px}
+    .ap-modal .modal-note{text-align:center;font-size:12px;color:#aaa;margin-top:14px}
+    .ap-modal .plan-card{border:1px solid #ddd;border-radius:8px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+    .ap-modal .plan-card:hover,.ap-modal .plan-card.selected{border-color:#C8102E;background:#fff8f8}
+    .ap-modal .plan-card strong{display:block;font-size:16px;color:#0B1F3A}
+    .ap-modal .plan-card span{font-size:13px;color:#777}
+    .ap-modal .plan-price{float:right;font-weight:700;color:#C8102E;font-size:17px}
+    .edition-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+    .edition-card{border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;cursor:pointer;transition:border-color .2s}
+    .edition-card:hover{border-color:#C8102E;background:#fff8f8}
+    .edition-card .ed-icon{font-size:28px;margin-bottom:6px}
+    .edition-card strong{display:block;font-size:13px;color:#0B1F3A}
+    .edition-card span{font-size:11px;color:#888}
+  `;
+  const styleEl = document.createElement('style');
+  styleEl.textContent = modalCSS;
+  document.head.appendChild(styleEl);
+
+  const modalsHTML = `
+  <!-- Subscribe Modal -->
+  <div class="ap-modal-overlay" id="subscribe-modal" onclick="if(event.target===this)closeModal('subscribe-modal')">
+    <div class="ap-modal">
+      <button class="modal-close" onclick="closeModal('subscribe-modal')">✕</button>
+      <h2>Subscribe to AmericaPulse</h2>
+      <p>Stay informed with unlimited access to breaking news and in-depth reporting.</p>
+      <div class="plan-card selected" onclick="selectPlan(this,'digital')">
+        <span class="plan-price">$9.99/mo</span>
+        <strong>Digital Access</strong>
+        <span>Unlimited articles, newsletters, mobile app</span>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this,'annual')">
+        <span class="plan-price">$79/yr</span>
+        <strong>Annual Plan</strong>
+        <span>Save 34% — best value, cancel anytime</span>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this,'free')">
+        <span class="plan-price">Free</span>
+        <strong>Newsletter Only</strong>
+        <span>Daily briefing email, 5 free articles/month</span>
+      </div>
+      <br/>
+      <input type="email" id="sub-email" placeholder="Your email address" />
+      <button class="btn-primary" onclick="handleSubscribe()">Continue →</button>
+      <p class="modal-note">No credit card required for free plan. Cancel anytime.</p>
+    </div>
+  </div>
+
+  <!-- Sign In Modal -->
+  <div class="ap-modal-overlay" id="signin-modal" onclick="if(event.target===this)closeModal('signin-modal')">
+    <div class="ap-modal">
+      <button class="modal-close" onclick="closeModal('signin-modal')">✕</button>
+      <h2>Sign In</h2>
+      <p>Access your AmericaPulse account.</p>
+      <input type="email" id="si-email" placeholder="Email address" />
+      <input type="password" id="si-pass" placeholder="Password" />
+      <button class="btn-primary" onclick="handleSignIn()">Sign In</button>
+      <div class="modal-divider">or continue with</div>
+      <button class="btn-secondary" onclick="handleSocialAuth('Google')">🔵 Continue with Google</button>
+      <button class="btn-secondary" onclick="handleSocialAuth('Apple')">🍎 Continue with Apple</button>
+      <p class="modal-note"><a href="#" onclick="openModal('subscribe-modal');closeModal('signin-modal');return false;" style="color:#C8102E">Create an account</a> &nbsp;·&nbsp; <a href="#" onclick="alert('Password reset email sent!');return false;" style="color:#888">Forgot password?</a></p>
+    </div>
+  </div>
+
+  <!-- E-Edition Modal -->
+  <div class="ap-modal-overlay" id="edition-modal" onclick="if(event.target===this)closeModal('edition-modal')">
+    <div class="ap-modal">
+      <button class="modal-close" onclick="closeModal('edition-modal')">✕</button>
+      <h2>E-Edition</h2>
+      <p>Read today's AmericaPulse in digital newspaper format.</p>
+      <div class="edition-grid">
+        <div class="edition-card" onclick="alert('Opening Today\\'s Edition…')">
+          <div class="ed-icon">📰</div>
+          <strong>Today's Edition</strong>
+          <span>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+        </div>
+        <div class="edition-card" onclick="alert('Opening Weekend Edition…')">
+          <div class="ed-icon">📋</div>
+          <strong>Weekend Edition</strong>
+          <span>Full Sunday paper</span>
+        </div>
+        <div class="edition-card" onclick="alert('Opening Archive…')">
+          <div class="ed-icon">🗂</div>
+          <strong>Archive</strong>
+          <span>Past 30 days</span>
+        </div>
+        <div class="edition-card" onclick="alert('Downloading PDF…')">
+          <div class="ed-icon">⬇️</div>
+          <strong>Download PDF</strong>
+          <span>Save for offline</span>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="handleSignIn();closeModal('edition-modal');openModal('signin-modal')">Sign In to Read →</button>
+      <p class="modal-note">E-Edition included with all paid subscriptions.</p>
+    </div>
+  </div>`;
+
+  document.body.insertAdjacentHTML('beforeend', modalsHTML);
+
+  // Modal helpers
+  window.openModal = function(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeModal = function(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.ap-modal-overlay.open').forEach(m => {
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  window.selectPlan = function(el, plan) {
+    el.closest('.ap-modal').querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    el.dataset.plan = plan;
+  };
+
+  window.handleSubscribe = function() {
+    const email = document.getElementById('sub-email').value.trim();
+    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+    closeModal('subscribe-modal');
+    alert(`Welcome to AmericaPulse!\n\nA confirmation email has been sent to:\n${email}`);
+  };
+
+  window.handleSignIn = function() {
+    const email = document.getElementById('si-email')?.value.trim();
+    if (!email || !email.includes('@')) { alert('Please enter your email address.'); return; }
+    closeModal('signin-modal');
+    alert(`Signed in as ${email}\n\nWelcome back to AmericaPulse!`);
+  };
+
+  window.handleSocialAuth = function(provider) {
+    closeModal('signin-modal');
+    alert(`Connecting to ${provider}…\n\n(Social login would open a ${provider} OAuth popup in production.)`);
+  };
 })();
