@@ -146,7 +146,7 @@
     <div class="ap-modal" style="max-width:520px">
       <button class="modal-close" onclick="closeModal('about-modal')">✕</button>
       <h2>About AmericaPulse</h2>
-      <p style="color:#333;line-height:1.7">AmericaPulse.live is a digital news publication covering the stories that shape America — from Capitol Hill to Main Street. Founded in 2020, we are committed to fast, fair, and factual journalism.</p>
+      <p style="color:#333;line-height:1.7">AmericaPulse.live is a digital news publication covering the stories that shape America — from Capitol Hill to Main Street. Founded in 2000, we are committed to fast, fair, and factual journalism.</p>
       <p style="color:#333;line-height:1.7">Our team of reporters, editors, and analysts cover <strong>Politics, Business, Technology, Sports, Health, World Affairs, Entertainment,</strong> and <strong>Opinion</strong> — delivering breaking news and in-depth analysis 24/7.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">
         <div style="background:#f8f8f8;border-radius:8px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:900;color:#C8102E">400+</div><div style="font-size:12px;color:#777;margin-top:2px">Original Articles</div></div>
@@ -345,14 +345,21 @@
     el.dataset.plan = plan;
   };
   window.handleSubscribe = async function() {
-    const email = document.getElementById('sub-email').value.trim();
-    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+    const emailEl = document.getElementById('sub-email');
+    const email = emailEl.value.trim();
+    if (!email || !email.includes('@')) {
+      emailEl.style.borderColor = '#C8102E';
+      emailEl.focus();
+      return;
+    }
+    emailEl.style.borderColor = '';
     try {
       await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body: new URLSearchParams({'form-name':'newsletter', email}).toString() });
     } catch(e) {}
-    closeModal('subscribe-modal');
-    alert('Welcome to AmericaPulse!\n\nYou\'ve been subscribed successfully.');
+    const modal = document.getElementById('subscribe-modal');
+    const inner = modal.querySelector('.ap-modal');
+    if (inner) inner.innerHTML = '<div style="text-align:center;padding:32px 16px"><div style="font-size:48px;margin-bottom:16px">&#10003;</div><h2 style="color:#0B1F3A;margin-bottom:8px">You\'re in!</h2><p style="color:#555;line-height:1.6">Welcome to AmericaPulse.<br>Check your inbox for updates.</p><button class="btn-primary" style="margin-top:20px" onclick="closeModal(\'subscribe-modal\')">Done</button></div>';
   };
   window.handleSignIn = function() {
     const email = document.getElementById('si-email')?.value.trim();
@@ -365,18 +372,23 @@
     alert(`Connecting to ${provider}…\n\n(Social login would open a ${provider} OAuth popup in production.)`);
   };
   window.handleContact = async function() {
-    const name  = document.getElementById('contact-name').value.trim();
-    const email = document.getElementById('contact-email').value.trim();
-    const msg   = document.getElementById('contact-msg').value.trim();
-    if (!name)  { alert('Please enter your name.'); return; }
-    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
-    if (!msg)   { alert('Please enter your message.'); return; }
+    const nameEl  = document.getElementById('contact-name');
+    const emailEl = document.getElementById('contact-email');
+    const msgEl   = document.getElementById('contact-msg');
+    const name  = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const msg   = msgEl.value.trim();
+    [nameEl, emailEl, msgEl].forEach(el => el.style.borderColor = '');
+    if (!name)  { nameEl.style.borderColor = '#C8102E'; nameEl.focus(); return; }
+    if (!email || !email.includes('@')) { emailEl.style.borderColor = '#C8102E'; emailEl.focus(); return; }
+    if (!msg)   { msgEl.style.borderColor = '#C8102E'; msgEl.focus(); return; }
     try {
       await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body: new URLSearchParams({'form-name':'contact', name, email, message: msg}).toString() });
     } catch(e) {}
-    closeModal('contact-modal');
-    alert(`Message sent! Thank you, ${name}. We'll reply to ${email} within 24-48 hours.`);
+    const modal = document.getElementById('contact-modal');
+    const inner = modal.querySelector('.ap-modal');
+    if (inner) inner.innerHTML = `<div style="text-align:center;padding:32px 16px"><div style="font-size:48px;margin-bottom:16px">&#10003;</div><h2 style="color:#0B1F3A;margin-bottom:8px">Message sent!</h2><p style="color:#555;line-height:1.6">Thank you, ${name}.<br>We'll reply to <strong>${email}</strong> within 24–48 hours.</p><button class="btn-primary" style="margin-top:20px" onclick="closeModal('contact-modal')">Done</button></div>`;
   };
   window.handleAlerts = async function() {
     const email = document.getElementById('alerts-email').value.trim();
