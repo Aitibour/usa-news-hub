@@ -1,4 +1,10 @@
 (function() {
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
 const active = document.body.dataset.section || '';
 const navItems = [
 { id:'', label:'Home', href:'index.html' },
@@ -69,7 +75,8 @@ const header = `
 </div>
 </div>
 </div>
-<header class="site-header">
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="site-header" role="banner">
 <div class="container header-inner">
 <a href="index.html" class="logo-link" style="text-decoration:none;display:flex;align-items:center">
 ${logoSVG}
@@ -85,9 +92,9 @@ ${logoSVG}
 </div>
 </div>
 </header>
-<nav class="main-nav">
+<nav class="main-nav" role="navigation" aria-label="Main navigation">
 <div class="container nav-inner">
-<button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navList">☰</button>
 <ul class="nav-list" id="navList">${navHTML}<li class="nav-subscribe-mobile"><a href="#" onclick="openModal('subscribe-modal');return false;" style="color:var(--gold)">Subscribe</a></li></ul>
 </div>
 </nav>
@@ -175,8 +182,10 @@ if (dateEl) {
 dateEl.textContent = new Date().toLocaleDateString('en-US',
 { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
-document.getElementById('navToggle').addEventListener('click', () => {
-document.getElementById('navList').classList.toggle('open');
+document.getElementById('navToggle').addEventListener('click', function() {
+var list = document.getElementById('navList');
+var open = list.classList.toggle('open');
+this.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 window.doSearch = function() {
 const q = document.getElementById('searchInput').value.trim();
