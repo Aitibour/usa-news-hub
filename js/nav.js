@@ -1,4 +1,9 @@
 (function() {
+// Apply theme immediately to avoid flash
+(function() {
+  var saved = localStorage.getItem('ap-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
 // Register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -88,6 +93,7 @@ ${logoSVG}
 </button>
 </div>
 <div class="header-actions">
+<button class="saved-nav-link theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode"><svg id="theme-icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="theme-icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
 <a href="/history.html" class="saved-nav-link" aria-label="Reading history" title="Reading history"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></a>
 <a href="/saved.html" class="saved-nav-link" aria-label="Saved articles" title="Saved articles"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg><span class="saved-badge" style="display:none"></span></a>
 <button class="btn-subscribe" onclick="openModal('subscribe-modal')">Subscribe</button>
@@ -282,6 +288,26 @@ if (document.getElementById('article-content')) {
     localStorage.setItem('cookie-ok', 'declined');
     banner.classList.remove('cookie-show');
     setTimeout(function() { banner.remove(); }, 400);
+  });
+})();
+
+// Theme toggle
+(function() {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('ap-theme', theme);
+    var isDark = theme === 'dark';
+    document.getElementById('theme-icon-dark').style.display  = isDark ? 'none'  : 'block';
+    document.getElementById('theme-icon-light').style.display = isDark ? 'block' : 'none';
+    btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  // Init icon state
+  applyTheme(localStorage.getItem('ap-theme') || 'light');
+  btn.addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
   });
 })();
 
