@@ -27,106 +27,124 @@ const navHTML = navItems.map(n =>
 `<li><a href="${n.href}" ${n.id === active ? 'class="active"' : ''}>${n.label}</a></li>`
 ).join('');
 const logoSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 110" width="310" height="55" aria-label="AmericaPulse.live">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 185" width="390" height="93" aria-label="AmericaPulse.live">
   <defs>
-    <linearGradient id="flagWave" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#0B1F3A;stop-opacity:1"/>
-      <stop offset="35%" style="stop-color:#0B1F3A;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#1a3a6e;stop-opacity:0.7"/>
+    <linearGradient id="lgo-am" x1="0" y1="120" x2="0" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5BC8F5"/>
+      <stop offset="100%" stop-color="#1060C8"/>
     </linearGradient>
-    <linearGradient id="redStripe" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#C8102E;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#C8102E;stop-opacity:0.5"/>
+    <linearGradient id="lgo-fb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#002868"/>
+      <stop offset="100%" stop-color="#1a4590"/>
     </linearGradient>
-    <clipPath id="flagClip">
-      <path d="M4,8 Q30,2 60,8 Q90,14 110,8 L110,62 Q80,56 50,62 Q20,68 4,62 Z"/>
-    </clipPath>
-    <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#C8102E;stop-opacity:0.9"/>
-      <stop offset="50%" style="stop-color:#C8102E;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#C8102E;stop-opacity:0.3"/>
+    <linearGradient id="lgo-sv" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#aaaaaa"/>
+    </linearGradient>
+    <linearGradient id="lgo-rr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#C8102E" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="lgo-rb" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#002868"/>
+      <stop offset="100%" stop-color="#002868" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="lgo-ekg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#C8102E" stop-opacity=".4"/>
+      <stop offset="30%"  stop-color="#C8102E"/>
+      <stop offset="70%"  stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#C8102E" stop-opacity=".4"/>
     </linearGradient>
   </defs>
 
-  <!-- ═══ WAVING FLAG (left) ═══ -->
-  <g transform="translate(0,4)">
-    <!-- Flag body with wave -->
-    <path d="M4,8 Q30,2 60,8 Q90,14 110,8 L110,62 Q80,56 50,62 Q20,68 4,62 Z" fill="#0B1F3A"/>
-    <!-- Red stripes -->
-    <path d="M4,8 Q57,14 110,8 L110,16 Q57,22 4,16 Z" fill="#C8102E"/>
-    <path d="M4,24 Q57,30 110,24 L110,32 Q57,38 4,32 Z" fill="#C8102E"/>
-    <path d="M4,40 Q57,46 110,40 L110,48 Q57,54 4,48 Z" fill="#C8102E"/>
-    <path d="M4,56 Q57,62 110,56 L110,62 Q57,68 4,62 Z" fill="#C8102E"/>
-    <!-- White stripes -->
-    <path d="M4,16 Q57,22 110,16 L110,24 Q57,30 4,24 Z" fill="white"/>
-    <path d="M4,32 Q57,38 110,32 L110,40 Q57,46 4,40 Z" fill="white"/>
-    <path d="M4,48 Q57,54 110,48 L110,56 Q57,62 4,56 Z" fill="white"/>
-    <!-- Canton (blue rectangle) -->
-    <path d="M4,8 Q30,2 60,8 L60,40 Q30,46 4,40 Z" fill="#0B1F3A"/>
-    <!-- Stars 3 rows -->
-    <text x="8"  y="20" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
-    <text x="11" y="28" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
-    <text x="8"  y="36" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
-    <!-- Wave tail -->
-    <path d="M110,14 Q130,10 145,20 Q155,26 165,18" fill="none" stroke="#C8102E" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M110,24 Q130,20 145,30 Q155,36 165,28" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M110,34 Q130,30 145,40 Q155,46 165,38" fill="none" stroke="#C8102E" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- CITY SKYLINE (gray silhouette, background) -->
+  <g opacity=".13" fill="#888">
+    <rect x="185" y="74" width="18" height="43"/>
+    <rect x="206" y="60" width="15" height="57"/>
+    <rect x="224" y="67" width="17" height="50"/>
+    <rect x="244" y="52" width="13" height="65"/>
+    <rect x="260" y="63" width="19" height="54"/>
+    <rect x="282" y="50" width="15" height="67"/>
+    <!-- Empire State Building -->
+    <rect x="300" y="30" width="25" height="87"/>
+    <polygon points="312,6 319,30 305,30"/>
+    <rect x="328" y="53" width="21" height="64"/>
+    <rect x="352" y="44" width="18" height="73"/>
+    <rect x="373" y="58" width="21" height="59"/>
+    <rect x="397" y="51" width="16" height="66"/>
+    <rect x="416" y="65" width="21" height="52"/>
+    <rect x="440" y="69" width="17" height="48"/>
+    <rect x="460" y="59" width="14" height="58"/>
   </g>
 
-  <!-- ═══ CITY SKYLINE (center background) ═══ -->
-  <g fill="#cccccc" opacity="0.35" transform="translate(155,0)">
-    <rect x="10"  y="28" width="10" height="50"/>
-    <rect x="12"  y="18" width="2"  height="14"/>
-    <rect x="22"  y="38" width="14" height="40"/>
-    <rect x="38"  y="32" width="8"  height="46"/>
-    <rect x="48"  y="42" width="10" height="36"/>
-    <rect x="60"  y="22" width="16" height="56"/>
-    <rect x="67"  y="10" width="2"  height="16"/>
-    <rect x="78"  y="35" width="12" height="43"/>
-    <rect x="92"  y="40" width="9"  height="38"/>
-    <rect x="103" y="30" width="14" height="48"/>
-    <rect x="119" y="44" width="8"  height="34"/>
-    <rect x="129" y="36" width="11" height="42"/>
-    <rect x="142" y="48" width="7"  height="30"/>
-    <rect x="151" y="38" width="9"  height="40"/>
-    <rect x="162" y="45" width="8"  height="33"/>
-    <rect x="172" y="26" width="13" height="52"/>
+  <!-- AMERICAN FLAG (left, angled ~-14°) -->
+  <g transform="translate(6,12) rotate(-14,72,48)">
+    <!-- White base -->
+    <rect x="0" y="0" width="148" height="95" rx="3" fill="white"/>
+    <!-- 7 red stripes (rows 1,3,5,7,9,11,13 of 13) -->
+    <rect x="0"  y="0"  width="148" height="13.5" fill="#BF0A30"/>
+    <rect x="0"  y="27" width="148" height="13.5" fill="#BF0A30"/>
+    <rect x="0"  y="54" width="148" height="13.5" fill="#BF0A30"/>
+    <rect x="0"  y="81" width="148" height="14"   fill="#BF0A30"/>
+    <rect x="62" y="13.5" width="86" height="13.5" fill="#BF0A30"/>
+    <rect x="62" y="40.5" width="86" height="13.5" fill="#BF0A30"/>
+    <rect x="62" y="67.5" width="86" height="13.5" fill="#BF0A30"/>
+    <!-- Blue canton -->
+    <rect x="0" y="0" width="62" height="54" fill="url(#lgo-fb)"/>
+    <!-- Stars (3-2-3-2 rows) -->
+    <text x="4"  y="13"  fill="white" font-size="9.5" font-family="serif">★ ★ ★</text>
+    <text x="10" y="24"  fill="white" font-size="9.5" font-family="serif">★ ★</text>
+    <text x="4"  y="35"  fill="white" font-size="9.5" font-family="serif">★ ★ ★</text>
+    <text x="10" y="46"  fill="white" font-size="9.5" font-family="serif">★ ★</text>
   </g>
 
-  <!-- ═══ PULSE / EKG LINE (center) ═══ -->
-  <polyline
-    points="155,42 178,42 185,42 191,20 197,64 203,20 209,42 222,42 232,42 238,42 244,30 250,54 256,30 262,42 290,42"
-    fill="none" stroke="#C8102E" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- EKG / HEARTBEAT LINE -->
+  <!-- soft glow -->
+  <path d="M138,78 L172,78 L177,66 L182,78 L208,78 L213,71 L218,78 L238,78 L250,78 L260,11 L273,98 L281,78 L530,78 L538,66 L544,78 L565,78"
+    fill="none" stroke="#C8102E" stroke-width="10" stroke-opacity=".1" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- main line -->
+  <path d="M138,78 L172,78 L177,66 L182,78 L208,78 L213,71 L218,78 L238,78 L250,78 L260,11 L273,98 L281,78 L530,78 L538,66 L544,78 L565,78"
+    fill="none" stroke="url(#lgo-ekg)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- ═══ RIBBON + STARS (right) ═══ -->
-  <g transform="translate(390,8)">
-    <!-- Ribbon stripes -->
-    <path d="M0,18 Q50,10 100,22 Q130,28 160,16 Q145,32 120,28 Q80,22 40,30 Z" fill="url(#ribbonGrad)"/>
-    <path d="M0,26 Q50,18 100,30 Q130,36 160,24 Q145,40 120,36 Q80,30 40,38 Z" fill="#0B1F3A" opacity="0.85"/>
-    <path d="M0,34 Q50,26 100,38 Q130,44 160,32 Q145,48 120,44 Q80,38 40,46 Z" fill="url(#ribbonGrad)" opacity="0.7"/>
-    <!-- Stars on ribbon -->
-    <text x="10" y="34" fill="white" font-size="14" font-family="serif">★</text>
-    <text x="42" y="32" fill="white" font-size="11" font-family="serif">★</text>
-    <text x="70" y="36" fill="white" font-size="9"  font-family="serif" opacity="0.7">★</text>
+  <!-- RIBBON with RWB stripes (right) -->
+  <!-- Red stripe (top) -->
+  <path d="M530,40 Q600,33 658,47 Q674,51 692,57 L690,68 Q672,62 656,58 Q598,44 530,51 Z" fill="url(#lgo-rr)"/>
+  <!-- White stripe (middle) -->
+  <path d="M530,51 Q598,44 656,58 Q672,62 690,68 L688,79 Q670,73 654,69 Q596,55 530,62 Z" fill="white" opacity=".95"/>
+  <!-- Blue stripe (bottom) -->
+  <path d="M530,62 Q596,55 654,69 Q670,73 688,79 L686,90 Q668,84 652,80 Q594,66 530,73 Z" fill="url(#lgo-rb)"/>
+  <!-- Stars on ribbon -->
+  <text x="542" y="65" fill="white" font-size="13" font-family="serif" opacity=".95">★</text>
+  <text x="564" y="63" fill="white" font-size="10" font-family="serif" opacity=".75">★</text>
+
+  <!-- SHOOTING STAR (right end of ribbon) -->
+  <g transform="translate(686,36)">
+    <!-- star polygon, scaled down -->
+    <polygon points="18,0 22,12 35,12 25,20 29,32 18,24 7,32 11,20 1,12 14,12"
+      fill="url(#lgo-sv)" stroke="#ccc" stroke-width=".5" transform="scale(.78)"/>
+    <!-- motion lines -->
+    <line x1="-3" y1="7"  x2="-19" y2="7"  stroke="#c0c0c0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-3" y1="12" x2="-24" y2="12" stroke="#c0c0c0" stroke-width="1"   stroke-linecap="round"/>
+    <line x1="-3" y1="17" x2="-16" y2="17" stroke="#c0c0c0" stroke-width="1"   stroke-linecap="round"/>
   </g>
 
-  <!-- ═══ WORDMARK ═══ -->
-  <!-- "America" in navy bold italic -->
-  <text x="2" y="100"
-    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
-    font-size="34" font-weight="900" font-style="italic"
-    fill="#0B1F3A" letter-spacing="-0.5">America</text>
-  <!-- "Pulse" in red bold italic -->
-  <text x="195" y="100"
-    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
-    font-size="34" font-weight="900" font-style="italic"
-    fill="#C8102E" letter-spacing="-0.5">Pulse</text>
-  <!-- ".live" red badge -->
-  <rect x="318" y="76" width="58" height="28" rx="5" fill="#C8102E"/>
-  <text x="323" y="97"
-    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
-    font-size="18" font-weight="900" font-style="italic"
-    fill="white" letter-spacing="0.5">.live</text>
+  <!-- WORDMARK -->
+  <!-- "America" — sky-blue italic bold -->
+  <text x="88" y="163"
+    font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
+    font-size="48" font-weight="900" font-style="italic" letter-spacing="-1"
+    fill="url(#lgo-am)">America</text>
+  <!-- "Pulse" — red italic bold -->
+  <text x="368" y="163"
+    font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
+    font-size="48" font-weight="900" font-style="italic" letter-spacing="-1"
+    fill="#C8102E">Pulse</text>
+  <!-- ".live" navy badge -->
+  <rect x="524" y="128" width="82" height="42" rx="7" fill="#002868"/>
+  <text x="565" y="160"
+    font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
+    font-size="26" font-weight="700" font-style="italic"
+    fill="white" text-anchor="middle">.live</text>
 </svg>`;
 const header = `
 <div class="top-bar">
