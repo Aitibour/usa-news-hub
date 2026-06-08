@@ -334,7 +334,20 @@ ${(article.tags||[]).map(t => `<a class="article-tag" href="search.html?q=${enco
 <a class="share-btn share-x" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent('https://americapulse.live/article.html?slug='+article.slug)}" target="_blank" rel="noopener" aria-label="Share on X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</a>
 <a class="share-btn share-fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://americapulse.live/article.html?slug='+article.slug)}" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
 <button class="share-btn share-copy" onclick="(function(){try{navigator.clipboard.writeText(location.href);this.textContent='Copied!';setTimeout(function(){},1500)}catch(e){}}).call(this)" aria-label="Copy link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy link</button>
+<button class="share-btn save-btn" id="save-article-btn" aria-label="Save for later"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> <span id="save-label">${isSaved(article.slug) ? 'Saved' : 'Save'}</span></button>
 </div>`;
+// Wire save button
+const saveBtn = document.getElementById('save-article-btn');
+const saveLabel = document.getElementById('save-label');
+if (saveBtn) {
+  if (isSaved(article.slug)) saveBtn.classList.add('save-active');
+  saveBtn.addEventListener('click', function() {
+    const nowSaved = toggleSave(article.slug);
+    saveLabel.textContent = nowSaved ? 'Saved' : 'Save';
+    saveBtn.classList.toggle('save-active', nowSaved);
+  });
+}
+
 const liveRelated   = await fetchLiveArticles(article.section, 6);
 const staticRelated = getArticlesBySection(article.section).filter(a => a.slug !== slug);
 const related = mergeArticles(staticRelated, liveRelated.filter(a => a.slug !== slug)).slice(0, 4);
@@ -349,7 +362,32 @@ relEl.innerHTML = `
 }
 }
 }
-// --- View tracking ---
+// --- Bookmarks ---
+const SAVED_KEY = 'ap_saved';
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); } catch(e) { return []; }
+}
+function setSaved(arr) {
+  try { localStorage.setItem(SAVED_KEY, JSON.stringify(arr)); } catch(e) {}
+  updateBookmarkBadge();
+}
+function isSaved(slug) { return getSaved().includes(slug); }
+function toggleSave(slug) {
+  const saved = getSaved();
+  const idx = saved.indexOf(slug);
+  if (idx === -1) { saved.unshift(slug); } else { saved.splice(idx, 1); }
+  setSaved(saved);
+  return idx === -1;
+}
+function updateBookmarkBadge() {
+  const count = getSaved().length;
+  document.querySelectorAll('.saved-badge').forEach(el => {
+    el.textContent = count || '';
+    el.style.display = count ? 'inline-flex' : 'none';
+  });
+}
+
+
 const VIEW_KEY = 'ap_views';
 const VIEW_MAX = 200;
 function trackView(slug) {
