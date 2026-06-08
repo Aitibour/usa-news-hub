@@ -3,7 +3,7 @@ const el = document.getElementById('sidebar-area');
 if (!el) return;
 el.innerHTML = `
 <div class="sidebar-widget trending-widget">
-<h3 class="widget-title"><span>Trending Now</span></h3>
+<h3 class="widget-title"><span>Most Read</span></h3>
 <ol class="trending-list" id="trending-list">
 <li><span class="trend-num" style="opacity:.3">01</span><div class="trend-body"><a href="#" style="color:#9ca3af">Loading stories…</a></div></li>
 </ol>

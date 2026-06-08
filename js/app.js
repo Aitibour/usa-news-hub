@@ -124,33 +124,28 @@ return `
 </div>
 </article>`;
 }
-const PAGE_SIZE = 10; // articles per page (1 hero + 2 secondary + 7 grid)
+const PAGE_SIZE = 12; // articles shown initially / per load-more batch
 async function renderSectionPage(sectionId) {
 const container = document.getElementById('section-articles');
 if (!container) return;
 container.innerHTML = '<p class="loading-msg">Loading latest stories…</p>';
 const color = SECTION_COLORS[sectionId];
-const page = Math.max(1, parseInt(new URLSearchParams(window.location.search).get('page') || '1', 10));
 const staticArts = getArticlesBySection(sectionId);
 if (staticArts.length) {
-renderSectionContent(container, staticArts, sectionId, color, page);
+renderSectionContent(container, staticArts, sectionId, color);
 }
 const liveArts = await fetchLiveArticles(sectionId, 10);
 if (liveArts.length) {
 const articles = mergeArticles(staticArts, liveArts);
-renderSectionContent(container, articles, sectionId, color, page);
+renderSectionContent(container, articles, sectionId, color);
 }
 }
-function renderSectionContent(container, allArticles, sectionId, color, page) {
+function renderSectionContent(container, allArticles, sectionId, color) {
 if (!allArticles.length) {
 container.innerHTML = '<p class="no-articles">No articles yet. Check back soon.</p>';
 return;
 }
-const totalPages = Math.ceil(allArticles.length / PAGE_SIZE);
-const safePage   = Math.min(Math.max(1, page), totalPages);
-const start      = (safePage - 1) * PAGE_SIZE;
-const articles   = allArticles.slice(start, start + PAGE_SIZE);
-const [feat, second, third, ...rest] = articles;
+const [feat, second, third, ...rest] = allArticles;
 const featSlug = safeSlug(feat.slug);
 const featImg  = esc(resolveArticleImage(feat));
 let html = `<div class="hero-lead" style="margin-bottom:32px">
@@ -193,30 +188,46 @@ return `
 }).join('')}
 </div>
 </div>`;
-if (rest.length) {
+const initial = rest.slice(0, PAGE_SIZE);
+const overflow = rest.slice(PAGE_SIZE);
+if (initial.length) {
 html += `
 <div class="section-header" style="margin-bottom:20px">
 <h2 class="section-title"><span class="section-accent" style="background:${color}">${capitalize(sectionId)} Archive</span></h2>
 <span class="article-count">${allArticles.length} stories</span>
 </div>
-<div class="cards-row four-col" style="margin-bottom:32px">
-${rest.map(a => renderCard(a, 'sm')).join('')}
+<div class="cards-row four-col" id="section-grid" style="margin-bottom:32px">
+${initial.map(a => renderCard(a, 'sm')).join('')}
 </div>`;
 }
-if (totalPages > 1) {
-const base = `${sectionId}.html`;
-let pageButtons = '';
-const lo = Math.max(1, safePage - 4);
-const hi = Math.min(totalPages, lo + 9);
-if (lo > 1) pageButtons += `<a href="${base}?page=1" class="pg-btn">1</a><span class="pg-ellipsis">…</span>`;
-for (let p = lo; p <= hi; p++) {
-pageButtons += `<a href="${base}?page=${p}" class="pg-btn${p === safePage ? ' pg-active' : ''}">${p}</a>`;
-}
-if (hi < totalPages) pageButtons += `<span class="pg-ellipsis">…</span><a href="${base}?page=${totalPages}" class="pg-btn">${totalPages}</a>`;
-html += `<nav class="pagination" aria-label="Page navigation">${pageButtons}</nav>`;
+if (overflow.length) {
+html += `<div class="load-more-wrap">
+<button class="load-more-btn" id="load-more-btn" data-loaded="${initial.length + 3}">Load More Stories</button>
+<p class="load-more-count">${initial.length + 3} of ${allArticles.length} stories</p>
+</div>`;
 }
 container.innerHTML = html;
-window.scrollTo({ top: 0, behavior: 'smooth' });
+// Wire Load More
+if (overflow.length) {
+const btn = document.getElementById('load-more-btn');
+const grid = document.getElementById('section-grid');
+const countEl = btn.nextElementSibling;
+let loaded = initial.length + 3; // 3 = hero + 2 secondary
+btn.addEventListener('click', function() {
+btn.disabled = true;
+btn.textContent = 'Loading…';
+const next = rest.slice(loaded - 3, loaded - 3 + PAGE_SIZE);
+grid.insertAdjacentHTML('beforeend', next.map(a => renderCard(a, 'sm')).join(''));
+loaded += next.length;
+countEl.textContent = `${loaded} of ${allArticles.length} stories`;
+if (loaded - 3 >= rest.length) {
+btn.closest('.load-more-wrap').remove();
+} else {
+btn.disabled = false;
+btn.textContent = 'Load More Stories';
+}
+});
+}
 }
 async function renderArticlePage() {
 const params = new URLSearchParams(window.location.search);
@@ -238,6 +249,8 @@ if (!article) {
 el.innerHTML = '<p class="no-articles">Article not found. <a href="index.html">← Home</a></p>';
 return;
 }
+// Track view in localStorage
+trackView(article.slug);
 const color = SECTION_COLORS[article.section] || '#C8102E';
 document.title = `${esc(article.title)} — AmericaPulse.live`;
 const artImg = resolveArticleImage(article);
@@ -336,11 +349,46 @@ relEl.innerHTML = `
 }
 }
 }
+// --- View tracking ---
+const VIEW_KEY = 'ap_views';
+const VIEW_MAX = 200;
+function trackView(slug) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
+    raw[slug] = (raw[slug] || 0) + 1;
+    // Prune to top VIEW_MAX by count
+    const entries = Object.entries(raw).sort((a,b) => b[1]-a[1]).slice(0, VIEW_MAX);
+    localStorage.setItem(VIEW_KEY, JSON.stringify(Object.fromEntries(entries)));
+  } catch(e) {}
+}
+function getMostRead(limit) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
+    return Object.entries(raw)
+      .sort((a,b) => b[1]-a[1])
+      .slice(0, limit)
+      .map(([slug]) => slug);
+  } catch(e) { return []; }
+}
+
 async function renderTrending(containerId) {
 const el = document.getElementById(containerId);
 if (!el) return;
-const staticArts = getAllArticles(8);
-el.innerHTML = staticArts.map((a, i) => `
+const mostRead = getMostRead(8);
+let arts;
+if (mostRead.length >= 3) {
+  const all = getAllArticles(0);
+  const bySlug = new Map(all.map(a => [a.slug, a]));
+  arts = mostRead.map(s => bySlug.get(s)).filter(Boolean);
+  // Pad with latest if fewer than 8
+  if (arts.length < 8) {
+    const seen = new Set(arts.map(a => a.slug));
+    for (const a of all) { if (!seen.has(a.slug)) { arts.push(a); if (arts.length >= 8) break; } }
+  }
+} else {
+  arts = getAllArticles(8);
+}
+el.innerHTML = arts.slice(0,8).map((a, i) => `
 <li>
 <span class="trend-num">${String(i+1).padStart(2,'0')}</span>
 <div class="trend-body">
