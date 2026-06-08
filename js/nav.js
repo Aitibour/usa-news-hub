@@ -264,7 +264,7 @@ const footer = `
 </div>
 </div>
 <div class="footer-bottom">
-<span>© 2026 AmericaPulse.live — All rights reserved.</span>
+<span>© 2000–2026 AmericaPulse.live — All rights reserved.</span>
 <div class="footer-legal">
 <a href="#" onclick="openModal('privacy-modal');return false;">Privacy Policy</a>
 <a href="#" onclick="openModal('terms-modal');return false;">Terms of Service</a>
