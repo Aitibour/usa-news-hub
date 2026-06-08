@@ -39,52 +39,36 @@ const logoSVG = `
     <stop offset="0%" stop-color="#E5001F"/>
     <stop offset="100%" stop-color="#A80015"/>
   </linearGradient>
-  <!-- Ribbon red, solid then fades to transparent at right -->
-  <linearGradient id="lgo-rib-r" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%"   stop-color="#C8102E"/>
-    <stop offset="80%"  stop-color="#C8102E"/>
-    <stop offset="100%" stop-color="#C8102E" stop-opacity="0"/>
+  <!-- Building face: bright blue left → dark blue right (3D effect) -->
+  <linearGradient id="lgo-bldg" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%"   stop-color="#5A9AF5"/>
+    <stop offset="100%" stop-color="#1040B0"/>
   </linearGradient>
-  <!-- Ribbon blue, solid then fades to transparent at right -->
-  <linearGradient id="lgo-rib-b" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%"   stop-color="#002868"/>
-    <stop offset="80%"  stop-color="#002868"/>
-    <stop offset="100%" stop-color="#002868" stop-opacity="0"/>
+  <!-- Building vertical: bright top → darker base -->
+  <linearGradient id="lgo-bldg-v" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%"   stop-color="#6AAAF8"/>
+    <stop offset="100%" stop-color="#1848C0"/>
   </linearGradient>
   <!-- EKG line: fade at both ends -->
   <linearGradient id="lgo-ekg" x1="0%" y1="0%" x2="100%" y2="0%">
     <stop offset="0%"   stop-color="#C8102E" stop-opacity=".3"/>
-    <stop offset="20%"  stop-color="#C8102E"/>
-    <stop offset="80%"  stop-color="#C8102E"/>
+    <stop offset="15%"  stop-color="#C8102E"/>
+    <stop offset="85%"  stop-color="#C8102E"/>
     <stop offset="100%" stop-color="#C8102E" stop-opacity=".3"/>
-  </linearGradient>
-  <!-- Star: silver/chrome -->
-  <linearGradient id="lgo-star" x1="0%" y1="0%" x2="100%" y2="100%">
-    <stop offset="0%"   stop-color="#FFFFFF"/>
-    <stop offset="50%"  stop-color="#E0E0E0"/>
-    <stop offset="100%" stop-color="#AAAAAA"/>
   </linearGradient>
   <!-- Drop shadow for flag -->
   <filter id="lgo-sh" x="-5%" y="-10%" width="120%" height="140%">
     <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,.25)"/>
   </filter>
+  <!-- Drop shadow for buildings -->
+  <filter id="lgo-bsh" x="-10%" y="-5%" width="130%" height="120%">
+    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="rgba(0,20,100,.35)"/>
+  </filter>
 </defs>
-
-<!-- ── CITY SKYLINE (outlined stroke style — no fill) ── -->
-<!-- Single connected path so the silhouette reads as one outline -->
-<path d="
-  M196,116 L196,72 L210,72 L210,58 L222,58 L222,66 L236,66 L236,52 L247,52 L247,62
-  L262,62 L262,49 L274,49 L274,28 L274,5 L283,5 L283,28 L296,28 L296,116
-  M296,50 L314,50 L314,41 L329,41 L329,56 L347,56 L347,49 L360,49 L360,63
-  L377,63 L377,67 L391,67 L391,58 L403,58 L403,116
-  M196,116 L403,116"
-  fill="none" stroke="#AAAAAA" stroke-width="1.5" stroke-linejoin="miter" opacity=".7"/>
 
 <!-- ── AMERICAN FLAG (angled -12°, drop shadow) ── -->
 <g transform="translate(8,12) rotate(-12,82,52)" filter="url(#lgo-sh)">
-  <!-- White flag base -->
   <rect x="0" y="0" width="162" height="102" rx="3" fill="white"/>
-  <!-- 7 red stripes — full width below canton, partial above -->
   <rect x="0"  y="0"  width="162" height="14.5" fill="url(#lgo-red)"/>
   <rect x="0"  y="29" width="162" height="14.5" fill="url(#lgo-red)"/>
   <rect x="0"  y="58" width="162" height="14.5" fill="url(#lgo-red)"/>
@@ -92,9 +76,7 @@ const logoSVG = `
   <rect x="68" y="14.5" width="94" height="14.5" fill="url(#lgo-red)"/>
   <rect x="68" y="43.5" width="94" height="14.5" fill="url(#lgo-red)"/>
   <rect x="68" y="72.5" width="94" height="14.5" fill="url(#lgo-red)"/>
-  <!-- Blue canton -->
   <rect x="0" y="0" width="68" height="58" fill="url(#lgo-canton)"/>
-  <!-- Stars: 5 rows alternating 3-2-3-2-3 -->
   <text x="3"  y="13" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
   <text x="9"  y="23" fill="white" font-size="9.5" font-family="serif" letter-spacing="5">★ ★</text>
   <text x="3"  y="33" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
@@ -102,8 +84,7 @@ const logoSVG = `
   <text x="3"  y="53" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
 </g>
 
-<!-- ── TRAILING WAVE STRIPES (flag right edge → EKG) ── -->
-<!-- These thick curved bands connect the flag to the EKG line -->
+<!-- ── TRAILING WAVE STRIPES ── -->
 <g fill="none" stroke-linecap="round">
   <path d="M162,20 Q200,13 245,20" stroke="#C8102E" stroke-width="14"/>
   <path d="M162,34 Q202,27 248,34" stroke="white"   stroke-width="11"/>
@@ -113,55 +94,79 @@ const logoSVG = `
 </g>
 
 <!-- ── EKG HEARTBEAT LINE ── -->
-<!-- soft glow -->
 <path d="M220,76 L248,76 L254,63 L260,76 L275,76 L281,67 L287,76 L304,76 L314,76 L325,8 L338,108 L348,76 L558,76 L566,62 L573,76 L594,76"
   fill="none" stroke="#C8102E" stroke-width="14" stroke-opacity=".08" stroke-linecap="round" stroke-linejoin="round"/>
-<!-- main line -->
 <path d="M220,76 L248,76 L254,63 L260,76 L275,76 L281,67 L287,76 L304,76 L314,76 L325,8 L338,108 L348,76 L558,76 L566,62 L573,76 L594,76"
   fill="none" stroke="url(#lgo-ekg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 
-<!-- ── RIBBON: 3 thick solid RWB curved stripes ── -->
-<!-- Red (top) — solid, no fade, ends where star begins -->
-<path d="M558,35 Q626,25 678,39 Q696,44 714,52 L711,65 Q693,57 675,52 Q623,38 558,48 Z"
-  fill="#C8102E"/>
-<!-- White (middle) -->
-<path d="M558,48 Q623,38 675,52 Q693,57 711,65 L708,78 Q690,70 672,65 Q620,51 558,61 Z"
-  fill="white"/>
-<!-- Blue/navy (bottom) -->
-<path d="M558,61 Q620,51 672,65 Q690,70 708,78 L705,91 Q687,83 669,78 Q617,64 558,74 Z"
-  fill="#002868"/>
-<!-- Stars on ribbon: large white star + smaller -->
-<text x="570" y="65" fill="white" font-size="17" font-family="serif">★</text>
-<text x="600" y="63" fill="white" font-size="14" font-family="serif" opacity=".9">★</text>
+<!-- ── CITY SKYLINE — 3D blue filled buildings ── -->
+<g filter="url(#lgo-bsh)">
+  <!-- B1 small left -->
+  <rect x="197" y="74" width="17" height="42" fill="url(#lgo-bldg)"/>
+  <rect x="214" y="74" width="3"  height="42" fill="#0A2880" opacity=".55"/>
+  <!-- B2 -->
+  <rect x="219" y="60" width="19" height="56" fill="url(#lgo-bldg)"/>
+  <rect x="238" y="60" width="3"  height="56" fill="#0A2880" opacity=".55"/>
+  <!-- B3 -->
+  <rect x="244" y="53" width="21" height="63" fill="url(#lgo-bldg)"/>
+  <rect x="265" y="53" width="3"  height="63" fill="#0A2880" opacity=".55"/>
+  <!-- B4 tall -->
+  <rect x="271" y="38" width="21" height="78" fill="url(#lgo-bldg)"/>
+  <rect x="292" y="38" width="3"  height="78" fill="#0A2880" opacity=".55"/>
+  <!-- B5 TALLEST — Empire State style -->
+  <rect x="297" y="40" width="19" height="76" fill="url(#lgo-bldg-v)"/>
+  <rect x="300" y="24" width="13" height="18" fill="url(#lgo-bldg-v)"/>
+  <rect x="303" y="13" width="7"  height="13" fill="url(#lgo-bldg-v)"/>
+  <line x1="306" y1="13" x2="306" y2="3"  stroke="#3068D8" stroke-width="2.5"/>
+  <rect x="316" y="40" width="3"  height="76" fill="#0A2880" opacity=".55"/>
+  <!-- B6 -->
+  <rect x="322" y="43" width="21" height="73" fill="url(#lgo-bldg)"/>
+  <rect x="343" y="43" width="3"  height="73" fill="#0A2880" opacity=".55"/>
+  <!-- B7 -->
+  <rect x="349" y="53" width="19" height="63" fill="url(#lgo-bldg)"/>
+  <rect x="368" y="53" width="3"  height="63" fill="#0A2880" opacity=".55"/>
+  <!-- B8 -->
+  <rect x="374" y="62" width="17" height="54" fill="url(#lgo-bldg)"/>
+  <rect x="391" y="62" width="3"  height="54" fill="#0A2880" opacity=".55"/>
+  <!-- B9 small right -->
+  <rect x="397" y="70" width="16" height="46" fill="url(#lgo-bldg)"/>
+  <!-- Ground shadow line -->
+  <rect x="197" y="116" width="216" height="2" fill="#0A2880" opacity=".3"/>
+</g>
 
-<!-- ── SHOOTING STAR (right, clean outline style) ── -->
-<g transform="translate(710,24)">
-  <!-- Stroke-only star (no fill / very light fill like the brand) -->
-  <polygon points="22,0 27,16 44,16 31,26 36,43 22,33 8,43 13,26 0,16 17,16"
-    fill="white" fill-opacity=".6" stroke="#BBBBBB" stroke-width="2" transform="scale(.9)"/>
-  <!-- Motion trail lines (to the left) -->
-  <line x1="-4"  y1="10" x2="-28" y2="10" stroke="#BBBBBB" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="-4"  y1="17" x2="-36" y2="17" stroke="#BBBBBB" stroke-width="2"   stroke-linecap="round"/>
-  <line x1="-4"  y1="24" x2="-26" y2="24" stroke="#BBBBBB" stroke-width="1.5" stroke-linecap="round"/>
+<!-- ── SWOOSH RIBBONS (EKG right → shooting star) ── -->
+<!-- Red swoosh (top) -->
+<path d="M556,36 Q622,14 688,46 L686,60 Q620,28 556,50 Z" fill="#C8102E"/>
+<!-- Blue swoosh (bottom) -->
+<path d="M556,50 Q620,28 686,60 L684,74 Q618,42 556,64 Z" fill="#1A55CC"/>
+
+<!-- ── SHOOTING STAR ── -->
+<g transform="translate(694,14)">
+  <!-- Outer star: white fill, red outline -->
+  <polygon points="28,0 34,19 55,19 39,32 45,52 28,40 11,52 17,32 1,19 22,19"
+    fill="white" stroke="#C8102E" stroke-width="3.5"/>
+  <!-- Inner blue star -->
+  <polygon points="28,13 32,24 44,24 35,31 38,42 28,35 18,42 21,31 12,24 24,24"
+    fill="#1A55CC"/>
 </g>
 
 <!-- ── WORDMARK ── -->
-<!-- "America" — DARK NAVY (matching brand) -->
+<!-- "America" — bright cobalt blue (matching brand) -->
 <text x="82" y="168"
   font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
   font-size="50" font-weight="900" font-style="italic" letter-spacing="-1"
-  fill="#002868">America</text>
+  fill="#1A5FCC">America</text>
 <!-- "Pulse" — red -->
 <text x="375" y="168"
   font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
   font-size="50" font-weight="900" font-style="italic" letter-spacing="-1"
   fill="#C8102E">Pulse</text>
-<!-- ".live" — RED badge (matching brand) with white text -->
-<rect x="545" y="130" width="90" height="44" rx="8" fill="#C8102E"/>
+<!-- ".live" — border-only rounded rect, blue text (matching brand) -->
+<rect x="545" y="130" width="90" height="44" rx="10" fill="none" stroke="#1A5FCC" stroke-width="3"/>
 <text x="590" y="164"
   font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
   font-size="27" font-weight="700" font-style="italic"
-  fill="white" text-anchor="middle">.live</text>
+  fill="#1A5FCC" text-anchor="middle">.live</text>
 </svg>`;
 const header = `
 <div class="top-bar">
