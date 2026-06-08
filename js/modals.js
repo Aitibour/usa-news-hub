@@ -388,7 +388,8 @@
     } catch(e) {}
     const modal = document.getElementById('contact-modal');
     const inner = modal.querySelector('.ap-modal');
-    if (inner) inner.innerHTML = `<div style="text-align:center;padding:32px 16px"><div style="font-size:48px;margin-bottom:16px">&#10003;</div><h2 style="color:#0B1F3A;margin-bottom:8px">Message sent!</h2><p style="color:#555;line-height:1.6">Thank you, ${name}.<br>We'll reply to <strong>${email}</strong> within 24–48 hours.</p><button class="btn-primary" style="margin-top:20px" onclick="closeModal('contact-modal')">Done</button></div>`;
+    function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
+    if (inner) inner.innerHTML = `<div style="text-align:center;padding:32px 16px"><div style="font-size:48px;margin-bottom:16px">&#10003;</div><h2 style="color:#0B1F3A;margin-bottom:8px">Message sent!</h2><p style="color:#555;line-height:1.6">Thank you, ${esc(name)}.<br>We'll reply to <strong>${esc(email)}</strong> within 24–48 hours.</p><button class="btn-primary" style="margin-top:20px" onclick="closeModal('contact-modal')">Done</button></div>`;
   };
   window.handleAlerts = async function() {
     const email = document.getElementById('alerts-email').value.trim();

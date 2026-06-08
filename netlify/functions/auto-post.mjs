@@ -96,7 +96,12 @@ function extractImage(item, slug) {
 
 // Strip HTML tags from text
 function stripHtml(html) {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return html.replace(/<[^>]*>/g, " ").replace(/&[a-z#0-9]+;/gi, " ").replace(/\s+/g, " ").trim();
+}
+
+// HTML-escape a plain-text string for safe insertion into HTML
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 }
 
 // Format body — wrap plain text in paragraphs
@@ -109,9 +114,9 @@ function formatBody(description, content) {
   const paras = [];
   for (let i = 0; i < words.length; i += 80) {
     const chunk = words.slice(i, i + 80).join(" ");
-    if (chunk.trim()) paras.push(`<p>${chunk}</p>`);
+    if (chunk.trim()) paras.push(chunk);
   }
-  return paras.join("\n") || `<p>${clean}</p>`;
+  return paras.map(c => `<p>${escHtml(c)}</p>`).join("\n") || `<p>${escHtml(clean)}</p>`;
 }
 
 async function fetchFeed(url, section) {

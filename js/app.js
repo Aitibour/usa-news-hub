@@ -14,7 +14,11 @@ return typeof slug === 'string' ? slug.replace(/[^a-zA-Z0-9-]/g, '') : '';
 }
 function safeUrl(url) {
 if (typeof url !== 'string') return '#';
-return /^https?:\/\//i.test(url) ? url : '#';
+try {
+  const u = new URL(url);
+  if (u.protocol !== 'https:') return '#';
+  return url;
+} catch { return '#'; }
 }
 function formatDate(dateStr) {
 const d = new Date(dateStr + 'T12:00:00');
