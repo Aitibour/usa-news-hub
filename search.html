@@ -28,7 +28,8 @@
         <h1>Search Results</h1>
         <p id="search-summary"></p>
       </div>
-      <div id="search-results" class="cards-row four-col" style="margin-top:24px"></div>
+      <div id="search-filters" style="margin:12px 0 4px;display:none"></div>
+      <div id="search-results" style="margin-top:20px"></div>
     </div>
   </main>
   <div id="site-footer"></div>
@@ -39,7 +40,8 @@
   <script>
   document.addEventListener('DOMContentLoaded', async function() {
     const q = (new URLSearchParams(window.location.search).get('q') || '').trim();
-    const summary = document.getElementById('search-summary');
+    const summary  = document.getElementById('search-summary');
+    const filtersEl = document.getElementById('search-filters');
     const container = document.getElementById('search-results');
     document.title = q ? `Search: ${q} — AmericaPulse.live` : 'Search — AmericaPulse.live';
 
@@ -51,27 +53,118 @@
     summary.textContent = `Searching for: "${q}"`;
     container.innerHTML = '<p class="loading-msg">Searching…</p>';
 
-    const lower = q.toLowerCase();
-    function matchArticle(a) {
-      return a.title.toLowerCase().includes(lower) ||
-             (a.excerpt || '').toLowerCase().includes(lower) ||
-             (a.section || '').toLowerCase().includes(lower);
+    // ---- Relevance scoring ----
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+
+    function scoreArticle(a) {
+      const title   = (a.title   || '').toLowerCase();
+      const excerpt = (a.excerpt || '').toLowerCase();
+      const section = (a.section || '').toLowerCase();
+      let score = 0;
+      for (const t of terms) {
+        const re = new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}`, 'i');
+        if (title === t)                  score += 100;  // exact title
+        else if (re.test(a.title))        score += 40;   // word-boundary title
+        else if (title.includes(t))       score += 20;   // title contains
+        if (re.test(a.excerpt))           score += 8;    // word-boundary excerpt
+        else if (excerpt.includes(t))     score += 4;    // excerpt contains
+        if (section.includes(t))          score += 2;
+        if ((a.author||'').toLowerCase().includes(t)) score += 3;
+      }
+      return score;
+    }
+
+    function matchArticle(a) { return scoreArticle(a) > 0; }
+
+    // ---- Highlight helper ----
+    function highlight(text, terms) {
+      if (!text) return '';
+      let result = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      for (const t of terms) {
+        const safe = t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+        result = result.replace(new RegExp(`(${safe})`, 'gi'),
+          '<mark class="search-hl">$1</mark>');
+      }
+      return result;
+    }
+
+    // ---- Snippet: find excerpt region around first term match ----
+    function snippet(text, terms, maxLen) {
+      if (!text) return '';
+      const lower = text.toLowerCase();
+      let best = -1;
+      for (const t of terms) {
+        const idx = lower.indexOf(t);
+        if (idx !== -1 && (best === -1 || idx < best)) best = idx;
+      }
+      if (best === -1) return text.slice(0, maxLen);
+      const start = Math.max(0, best - 40);
+      const end   = Math.min(text.length, start + maxLen);
+      return (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
+    }
+
+    // ---- Render a search result row ----
+    const SECTION_COLORS = window.SECTION_COLORS || {};
+    function renderResult(a) {
+      const color = SECTION_COLORS[a.section] || '#C8102E';
+      const slug  = (a.slug||'').replace(/[^a-zA-Z0-9-]/g,'');
+      const img   = (typeof resolveArticleImage === 'function') ? resolveArticleImage(a) : '';
+      const snip  = snippet(a.excerpt || a.title, terms, 140);
+      return `<article class="search-result-row" data-slug="${slug}" style="cursor:pointer">
+        <div class="sr-img">
+          <img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'" />
+        </div>
+        <div class="sr-body">
+          <div class="sr-meta">
+            <span class="card-tag" style="background:${color};margin-right:8px">${a.section||''}</span>
+            <time style="font-size:12px;color:#6b7280">${typeof formatDate==='function'?formatDate(a.date):a.date}</time>
+          </div>
+          <h3 class="sr-title">${highlight(a.title, terms)}</h3>
+          <p class="sr-excerpt">${highlight(snip, terms)}</p>
+          <span class="sr-author">${typeof authorLink==='function' ? authorLink(a.author||'') : (a.author||'')}</span>
+        </div>
+      </article>`;
+    }
+
+    let allResults = [];
+    let activeSection = '';
+
+    function renderFilters() {
+      const sections = [...new Set(allResults.map(a => a.section).filter(Boolean))].sort();
+      if (sections.length < 2) { filtersEl.style.display = 'none'; return; }
+      filtersEl.style.display = 'flex';
+      filtersEl.innerHTML = `<div class="search-filter-chips">
+        <button class="filter-chip${!activeSection?' chip-active':''}" data-sec="">All</button>
+        ${sections.map(s => `<button class="filter-chip${activeSection===s?' chip-active':''}" data-sec="${s}">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
+      </div>`;
+      filtersEl.querySelectorAll('.filter-chip').forEach(btn => {
+        btn.addEventListener('click', function() {
+          activeSection = this.dataset.sec;
+          renderFilters();
+          renderResults();
+        });
+      });
+    }
+
+    function renderResults() {
+      const filtered = activeSection ? allResults.filter(a => a.section === activeSection) : allResults;
+      summary.textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for: "${q}"${activeSection ? ` in ${activeSection}` : ''}`;
+      container.innerHTML = filtered.length
+        ? filtered.map(renderResult).join('')
+        : '<p style="padding:24px;color:#888">No articles found. Try different keywords.</p>';
+    }
+
+    function setResults(raw) {
+      allResults = raw.filter(matchArticle).sort((a,b) => scoreArticle(b) - scoreArticle(a));
+      renderFilters();
+      renderResults();
     }
 
     // Static results immediately
     const db = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
-    const staticResults = db.filter(matchArticle);
+    setResults(db);
 
-    function render(results) {
-      summary.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for: "${q}"`;
-      container.innerHTML = results.length
-        ? results.map(a => renderCard(a, 'sm')).join('')
-        : '<p style="padding:24px;color:#888">No articles found. Try different keywords.</p>';
-    }
-
-    render(staticResults);
-
-    // Also fetch live articles
+    // Fetch live articles and merge
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 4000);
@@ -79,11 +172,10 @@
       clearTimeout(tid);
       if (r.ok) {
         const d = await r.json();
-        const live = (d.articles || []).filter(matchArticle);
+        const live = d.articles || [];
         if (live.length) {
-          const seen = new Set(staticResults.map(a => a.slug));
-          const merged = [...live.filter(a => !seen.has(a.slug)), ...staticResults];
-          render(merged);
+          const seen = new Set(db.map(a => a.slug));
+          setResults([...live.filter(a => !seen.has(a.slug)), ...db]);
         }
       }
     } catch(e) {}
