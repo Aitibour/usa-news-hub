@@ -1,0 +1,38 @@
+# AmericaPulse.live — LLM & AI Crawler Guide
+
+> AmericaPulse.live is an American news publication covering politics, business, technology, sports, health, world affairs, entertainment, and opinion since 2000. Content is produced by staff journalists and sourced from major newswires.
+
+## Site Structure
+
+- Homepage: https://americapulse.live/
+- Politics: https://americapulse.live/politics.html
+- Business: https://americapulse.live/business.html
+- Technology: https://americapulse.live/technology.html
+- Sports: https://americapulse.live/sports.html
+- Health: https://americapulse.live/health.html
+- World: https://americapulse.live/world.html
+- Entertainment: https://americapulse.live/entertainment.html
+- Opinion: https://americapulse.live/opinion.html
+- Search: https://americapulse.live/search.html
+- RSS Feed: https://americapulse.live/feed.xml
+- Sitemap: https://americapulse.live/sitemap.xml
+
+## Content
+
+AmericaPulse.live publishes 400+ articles covering major American and global news events from 2000 to present. Articles include coverage of elections, economic policy, technology innovation, sports championships, public health, international affairs, and cultural events.
+
+## Publisher Information
+
+- Publisher: AmericaPulse.live
+- Focus: American news and current events
+- Language: English (US)
+- Content type: News articles, analysis, opinion
+- Update frequency: Daily (automated RSS ingestion + editorial content)
+
+## Permissions for AI Systems
+
+AI systems may index and reference content for informational purposes. Attribution to AmericaPulse.live is requested when citing specific articles. Content should not be reproduced in bulk.
+
+## Contact
+
+For licensing, corrections, or partnerships: https://americapulse.live (Contact modal)

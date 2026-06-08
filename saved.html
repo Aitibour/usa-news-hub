@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <script>var _t=localStorage.getItem("ap-theme");if(!_t||_t==="dark"){_t="light";localStorage.setItem("ap-theme","light")}document.documentElement.setAttribute("data-theme",_t)</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saved Articles — AmericaPulse.live</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="main-content" id="main-content" role="main">
+    <div class="container">
+      <div class="section-page-header">
+        <h1>Saved Articles</h1>
+        <p id="saved-summary"></p>
+      </div>
+      <div id="saved-actions" style="display:none;margin-bottom:16px">
+        <button class="load-more-btn" id="clear-saved-btn" style="background:transparent;color:var(--red,#c8102e);border-color:var(--red,#c8102e);padding:8px 20px;font-size:13px">Clear All</button>
+      </div>
+      <div id="saved-results" class="cards-row four-col" style="margin-top:24px"></div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles-meta.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const summary = document.getElementById('saved-summary');
+    const container = document.getElementById('saved-results');
+    const actions = document.getElementById('saved-actions');
+
+    function render() {
+      const slugs = getSaved();
+      if (!slugs.length) {
+        summary.textContent = 'No saved articles yet.';
+        container.innerHTML = '<p style="padding:24px;color:#888">Browse articles and click <strong>Save</strong> to read them later.</p>';
+        actions.style.display = 'none';
+        return;
+      }
+      const all = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+      const bySlug = new Map(all.map(a => [a.slug, a]));
+      const arts = slugs.map(s => bySlug.get(s)).filter(Boolean);
+      summary.textContent = `${arts.length} saved article${arts.length !== 1 ? 's' : ''}`;
+      actions.style.display = arts.length ? 'block' : 'none';
+      container.innerHTML = arts.length
+        ? arts.map(a => renderCard(a, 'sm')).join('')
+        : '<p style="padding:24px;color:#888">Some saved articles could not be found.</p>';
+    }
+
+    render();
+
+    document.getElementById('clear-saved-btn').addEventListener('click', function() {
+      if (confirm('Remove all saved articles?')) {
+        setSaved([]);
+        render();
+      }
+    });
+  });
+  </script>
+</body>
+</html>

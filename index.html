@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <script>var _t=localStorage.getItem("ap-theme");if(!_t||_t==="dark"){_t="light";localStorage.setItem("ap-theme","light")}document.documentElement.setAttribute("data-theme",_t)</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmericaPulse.live — Breaking News & Top Stories</title>
+  <meta name="description" content="AmericaPulse.live — Breaking news, politics, business, technology, sports, health, world affairs and entertainment." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="canonical" href="https://americapulse.live/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AmericaPulse.live" />
+  <meta property="og:title" content="AmericaPulse.live — Breaking News &amp; Top Stories" />
+  <meta property="og:description" content="AmericaPulse.live — Breaking news, politics, business, technology, sports, health, world affairs and entertainment." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@AmericaPulse" />
+  <meta name="twitter:title" content="AmericaPulse.live — Breaking News &amp; Top Stories" />
+  <meta name="twitter:description" content="AmericaPulse.live — Breaking news, politics, business, technology, sports, health, world affairs and entertainment." />
+  <meta name="twitter:image" content="https://picsum.photos/seed/americapulse-home/1200/630" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://americapulse.live/#website","url":"https://americapulse.live","name":"AmericaPulse.live","description":"Breaking news, politics, business, technology, sports, health, world affairs and entertainment.","publisher":{"@id":"https://americapulse.live/#organization"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://americapulse.live/search.html?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://americapulse.live/#organization","name":"AmericaPulse.live","url":"https://americapulse.live","logo":{"@type":"ImageObject","url":"https://americapulse.live/icon-512.png","width":512,"height":512},"sameAs":["https://twitter.com/AmericaPulse","https://facebook.com/AmericaPulse","https://instagram.com/AmericaPulse"]},{"@type":"NewsMediaOrganization","@id":"https://americapulse.live/#newsorg","name":"AmericaPulse.live","url":"https://americapulse.live","publishingPrinciples":"https://americapulse.live","masthead":"https://americapulse.live","actionableFeedbackPolicy":"https://americapulse.live","correctionsPolicy":"https://americapulse.live","ethicsPolicy":"https://americapulse.live"}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://picsum.photos" />
+  <link rel="dns-prefetch" href="https://api.open-meteo.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="search" type="application/opensearchdescription+xml" title="AmericaPulse.live" href="/opensearch.xml" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="alternate" type="application/rss+xml" title="AmericaPulse.live" href="/feed.xml" />
+
+  </head>
+<body data-section="">
+  <!-- Netlify form detection (hidden, never shown) -->
+  <form name="newsletter" netlify netlify-honeypot="bot-field" hidden><input name="email" type="email" /><input name="bot-field" /></form>
+  <form name="breaking-alerts" netlify netlify-honeypot="bot-field" hidden><input name="email" type="email" /><input name="bot-field" /></form>
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden><input name="name" /><input name="email" type="email" /><textarea name="message"></textarea><input name="bot-field" /></form>
+  <div id="site-header"></div>
+
+  <main class="main-content" id="main-content" role="main">
+    <div class="container">
+
+      <!-- Hero Section -->
+      <section class="hero-section" id="hero-section">
+        <div class="hero-lead" id="hero-lead"><!-- rendered by JS --></div>
+      </section>
+
+      <!-- Content + Sidebar -->
+      <div class="content-sidebar-layout">
+        <div class="content-feed" id="main-feed"><!-- rendered by JS --></div>
+        <aside class="sidebar" id="sidebar-area"></aside>
+      </div>
+
+      <!-- Full-width sections -->
+      <div id="full-width-sections"><!-- rendered by JS --></div>
+
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data/articles-meta.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/sidebar.js" defer></script>
+  <script>
+  // ---- Render Homepage ----
+  document.addEventListener('DOMContentLoaded', async function() {
+    const staticDB = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+
+    // Render immediately with static data
+    renderHomeFeed(staticDB);
+
+    // Fetch live AI articles in background, re-render if any arrive
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 3000);
+      const r = await fetch('/.netlify/functions/get-articles?limit=8', { signal: ctrl.signal });
+      clearTimeout(tid);
+      if (r.ok) {
+        const d = await r.json();
+        const aiArticles = d.articles || [];
+        if (aiArticles.length) {
+          const seen = new Set(staticDB.map(a => a.slug));
+          const newOnes = aiArticles.filter(a => !seen.has(a.slug));
+          if (newOnes.length) renderHomeFeed([...newOnes, ...staticDB]);
+        }
+      }
+    } catch(e) {}
+
+    function renderHomeFeed(allArticles) {
+      allArticles = [...allArticles].sort((a,b) => new Date(b.date) - new Date(a.date));
+
+      // Hero
+      const [h1, h2, h3] = allArticles;
+      const heroLead = document.getElementById('hero-lead');
+      heroLead.innerHTML = `
+        <div class="hero-card hero-main" data-slug="${safeSlug(h1.slug)}" style="cursor:pointer">
+          <div class="hero-img-wrap">
+            <img src="${esc(resolveArticleImage(h1))}" alt="${esc(h1.title)}" loading="eager" fetchpriority="high" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'"/>
+            <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${sectionLabel(h1.section)}</span>
+          </div>
+          <div class="hero-body">
+            <h1 class="hero-title">${esc(h1.title)}</h1>
+            <p class="hero-excerpt">${esc(h1.excerpt)}</p>
+            <div class="hero-meta">
+              <span class="author">${esc(h1.author)}</span>
+              <span class="dot">•</span>
+              <time>${formatDate(h1.date)}</time>
+              <span class="dot">•</span>
+              <span>${h1.readTime||5} min read</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-side">
+          ${[h2,h3].filter(Boolean).map(a => `
+          <div class="hero-card hero-secondary" data-slug="${safeSlug(a.slug)}" style="cursor:pointer">
+            <div class="hero-img-wrap">
+              <img src="${esc(resolveArticleImage(a))}" alt="${esc(a.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'"/>
+              <span class="hero-category-tag" style="background:${SECTION_COLORS[a.section]}">${sectionLabel(a.section)}</span>
+            </div>
+            <div class="hero-body">
+              <h2 class="hero-title-sm">${esc(a.title)}</h2>
+              <div class="hero-meta">
+                <span class="author">${esc(a.author)}</span>
+                <span class="dot">•</span>
+                <time>${formatDate(a.date)}</time>
+              </div>
+            </div>
+          </div>`).join('')}
+        </div>`;
+
+      // Main feed — one block per section
+      const FEED_SECTIONS = ['politics','business','technology','sports'];
+      const feed = document.getElementById('main-feed');
+      let feedHTML = '';
+
+      for (const sec of FEED_SECTIONS) {
+        const arts = allArticles.filter(a => a.section === sec);
+        if (!arts.length) continue;
+        const color = SECTION_COLORS[sec];
+        const [feat, ...rest] = arts;
+
+        feedHTML += `
+        <section class="section-block">
+          <div class="section-header">
+            <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
+            <a href="${sec}.html" class="see-all">See All ➜</a>
+          </div>
+          <div class="news-grid">
+            <article class="news-card card-featured" data-slug="${safeSlug(feat.slug)}" style="cursor:pointer">
+              <div class="card-img-wrap"><img src="${esc(resolveArticleImage(feat))}" alt="${esc(feat.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'"/></div>
+              <div class="card-body">
+                <span class="card-tag" style="background:${color}">${capitalize(sec)}</span>
+                <h3 class="card-title">${esc(feat.title)}</h3>
+                <p class="card-excerpt">${esc(feat.excerpt)}</p>
+                <div class="card-meta"><span>${esc(feat.author)}</span><time>${formatDate(feat.date)}</time></div>
+              </div>
+            </article>
+            <div class="news-list">
+              ${rest.slice(0,3).map(a => renderListItem(a)).join('')}
+            </div>
+          </div>
+        </section>`;
+
+      // Markets strip after business
+      if (sec === 'business') {
+        feedHTML += `
+        <div class="markets-strip" id="markets-strip">
+          <div class="markets-label">MARKETS</div>
+          <div class="markets-tickers" id="markets-tickers">
+            <div class="market-item" style="color:#8ba0bb;font-size:12px">Loading…</div>
+          </div>
+        </div>`;
+      }
+    }
+      feed.innerHTML = feedHTML;
+
+      // Full-width sections
+      const FW_SECTIONS = ['world','health','entertainment','opinion'];
+      const fwEl = document.getElementById('full-width-sections');
+      let fwHTML = '';
+
+      for (const sec of FW_SECTIONS) {
+        const arts = allArticles.filter(a => a.section === sec).slice(0,4);
+        if (!arts.length) continue;
+        const color = SECTION_COLORS[sec];
+        fwHTML += `
+        <section class="section-block full-width-section">
+          <div class="section-header">
+            <h2 class="section-title"><span class="section-accent" style="background:${color}">${sectionLabel(sec)}</span></h2>
+            <a href="${sec}.html" class="see-all">See All ➜</a>
+          </div>
+          <div class="cards-row four-col">
+            ${arts.map(a => renderCard(a,'sm')).join('')}
+          </div>
+        </section>`;
+      }
+      fwEl.innerHTML = fwHTML;
+    } // end renderHomeFeed
+
+    // Live markets data
+    (async function() {
+      try {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), 5000);
+        const r = await fetch('/.netlify/functions/get-markets', { signal: ctrl.signal });
+        if (!r.ok) return;
+        const { markets } = await r.json();
+        const el = document.getElementById('markets-tickers');
+        if (!el || !markets?.length) return;
+        el.innerHTML = markets.map(m => `
+          <div class="market-item ${m.up ? 'up' : 'down'}">
+            <span class="m-name">${m.key}</span>
+            <span class="m-val">${m.val}</span>
+            <span class="m-chg">${m.chg}</span>
+          </div>`).join('');
+      } catch(e) {}
+    })();
+  });
+  </script>
+</body>
+</html>

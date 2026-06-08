@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <script>var _t=localStorage.getItem("ap-theme");if(!_t||_t==="dark"){_t="light";localStorage.setItem("ap-theme","light")}document.documentElement.setAttribute("data-theme",_t)</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading History — AmericaPulse.live</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="main-content" id="main-content" role="main">
+    <div class="container">
+      <div class="section-page-header">
+        <h1>Reading History</h1>
+        <p id="history-summary"></p>
+      </div>
+      <div id="history-actions" style="display:none;margin-bottom:8px">
+        <button class="load-more-btn" id="clear-history-btn" style="background:transparent;color:var(--red,#c8102e);border-color:var(--red,#c8102e);padding:8px 20px;font-size:13px">Clear History</button>
+      </div>
+      <div id="history-list" style="margin-top:20px"></div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles-meta.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const summary  = document.getElementById('history-summary');
+    const actions  = document.getElementById('history-actions');
+    const listEl   = document.getElementById('history-list');
+
+    function relativeTime(isoStr) {
+      const diff = Math.floor((Date.now() - new Date(isoStr)) / 1000);
+      if (diff < 60)    return 'Just now';
+      if (diff < 3600)  return `${Math.floor(diff/60)}m ago`;
+      if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+      const d = Math.floor(diff/86400);
+      if (d < 7) return `${d}d ago`;
+      return new Date(isoStr).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    }
+
+    function render() {
+      const hist = getHistory();
+      if (!hist.length) {
+        summary.textContent = 'No reading history yet.';
+        listEl.innerHTML = '<p style="padding:24px;color:#888">Start reading articles to build your history.</p>';
+        actions.style.display = 'none';
+        return;
+      }
+
+      const all = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+      const bySlug = new Map(all.map(a => [a.slug, a]));
+
+      // Group by day
+      const groups = {};
+      const ORDER  = [];
+      for (const { slug, ts } of hist) {
+        const art = bySlug.get(slug);
+        if (!art) continue;
+        const dayKey = new Date(ts).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+        if (!groups[dayKey]) { groups[dayKey] = []; ORDER.push(dayKey); }
+        groups[dayKey].push({ art, ts });
+      }
+
+      summary.textContent = `${hist.length} article${hist.length !== 1 ? 's' : ''} read`;
+      actions.style.display = 'block';
+
+      listEl.innerHTML = ORDER.map(day => `
+        <div class="history-day-group">
+          <h3 class="history-day-label">${day}</h3>
+          ${groups[day].map(({ art, ts }) => {
+            const color = (window.SECTION_COLORS||{})[art.section] || '#C8102E';
+            const slug  = (art.slug||'').replace(/[^a-zA-Z0-9-]/g,'');
+            const img   = typeof resolveArticleImage==='function' ? resolveArticleImage(art) : '';
+            return `<article class="search-result-row" data-slug="${slug}" style="cursor:pointer">
+              <div class="sr-img"><img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'" /></div>
+              <div class="sr-body">
+                <div class="sr-meta">
+                  <span class="card-tag" style="background:${color};margin-right:8px">${art.section||''}</span>
+                  <time style="font-size:12px;color:#6b7280">${relativeTime(ts)}</time>
+                </div>
+                <h3 class="sr-title">${(art.title||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h3>
+                <p class="sr-excerpt">${(art.excerpt||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').slice(0,120)}…</p>
+                <span class="sr-author">${typeof authorLink==='function'?authorLink(art.author||''):(art.author||'')}</span>
+              </div>
+            </article>`;
+          }).join('')}
+        </div>`).join('');
+    }
+
+    render();
+
+    document.getElementById('clear-history-btn').addEventListener('click', function() {
+      if (confirm('Clear your entire reading history?')) {
+        try { localStorage.removeItem('ap_history'); localStorage.removeItem('ap_views'); } catch(e) {}
+        render();
+      }
+    });
+  });
+  </script>
+</body>
+</html>
