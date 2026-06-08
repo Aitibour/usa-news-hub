@@ -24,7 +24,7 @@ a.article-tag{text-decoration:none}
 /* ===== LIGHT MODE (explicit, overrides any OS dark preference) ===== */
 html[data-theme="light"] body{background:#F4F6F9;color:#1A1A2E}
 html[data-theme="light"] .main-content{background:#F4F6F9}
-html[data-theme="light"] .site-header{background:#0B1F3A}
+html[data-theme="light"] .site-header{background:#ffffff;border-bottom-color:#0B1F3A}
 html[data-theme="light"] .main-nav{background:#0B1F3A}
 html[data-theme="light"] .hero-card,html[data-theme="light"] .news-card-sm,html[data-theme="light"] .card-featured,html[data-theme="light"] .news-list,html[data-theme="light"] .sidebar-widget,html[data-theme="light"] .section-block{background:#fff}
 html[data-theme="light"] .hero-title,html[data-theme="light"] .hero-title-sm,html[data-theme="light"] .card-title,html[data-theme="light"] .card-title-sm,html[data-theme="light"] .list-body h4,html[data-theme="light"] .article-title,html[data-theme="light"] .section-page-header h1,html[data-theme="light"] .latest-row-title,html[data-theme="light"] .sr-title,html[data-theme="light"] .author-name{color:#0B1F3A}
@@ -96,3 +96,11 @@ html[data-theme="dark"] .author-link{color:#e5e7eb}
 html[data-theme="dark"] .author-link:hover{color:#f87171}
 html[data-theme="dark"] .card-title-sm{color:#f3f4f6}
 html[data-theme="dark"] #cookie-banner{background:#0f172a}
+html[data-theme="light"] .header-search{border-color:#D1D5DB;background:#fff}
+html[data-theme="light"] .header-search input{color:#1A1A2E;background:#fff}
+html[data-theme="light"] .header-search input::placeholder{color:#9CA3AF}
+html[data-theme="light"] .search-btn{background:#0B1F3A;color:#fff}
+html[data-theme="light"] .saved-nav-link{color:#6B7280}
+html[data-theme="light"] .saved-nav-link:hover{color:#0B1F3A}
+html[data-theme="light"] .theme-toggle{color:#6B7280}
+html[data-theme="light"] .theme-toggle:hover{color:#0B1F3A}
