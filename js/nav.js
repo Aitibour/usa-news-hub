@@ -209,4 +209,29 @@ window.closeModal = function(id) {
 var el = document.getElementById(id);
 if (el) { el.classList.remove('open'); document.body.style.overflow = ''; }
 };
+
+// Back-to-top button
+var btt = document.createElement('button');
+btt.id = 'back-to-top';
+btt.setAttribute('aria-label', 'Back to top');
+btt.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>';
+document.body.appendChild(btt);
+window.addEventListener('scroll', function() {
+  btt.classList.toggle('btt-visible', window.scrollY > 400);
+}, { passive: true });
+btt.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Reading progress bar (article pages only)
+if (document.getElementById('article-content')) {
+  var bar = document.createElement('div');
+  bar.id = 'read-progress';
+  document.body.appendChild(bar);
+  window.addEventListener('scroll', function() {
+    var doc = document.documentElement;
+    var pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    bar.style.width = Math.min(100, pct) + '%';
+  }, { passive: true });
+}
 })();
