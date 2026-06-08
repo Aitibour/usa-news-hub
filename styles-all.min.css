@@ -23,7 +23,7 @@ a.article-tag{text-decoration:none}
 
 /* ===== LIGHT MODE (explicit, overrides any OS dark preference) ===== */
 html[data-theme="light"] body{background:#F4F6F9!important;color:#1A1A2E!important}
-html[data-theme="light"] .main-content{background:#F4F6F9!important}
+html[data-theme="light"] .main-content{background:#F4F6F9!important}html[data-theme="light"] .section-page-header{background:transparent!important;color:#1A1A2E!important}html[data-theme="light"] .hero-lead,html[data-theme="light"] .content-sidebar-layout,html[data-theme="light"] .hero-body{background:transparent!important}html[data-theme="light"] .hero-meta,html[data-theme="light"] .hero-meta .author,html[data-theme="light"] .hero-meta .dot{color:#6B7280!important}
 html[data-theme="light"] .site-header{background:#ffffff!important;border-bottom-color:#0B1F3A!important}
 html[data-theme="light"] .main-nav{background:#0B1F3A}
 html[data-theme="light"] .hero-card,html[data-theme="light"] .news-card-sm,html[data-theme="light"] .card-featured,html[data-theme="light"] .news-list,html[data-theme="light"] .sidebar-widget,html[data-theme="light"] .section-block{background:#fff!important}

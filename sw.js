@@ -1,4 +1,4 @@
-const CACHE = 'ap-v1';
+const CACHE = 'ap-v2';
 const STATIC = [
   '/',
   '/index.html',
