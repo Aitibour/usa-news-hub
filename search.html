@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Search — AmericaPulse.live</title>
   <meta name="theme-color" content="#0B1F3A" />
+  <meta name="robots" content="noindex" />
   <link rel="dns-prefetch" href="https://picsum.photos" />
-  <link rel="dns-prefetch" href="https://images.unsplash.com" />
   <link rel="dns-prefetch" href="https://api.open-meteo.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,14 +15,13 @@
   <link rel="stylesheet" href="styles-all.min.css" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="alternate" type="application/rss+xml" title="AmericaPulse.live" href="/feed.xml" />
-
-  </head>
+</head>
 <body>
   <div id="site-header"></div>
   <main class="main-content" id="main-content" role="main">
     <div class="container">
       <div class="section-page-header">
-        <h1>🔎 Search Results</h1>
+        <h1>Search Results</h1>
         <p id="search-summary"></p>
       </div>
       <div id="search-results" class="cards-row four-col" style="margin-top:24px"></div>
@@ -34,25 +33,56 @@
   <script src="js/app.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const q = new URLSearchParams(window.location.search).get('q') || '';
-    document.title = `🔎 Search: ${q} — AmericaPulse.live`;
-    document.getElementById('search-summary').textContent = q ? `Results for: "${q}"` : 'Enter a search term above.';
-    if (q) {
-      const lower = q.toLowerCase();
-      const db = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
-      const results = db.filter(a =>
-        a.title.toLowerCase().includes(lower) ||
-        a.excerpt.toLowerCase().includes(lower) ||
-        (a.tags || []).some(t => t.toLowerCase().includes(lower))
-      );
-      const container = document.getElementById('search-results');
-      if (results.length) {
-        container.innerHTML = results.map(a => renderCard(a, 'sm')).join('');
-      } else {
-        container.innerHTML = '<p style="padding:24px;color:#888">No articles found matching your search. Try different keywords.</p>';
-      }
+  document.addEventListener('DOMContentLoaded', async function() {
+    const q = (new URLSearchParams(window.location.search).get('q') || '').trim();
+    const summary = document.getElementById('search-summary');
+    const container = document.getElementById('search-results');
+    document.title = q ? `Search: ${q} — AmericaPulse.live` : 'Search — AmericaPulse.live';
+
+    if (!q) {
+      summary.textContent = 'Enter a search term above.';
+      return;
     }
+
+    summary.textContent = `Searching for: "${q}"`;
+    container.innerHTML = '<p class="loading-msg">Searching…</p>';
+
+    const lower = q.toLowerCase();
+    function matchArticle(a) {
+      return a.title.toLowerCase().includes(lower) ||
+             (a.excerpt || '').toLowerCase().includes(lower) ||
+             (a.section || '').toLowerCase().includes(lower);
+    }
+
+    // Static results immediately
+    const db = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+    const staticResults = db.filter(matchArticle);
+
+    function render(results) {
+      summary.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for: "${q}"`;
+      container.innerHTML = results.length
+        ? results.map(a => renderCard(a, 'sm')).join('')
+        : '<p style="padding:24px;color:#888">No articles found. Try different keywords.</p>';
+    }
+
+    render(staticResults);
+
+    // Also fetch live articles
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 4000);
+      const r = await fetch(`/.netlify/functions/get-articles?limit=20`, { signal: ctrl.signal });
+      clearTimeout(tid);
+      if (r.ok) {
+        const d = await r.json();
+        const live = (d.articles || []).filter(matchArticle);
+        if (live.length) {
+          const seen = new Set(staticResults.map(a => a.slug));
+          const merged = [...live.filter(a => !seen.has(a.slug)), ...staticResults];
+          render(merged);
+        }
+      }
+    } catch(e) {}
   });
   </script>
 </body>
