@@ -28,34 +28,10 @@ const navHTML = navItems.map(n =>
 ).join('');
 const logoSVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 190" width="400" height="95" aria-label="AmericaPulse.live">
-<defs>
-  <linearGradient id="lgo-canton" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" stop-color="#2A50A8"/>
-    <stop offset="100%" stop-color="#0E2870"/>
-  </linearGradient>
-  <linearGradient id="lgo-bldg" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%" stop-color="#5A9AF5"/>
-    <stop offset="100%" stop-color="#1040B0"/>
-  </linearGradient>
-  <linearGradient id="lgo-bldg-v" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" stop-color="#6AAAF8"/>
-    <stop offset="100%" stop-color="#1848C0"/>
-  </linearGradient>
-  <linearGradient id="lgo-ekg" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%"  stop-color="#C8102E" stop-opacity=".3"/>
-    <stop offset="12%" stop-color="#C8102E"/>
-    <stop offset="88%" stop-color="#C8102E"/>
-    <stop offset="100%" stop-color="#C8102E" stop-opacity=".3"/>
-  </linearGradient>
-  <filter id="lgo-bsh" x="-10%" y="-5%" width="130%" height="120%">
-    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="rgba(0,20,100,.35)"/>
-  </filter>
-</defs>
 
 <!-- ── AMERICAN FLAG (flat, upright) x=8-170, y=10-114 ── -->
 <g transform="translate(8,10)">
   <rect x="0" y="0" width="162" height="104" fill="white"/>
-  <!-- 13 stripes: red at y=0,16,32,48,64,80,96; white background shows between -->
   <rect x="0" y="0"  width="162" height="8" fill="#C8102E"/>
   <rect x="0" y="16" width="162" height="8" fill="#C8102E"/>
   <rect x="0" y="32" width="162" height="8" fill="#C8102E"/>
@@ -63,9 +39,7 @@ const logoSVG = `
   <rect x="0" y="64" width="162" height="8" fill="#C8102E"/>
   <rect x="0" y="80" width="162" height="8" fill="#C8102E"/>
   <rect x="0" y="96" width="162" height="8" fill="#C8102E"/>
-  <!-- Canton: top-left, covers 7 stripes height -->
-  <rect x="0" y="0" width="68" height="56" fill="url(#lgo-canton)"/>
-  <!-- Stars -->
+  <rect x="0" y="0" width="68" height="56" fill="#1D3D80"/>
   <text x="3"  y="13" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
   <text x="9"  y="23" fill="white" font-size="9.5" font-family="serif" letter-spacing="5">★ ★</text>
   <text x="3"  y="33" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
@@ -73,7 +47,7 @@ const logoSVG = `
   <text x="3"  y="53" fill="white" font-size="9.5" font-family="serif" letter-spacing="3.5">★ ★ ★</text>
 </g>
 
-<!-- ── WAVING STRIPE EXTENSIONS (from flag right edge x=170) ── -->
+<!-- ── WAVING STRIPE EXTENSIONS ── -->
 <g fill="none" stroke-linecap="round">
   <path d="M170,18  Q214,10 262,18"  stroke="#C8102E" stroke-width="14"/>
   <path d="M170,34  Q216,26 264,33"  stroke="white"   stroke-width="11"/>
@@ -86,32 +60,33 @@ const logoSVG = `
 
 <!-- ── EKG HEARTBEAT LINE ── -->
 <path d="M220,76 L248,76 L254,63 L260,76 L275,76 L281,67 L287,76 L304,76 L314,76 L325,8 L338,108 L348,76 L558,76 L566,62 L573,76 L594,76"
-  fill="none" stroke="#C8102E" stroke-width="14" stroke-opacity=".08" stroke-linecap="round" stroke-linejoin="round"/>
+  fill="none" stroke="#C8102E" stroke-width="14" stroke-opacity=".07" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M220,76 L248,76 L254,63 L260,76 L275,76 L281,67 L287,76 L304,76 L314,76 L325,8 L338,108 L348,76 L558,76 L566,62 L573,76 L594,76"
-  fill="none" stroke="url(#lgo-ekg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  fill="none" stroke="#C8102E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 
-<!-- ── CITY SKYLINE ── -->
-<g filter="url(#lgo-bsh)">
-  <rect x="197" y="74" width="17" height="42" fill="url(#lgo-bldg)"/>
-  <rect x="214" y="74" width="3"  height="42" fill="#0A2880" opacity=".55"/>
-  <rect x="219" y="60" width="19" height="56" fill="url(#lgo-bldg)"/>
-  <rect x="238" y="60" width="3"  height="56" fill="#0A2880" opacity=".55"/>
-  <rect x="244" y="53" width="21" height="63" fill="url(#lgo-bldg)"/>
-  <rect x="265" y="53" width="3"  height="63" fill="#0A2880" opacity=".55"/>
-  <rect x="271" y="38" width="21" height="78" fill="url(#lgo-bldg)"/>
-  <rect x="292" y="38" width="3"  height="78" fill="#0A2880" opacity=".55"/>
-  <rect x="297" y="40" width="19" height="76" fill="url(#lgo-bldg-v)"/>
-  <rect x="300" y="24" width="13" height="18" fill="url(#lgo-bldg-v)"/>
-  <rect x="303" y="13" width="7"  height="13" fill="url(#lgo-bldg-v)"/>
+<!-- ── CITY SKYLINE (solid fills — no gradient IDs to avoid duplicate-ID issues) ── -->
+<g>
+  <rect x="197" y="74" width="17" height="42" fill="#4A88EE"/>
+  <rect x="214" y="74" width="3"  height="42" fill="#0A2880" opacity=".6"/>
+  <rect x="219" y="60" width="19" height="56" fill="#4A88EE"/>
+  <rect x="238" y="60" width="3"  height="56" fill="#0A2880" opacity=".6"/>
+  <rect x="244" y="53" width="21" height="63" fill="#3A7EE8"/>
+  <rect x="265" y="53" width="3"  height="63" fill="#0A2880" opacity=".6"/>
+  <rect x="271" y="38" width="21" height="78" fill="#3A7EE8"/>
+  <rect x="292" y="38" width="3"  height="78" fill="#0A2880" opacity=".6"/>
+  <!-- Empire State style — tallest -->
+  <rect x="297" y="40" width="19" height="76" fill="#5A92F0"/>
+  <rect x="300" y="24" width="13" height="18" fill="#5A92F0"/>
+  <rect x="303" y="13" width="7"  height="13" fill="#4A88EE"/>
   <line x1="306" y1="13" x2="306" y2="3" stroke="#3068D8" stroke-width="2.5"/>
-  <rect x="316" y="40" width="3"  height="76" fill="#0A2880" opacity=".55"/>
-  <rect x="322" y="43" width="21" height="73" fill="url(#lgo-bldg)"/>
-  <rect x="343" y="43" width="3"  height="73" fill="#0A2880" opacity=".55"/>
-  <rect x="349" y="53" width="19" height="63" fill="url(#lgo-bldg)"/>
-  <rect x="368" y="53" width="3"  height="63" fill="#0A2880" opacity=".55"/>
-  <rect x="374" y="62" width="17" height="54" fill="url(#lgo-bldg)"/>
-  <rect x="391" y="62" width="3"  height="54" fill="#0A2880" opacity=".55"/>
-  <rect x="397" y="70" width="16" height="46" fill="url(#lgo-bldg)"/>
+  <rect x="316" y="40" width="3"  height="76" fill="#0A2880" opacity=".6"/>
+  <rect x="322" y="43" width="21" height="73" fill="#3A7EE8"/>
+  <rect x="343" y="43" width="3"  height="73" fill="#0A2880" opacity=".6"/>
+  <rect x="349" y="53" width="19" height="63" fill="#4A88EE"/>
+  <rect x="368" y="53" width="3"  height="63" fill="#0A2880" opacity=".6"/>
+  <rect x="374" y="62" width="17" height="54" fill="#4A88EE"/>
+  <rect x="391" y="62" width="3"  height="54" fill="#0A2880" opacity=".6"/>
+  <rect x="397" y="70" width="16" height="46" fill="#5A92F0"/>
   <rect x="197" y="116" width="216" height="2" fill="#0A2880" opacity=".3"/>
 </g>
 
@@ -136,7 +111,7 @@ const logoSVG = `
   font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
   font-size="50" font-weight="900" font-style="italic" letter-spacing="-1"
   fill="#C8102E">Pulse</text>
-<rect x="545" y="130" width="90" height="44" rx="10" fill="none" stroke="#1A5FCC" stroke-width="3"/>
+<rect x="545" y="130" width="90" height="44" rx="10" fill="white" stroke="#1A5FCC" stroke-width="3"/>
 <text x="590" y="164"
   font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
   font-size="27" font-weight="700" font-style="italic"
