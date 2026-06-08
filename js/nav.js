@@ -102,16 +102,7 @@ ${logoSVG}
 <div class="container breaking-inner">
 <span class="breaking-label">BREAKING</span>
 <div class="ticker-wrap">
-<div class="ticker">
-<span>Senate Climate Vote Draws Unprecedented Public Support &nbsp;•&nbsp;</span>
-<span>Federal Reserve Signals Potential Rate Cuts in Q3 &nbsp;•&nbsp;</span>
-<span>Hurricane Watch Issued for Gulf Coast as Category 3 Storm Approaches &nbsp;•&nbsp;</span>
-<span>Supreme Court to Hear Landmark Digital Privacy Case &nbsp;•&nbsp;</span>
-<span>NYSE Closes at Record High Amid Strong AI Earnings &nbsp;•&nbsp;</span>
-<span>U.S. Soccer Clinches World Cup Qualifying Spot &nbsp;•&nbsp;</span>
-<span>FDA Approves Breakthrough Alzheimer's Treatment &nbsp;•&nbsp;</span>
-<span>Taylor Swift's Eras Tour Breaks All-Time Revenue Record at $2.1B &nbsp;•&nbsp;</span>
-</div>
+<div class="ticker" id="breaking-ticker"></div>
 </div>
 </div>
 </div>`;
@@ -197,6 +188,27 @@ if (e.key === 'Enter') doSearch();
 });
 if (!document.title.includes('AmericaPulse')) {
 document.title = document.title.replace('USA News Hub', 'AmericaPulse.live');
+}
+// Populate breaking ticker from latest article titles (doubled for seamless loop)
+(function() {
+var ticker = document.getElementById('breaking-ticker');
+if (!ticker) return;
+var arts = typeof getAllArticles === 'function' ? getAllArticles(8) : [];
+if (!arts.length) {
+  // fallback until articles-meta.js loads
+  window.addEventListener('load', function() {
+    arts = typeof getAllArticles === 'function' ? getAllArticles(8) : [];
+    if (arts.length) buildTicker(ticker, arts);
+  });
+} else {
+  buildTicker(ticker, arts);
+}
+})();
+function buildTicker(el, arts) {
+var items = arts.map(function(a) {
+  return '<span><a href="article.html?slug=' + encodeURIComponent((a.slug||'')) + '" style="color:inherit;text-decoration:none">' + (a.title||'').replace(/</g,'&lt;') + '</a> &nbsp;•&nbsp; </span>';
+}).join('');
+el.innerHTML = items + items; // doubled for infinite loop
 }
 var _modalsReady = false, _modalQueue = [];
 window.openModal = function(id) {

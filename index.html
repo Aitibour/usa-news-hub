@@ -156,15 +156,10 @@
       // Markets strip after business
       if (sec === 'business') {
         feedHTML += `
-        <div class="markets-strip">
+        <div class="markets-strip" id="markets-strip">
           <div class="markets-label">MARKETS</div>
-          <div class="markets-tickers">
-            <div class="market-item up"><span class="m-name">DOW</span><span class="m-val">42,841</span><span class="m-chg">+1.92%</span></div>
-            <div class="market-item up"><span class="m-name">S&P 500</span><span class="m-val">5,612</span><span class="m-chg">+1.47%</span></div>
-            <div class="market-item down"><span class="m-name">NASDAQ</span><span class="m-val">18,230</span><span class="m-chg">-0.38%</span></div>
-            <div class="market-item up"><span class="m-name">OIL</span><span class="m-val">$74.22</span><span class="m-chg">+0.81%</span></div>
-            <div class="market-item down"><span class="m-name">GOLD</span><span class="m-val">$2,418</span><span class="m-chg">-0.22%</span></div>
-            <div class="market-item up"><span class="m-name">BTC</span><span class="m-val">$98,540</span><span class="m-chg">+3.14%</span></div>
+          <div class="markets-tickers" id="markets-tickers">
+            <div class="market-item" style="color:#8ba0bb;font-size:12px">Loading…</div>
           </div>
         </div>`;
       }
@@ -193,6 +188,25 @@
       }
       fwEl.innerHTML = fwHTML;
     } // end renderHomeFeed
+
+    // Live markets data
+    (async function() {
+      try {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), 5000);
+        const r = await fetch('/.netlify/functions/get-markets', { signal: ctrl.signal });
+        if (!r.ok) return;
+        const { markets } = await r.json();
+        const el = document.getElementById('markets-tickers');
+        if (!el || !markets?.length) return;
+        el.innerHTML = markets.map(m => `
+          <div class="market-item ${m.up ? 'up' : 'down'}">
+            <span class="m-name">${m.key}</span>
+            <span class="m-val">${m.val}</span>
+            <span class="m-chg">${m.chg}</span>
+          </div>`).join('');
+      } catch(e) {}
+    })();
   });
   </script>
 </body>
