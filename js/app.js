@@ -97,10 +97,12 @@ return `
 </div>
 </article>`;
 }
+const readBadge = hasRead(article.slug) ? '<span class="read-badge" title="You\'ve read this">✓</span>' : '';
 return `
-<article class="news-card-sm" data-slug="${slug}" style="cursor:pointer">
+<article class="news-card-sm${hasRead(article.slug) ? ' card-read' : ''}" data-slug="${slug}" style="cursor:pointer">
 <div class="card-img-wrap">
 <img src="${img}" alt="${esc(article.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
+${readBadge}
 </div>
 <div class="card-body">
 <span class="card-tag" style="background:${color}">${capitalize(article.section)}</span>
@@ -391,15 +393,24 @@ function updateBookmarkBadge() {
 }
 
 
-const VIEW_KEY = 'ap_views';
-const VIEW_MAX = 200;
+const VIEW_KEY    = 'ap_views';
+const HISTORY_KEY = 'ap_history';
+const VIEW_MAX    = 200;
+
 function trackView(slug) {
   try {
+    // Count store (for Most Read)
     const raw = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
     raw[slug] = (raw[slug] || 0) + 1;
-    // Prune to top VIEW_MAX by count
     const entries = Object.entries(raw).sort((a,b) => b[1]-a[1]).slice(0, VIEW_MAX);
     localStorage.setItem(VIEW_KEY, JSON.stringify(Object.fromEntries(entries)));
+    // Chronological history store
+    const hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    const now = new Date().toISOString();
+    const existing = hist.findIndex(e => e.slug === slug);
+    if (existing !== -1) hist.splice(existing, 1);
+    hist.unshift({ slug, ts: now });
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(hist.slice(0, VIEW_MAX)));
   } catch(e) {}
 }
 function getMostRead(limit) {
@@ -410,6 +421,15 @@ function getMostRead(limit) {
       .slice(0, limit)
       .map(([slug]) => slug);
   } catch(e) { return []; }
+}
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { return []; }
+}
+function hasRead(slug) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
+    return !!raw[slug];
+  } catch(e) { return false; }
 }
 
 async function renderTrending(containerId) {
