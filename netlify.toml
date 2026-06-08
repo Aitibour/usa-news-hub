@@ -31,7 +31,7 @@
     # - frame-ancestors: no embedding anywhere
     # - form-action: forms only submit to self
     # - base-uri: prevent base tag hijacking
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://picsum.photos https://fastly.picsum.photos data: blob:; connect-src 'self' https://api.open-meteo.com; media-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://picsum.photos https://fastly.picsum.photos data: blob:; connect-src 'self' https://api.open-meteo.com; media-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;"
     # Prevent cross-origin data leaks
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
@@ -56,6 +56,11 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=60, stale-while-revalidate=300"
+
+[[redirects]]
+  from = "/security.txt"
+  to   = "/.well-known/security.txt"
+  status = 200
 
 [[redirects]]
   from = "/api/articles"
