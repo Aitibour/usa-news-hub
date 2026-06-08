@@ -340,6 +340,10 @@ ${(article.tags||[]).map(t => `<a class="article-tag" href="search.html?q=${enco
 <a class="share-btn share-fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://americapulse.live/article.html?slug='+article.slug)}" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
 <button class="share-btn share-copy" onclick="(function(){try{navigator.clipboard.writeText(location.href);this.textContent='Copied!';setTimeout(function(){},1500)}catch(e){}}).call(this)" aria-label="Copy link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy link</button>
 <button class="share-btn save-btn" id="save-article-btn" aria-label="Save for later"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> <span id="save-label">${isSaved(article.slug) ? 'Saved' : 'Save'}</span></button>
+<div class="font-size-ctrl" aria-label="Text size">
+  <button class="font-btn" id="font-dec" aria-label="Decrease text size" title="Smaller text">A−</button>
+  <button class="font-btn" id="font-inc" aria-label="Increase text size" title="Larger text">A+</button>
+</div>
 </div>`;
 // Wire save button
 const saveBtn = document.getElementById('save-article-btn');
@@ -352,6 +356,22 @@ if (saveBtn) {
     saveBtn.classList.toggle('save-active', nowSaved);
   });
 }
+
+// Wire font size buttons
+(function() {
+  const FONT_KEY = 'ap-font-size';
+  const MIN = 14, MAX = 24, STEP = 2;
+  function getSize() { return parseInt(localStorage.getItem(FONT_KEY) || '18', 10); }
+  function applySize(sz) {
+    document.documentElement.style.setProperty('--article-font-size', sz + 'px');
+    localStorage.setItem(FONT_KEY, sz);
+  }
+  applySize(getSize());
+  const decBtn = document.getElementById('font-dec');
+  const incBtn = document.getElementById('font-inc');
+  if (decBtn) decBtn.addEventListener('click', function() { applySize(Math.max(MIN, getSize() - STEP)); });
+  if (incBtn) incBtn.addEventListener('click', function() { applySize(Math.min(MAX, getSize() + STEP)); });
+})();
 
 const liveRelated   = await fetchLiveArticles(article.section, 6);
 const staticRelated = getArticlesBySection(article.section).filter(a => a.slug !== slug);
