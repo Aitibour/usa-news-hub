@@ -27,48 +27,106 @@ const navHTML = navItems.map(n =>
 `<li><a href="${n.href}" ${n.id === active ? 'class="active"' : ''}>${n.label}</a></li>`
 ).join('');
 const logoSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 90" width="300" height="52" aria-label="AmericaPulse.live">
-<rect x="2" y="18" width="52" height="38" rx="3" fill="#0B1F3A"/>
-<rect x="2" y="18" width="22" height="20" fill="#0B1F3A"/>
-<text x="5"  y="28" fill="white" font-size="5" font-family="sans-serif">★★★</text>
-<text x="5"  y="34" fill="white" font-size="5" font-family="sans-serif">★★★</text>
-<rect x="24" y="18" width="30" height="4"  fill="#C8102E"/>
-<rect x="24" y="26" width="30" height="4"  fill="#C8102E"/>
-<rect x="24" y="34" width="30" height="4"  fill="#C8102E"/>
-<rect x="2"  y="38" width="52" height="4"  fill="#C8102E"/>
-<rect x="2"  y="46" width="52" height="4"  fill="#C8102E"/>
-<rect x="24" y="22" width="30" height="4"  fill="white"/>
-<rect x="24" y="30" width="30" height="4"  fill="white"/>
-<rect x="2"  y="42" width="52" height="4"  fill="white"/>
-<rect x="2"  y="50" width="52" height="4"  fill="white"/>
-<polyline points="58,40 72,40 76,40 79,26 82,54 85,26 88,40 96,40"
-fill="none" stroke="#C8102E" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
-<g fill="#0B1F3A" opacity="0.85">
-<rect x="97" y="22" width="6"  height="28"/>
-<rect x="100" y="15" width="1.5" height="10"/>
-<rect x="86" y="30" width="10" height="20"/>
-<rect x="80" y="33" width="7"  height="17"/>
-<rect x="74" y="35" width="6"  height="15"/>
-<rect x="104" y="28" width="9"  height="22"/>
-<rect x="114" y="31" width="8"  height="19"/>
-<rect x="123" y="34" width="7"  height="16"/>
-<rect x="131" y="36" width="6"  height="14"/>
-</g>
-<polyline points="140,40 152,40 155,40 158,26 161,54 164,26 167,40 178,40"
-fill="none" stroke="#C8102E" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
-<path d="M178,36 Q210,28 230,38 Q250,48 270,34" fill="none" stroke="#C8102E" stroke-width="3" stroke-linecap="round"/>
-<path d="M178,42 Q210,34 230,44 Q250,54 270,40" fill="none" stroke="#0B1F3A" stroke-width="2" stroke-linecap="round"/>
-<polygon points="278,28  280,22  282,28  288,28  283,32  285,38  280,34  275,38  277,32  272,28"
-fill="#C8102E"/>
-<polygon points="278,28  280,23  282,28  287,28  283,31  285,37  280,33  275,37  277,31  273,28"
-fill="white" opacity="0.5"/>
-<text x="2" y="80" font-family="'Arial Black','Impact',sans-serif" font-size="22"
-font-weight="900" font-style="italic" fill="#0B1F3A" letter-spacing="-0.5">America</text>
-<text x="116" y="80" font-family="'Arial Black','Impact',sans-serif" font-size="22"
-font-weight="900" font-style="italic" fill="#C8102E" letter-spacing="-0.5">Pulse</text>
-<rect x="196" y="63" width="46" height="20" rx="4" fill="#0B1F3A"/>
-<text x="199" y="78" font-family="'Arial Black','Impact',sans-serif" font-size="14"
-font-weight="900" font-style="italic" fill="white" letter-spacing="0.5">.live</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 110" width="310" height="55" aria-label="AmericaPulse.live">
+  <defs>
+    <linearGradient id="flagWave" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0B1F3A;stop-opacity:1"/>
+      <stop offset="35%" style="stop-color:#0B1F3A;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a3a6e;stop-opacity:0.7"/>
+    </linearGradient>
+    <linearGradient id="redStripe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C8102E;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#C8102E;stop-opacity:0.5"/>
+    </linearGradient>
+    <clipPath id="flagClip">
+      <path d="M4,8 Q30,2 60,8 Q90,14 110,8 L110,62 Q80,56 50,62 Q20,68 4,62 Z"/>
+    </clipPath>
+    <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C8102E;stop-opacity:0.9"/>
+      <stop offset="50%" style="stop-color:#C8102E;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#C8102E;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ═══ WAVING FLAG (left) ═══ -->
+  <g transform="translate(0,4)">
+    <!-- Flag body with wave -->
+    <path d="M4,8 Q30,2 60,8 Q90,14 110,8 L110,62 Q80,56 50,62 Q20,68 4,62 Z" fill="#0B1F3A"/>
+    <!-- Red stripes -->
+    <path d="M4,8 Q57,14 110,8 L110,16 Q57,22 4,16 Z" fill="#C8102E"/>
+    <path d="M4,24 Q57,30 110,24 L110,32 Q57,38 4,32 Z" fill="#C8102E"/>
+    <path d="M4,40 Q57,46 110,40 L110,48 Q57,54 4,48 Z" fill="#C8102E"/>
+    <path d="M4,56 Q57,62 110,56 L110,62 Q57,68 4,62 Z" fill="#C8102E"/>
+    <!-- White stripes -->
+    <path d="M4,16 Q57,22 110,16 L110,24 Q57,30 4,24 Z" fill="white"/>
+    <path d="M4,32 Q57,38 110,32 L110,40 Q57,46 4,40 Z" fill="white"/>
+    <path d="M4,48 Q57,54 110,48 L110,56 Q57,62 4,56 Z" fill="white"/>
+    <!-- Canton (blue rectangle) -->
+    <path d="M4,8 Q30,2 60,8 L60,40 Q30,46 4,40 Z" fill="#0B1F3A"/>
+    <!-- Stars 3 rows -->
+    <text x="8"  y="20" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
+    <text x="11" y="28" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
+    <text x="8"  y="36" fill="white" font-size="7" font-family="serif" letter-spacing="5">★★★</text>
+    <!-- Wave tail -->
+    <path d="M110,14 Q130,10 145,20 Q155,26 165,18" fill="none" stroke="#C8102E" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M110,24 Q130,20 145,30 Q155,36 165,28" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M110,34 Q130,30 145,40 Q155,46 165,38" fill="none" stroke="#C8102E" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ═══ CITY SKYLINE (center background) ═══ -->
+  <g fill="#cccccc" opacity="0.35" transform="translate(155,0)">
+    <rect x="10"  y="28" width="10" height="50"/>
+    <rect x="12"  y="18" width="2"  height="14"/>
+    <rect x="22"  y="38" width="14" height="40"/>
+    <rect x="38"  y="32" width="8"  height="46"/>
+    <rect x="48"  y="42" width="10" height="36"/>
+    <rect x="60"  y="22" width="16" height="56"/>
+    <rect x="67"  y="10" width="2"  height="16"/>
+    <rect x="78"  y="35" width="12" height="43"/>
+    <rect x="92"  y="40" width="9"  height="38"/>
+    <rect x="103" y="30" width="14" height="48"/>
+    <rect x="119" y="44" width="8"  height="34"/>
+    <rect x="129" y="36" width="11" height="42"/>
+    <rect x="142" y="48" width="7"  height="30"/>
+    <rect x="151" y="38" width="9"  height="40"/>
+    <rect x="162" y="45" width="8"  height="33"/>
+    <rect x="172" y="26" width="13" height="52"/>
+  </g>
+
+  <!-- ═══ PULSE / EKG LINE (center) ═══ -->
+  <polyline
+    points="155,42 178,42 185,42 191,20 197,64 203,20 209,42 222,42 232,42 238,42 244,30 250,54 256,30 262,42 290,42"
+    fill="none" stroke="#C8102E" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- ═══ RIBBON + STARS (right) ═══ -->
+  <g transform="translate(390,8)">
+    <!-- Ribbon stripes -->
+    <path d="M0,18 Q50,10 100,22 Q130,28 160,16 Q145,32 120,28 Q80,22 40,30 Z" fill="url(#ribbonGrad)"/>
+    <path d="M0,26 Q50,18 100,30 Q130,36 160,24 Q145,40 120,36 Q80,30 40,38 Z" fill="#0B1F3A" opacity="0.85"/>
+    <path d="M0,34 Q50,26 100,38 Q130,44 160,32 Q145,48 120,44 Q80,38 40,46 Z" fill="url(#ribbonGrad)" opacity="0.7"/>
+    <!-- Stars on ribbon -->
+    <text x="10" y="34" fill="white" font-size="14" font-family="serif">★</text>
+    <text x="42" y="32" fill="white" font-size="11" font-family="serif">★</text>
+    <text x="70" y="36" fill="white" font-size="9"  font-family="serif" opacity="0.7">★</text>
+  </g>
+
+  <!-- ═══ WORDMARK ═══ -->
+  <!-- "America" in navy bold italic -->
+  <text x="2" y="100"
+    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+    font-size="34" font-weight="900" font-style="italic"
+    fill="#0B1F3A" letter-spacing="-0.5">America</text>
+  <!-- "Pulse" in red bold italic -->
+  <text x="195" y="100"
+    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+    font-size="34" font-weight="900" font-style="italic"
+    fill="#C8102E" letter-spacing="-0.5">Pulse</text>
+  <!-- ".live" red badge -->
+  <rect x="318" y="76" width="58" height="28" rx="5" fill="#C8102E"/>
+  <text x="323" y="97"
+    font-family="'Arial Black','Franklin Gothic Heavy','Impact',sans-serif"
+    font-size="18" font-weight="900" font-style="italic"
+    fill="white" letter-spacing="0.5">.live</text>
 </svg>`;
 const header = `
 <div class="top-bar">
