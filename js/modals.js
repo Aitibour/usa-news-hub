@@ -344,11 +344,15 @@
     el.classList.add('selected');
     el.dataset.plan = plan;
   };
-  window.handleSubscribe = function() {
+  window.handleSubscribe = async function() {
     const email = document.getElementById('sub-email').value.trim();
     if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+    try {
+      await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({'form-name':'newsletter', email}).toString() });
+    } catch(e) {}
     closeModal('subscribe-modal');
-    alert(`Welcome to AmericaPulse!\n\nA confirmation email has been sent to:\n${email}`);
+    alert('Welcome to AmericaPulse!\n\nYou\'ve been subscribed successfully.');
   };
   window.handleSignIn = function() {
     const email = document.getElementById('si-email')?.value.trim();
@@ -360,21 +364,29 @@
     closeModal('signin-modal');
     alert(`Connecting to ${provider}…\n\n(Social login would open a ${provider} OAuth popup in production.)`);
   };
-  window.handleContact = function() {
+  window.handleContact = async function() {
     const name  = document.getElementById('contact-name').value.trim();
     const email = document.getElementById('contact-email').value.trim();
     const msg   = document.getElementById('contact-msg').value.trim();
     if (!name)  { alert('Please enter your name.'); return; }
     if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
     if (!msg)   { alert('Please enter your message.'); return; }
+    try {
+      await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({'form-name':'contact', name, email, message: msg}).toString() });
+    } catch(e) {}
     closeModal('contact-modal');
-    alert(`✅ Message sent!\n\nThank you, ${name}. We'll reply to ${email} within 24–48 hours.`);
+    alert(`Message sent! Thank you, ${name}. We'll reply to ${email} within 24-48 hours.`);
   };
-  window.handleAlerts = function() {
+  window.handleAlerts = async function() {
     const email = document.getElementById('alerts-email').value.trim();
     if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+    try {
+      await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({'form-name':'breaking-alerts', email}).toString() });
+    } catch(e) {}
     closeModal('alerts-modal');
-    alert(`🔔 Breaking alerts enabled!\n\nWe'll send urgent news to:\n${email}`);
+    alert(`Breaking alerts enabled! We'll send urgent news to:\n${email}`);
   };
   window.copyRSS = function(section) {
     const url = `https://americapulse.live/rss/${section}.xml`;

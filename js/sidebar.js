@@ -80,10 +80,23 @@ return `<div class="weather-row">
 el.innerHTML = '<div class="weather-row"><span class="city" style="color:#888;font-size:12px">Weather unavailable</span></div>';
 }
 }
-window.subscribeNL = function() {
-const email = document.getElementById('nl-email').value.trim();
-if (!email) return;
-alert(`Thank you! ${email} has been subscribed to the Daily Briefing.`);
-document.getElementById('nl-email').value = '';
+window.subscribeNL = async function() {
+const input = document.getElementById('nl-email');
+const email = input.value.trim();
+if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  input.style.borderColor = '#C8102E';
+  return;
+}
+input.style.borderColor = '';
+try {
+  await fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ 'form-name': 'newsletter', email }).toString(),
+  });
+} catch(e) {}
+input.value = '';
+const btn = input.nextElementSibling;
+if (btn) { btn.textContent = 'Subscribed!'; btn.disabled = true; }
 };
 })();

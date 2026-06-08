@@ -19,11 +19,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
   <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="search" type="application/opensearchdescription+xml" title="AmericaPulse.live" href="/opensearch.xml" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="alternate" type="application/rss+xml" title="AmericaPulse.live" href="/feed.xml" />
 
   </head>
 <body data-section="">
+  <!-- Netlify form detection (hidden, never shown) -->
+  <form name="newsletter" netlify netlify-honeypot="bot-field" hidden><input name="email" type="email" /><input name="bot-field" /></form>
+  <form name="breaking-alerts" netlify netlify-honeypot="bot-field" hidden><input name="email" type="email" /><input name="bot-field" /></form>
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden><input name="name" /><input name="email" type="email" /><textarea name="message"></textarea><input name="bot-field" /></form>
   <div id="site-header"></div>
 
   <main class="main-content" id="main-content" role="main">
@@ -87,7 +92,7 @@
       heroLead.innerHTML = `
         <div class="hero-card hero-main" data-slug="${safeSlug(h1.slug)}" style="cursor:pointer">
           <div class="hero-img-wrap">
-            <img src="${esc(resolveArticleImage(h1))}" alt="${esc(h1.title)}" loading="eager" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'"/>
+            <img src="${esc(resolveArticleImage(h1))}" alt="${esc(h1.title)}" loading="eager" fetchpriority="high" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'"/>
             <span class="hero-category-tag" style="background:${SECTION_COLORS[h1.section]}">${sectionLabel(h1.section)}</span>
           </div>
           <div class="hero-body">

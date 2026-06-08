@@ -156,7 +156,7 @@ const featImg  = esc(resolveArticleImage(feat));
 let html = `<div class="hero-lead" style="margin-bottom:32px">
 <div class="hero-card hero-main" data-slug="${featSlug}" style="cursor:pointer">
 <div class="hero-img-wrap">
-<img src="${featImg}" alt="${esc(feat.title)}" loading="eager" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
+<img src="${featImg}" alt="${esc(feat.title)}" loading="eager" fetchpriority="high" onerror="this.src='https://picsum.photos/seed/'+encodeURIComponent(this.alt.slice(0,20))+'/900/600'" />
 <span class="hero-category-tag" style="background:${color}">${sectionLabel(sectionId)}</span>
 </div>
 <div class="hero-body">
