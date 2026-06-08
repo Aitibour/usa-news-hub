@@ -240,6 +240,24 @@ return;
 }
 const color = SECTION_COLORS[article.section] || '#C8102E';
 document.title = `${esc(article.title)} — AmericaPulse.live`;
+const artImg = resolveArticleImage(article);
+const canonEl = document.getElementById('canonical-url');
+if (canonEl) canonEl.href = `https://americapulse.live/article.html?slug=${encodeURIComponent(article.slug)}`;
+const ogT = document.getElementById('og-title'); if (ogT) ogT.content = article.title;
+const ogD = document.getElementById('og-desc'); if (ogD) ogD.content = article.excerpt || '';
+const ogI = document.getElementById('og-image'); if (ogI) ogI.content = artImg;
+const ldEl = document.createElement('script'); ldEl.type = 'application/ld+json';
+ldEl.textContent = JSON.stringify({
+  "@context":"https://schema.org","@type":"NewsArticle",
+  "headline": article.title,
+  "description": article.excerpt || '',
+  "image": artImg,
+  "author": {"@type":"Person","name": article.author},
+  "datePublished": article.date,
+  "publisher": {"@type":"Organization","name":"AmericaPulse.live","url":"https://americapulse.live"},
+  "url": `https://americapulse.live/article.html?slug=${encodeURIComponent(article.slug)}`
+});
+document.head.appendChild(ldEl);
 const rawBody = article.body || '';
 const bodyHTML = article.aiGenerated
 ? `<p>${esc(rawBody)}</p>`
