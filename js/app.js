@@ -314,7 +314,7 @@ ${sourceLine}
 </div>
 <div class="article-body">${bodyHTML}</div>
 <div class="article-tags">
-${(article.tags||[]).map(t => `<span class="article-tag" data-tag="${esc(t)}">${esc(t)}</span>`).join('')}
+${(article.tags||[]).map(t => `<a class="article-tag" href="search.html?q=${encodeURIComponent(t)}">${esc(t)}</a>`).join('')}
 </div>
 <div class="article-share">
 <span class="share-label">Share</span>

@@ -255,4 +255,32 @@ if (document.getElementById('article-content')) {
     bar.style.width = Math.min(100, pct) + '%';
   }, { passive: true });
 }
+
+// Cookie consent banner
+(function() {
+  if (localStorage.getItem('cookie-ok')) return;
+  var banner = document.createElement('div');
+  banner.id = 'cookie-banner';
+  banner.setAttribute('role', 'region');
+  banner.setAttribute('aria-label', 'Cookie consent');
+  banner.innerHTML = '<p>We use cookies to improve your experience and analyze traffic. By continuing, you agree to our use of cookies.</p>'
+    + '<div class="cookie-actions">'
+    + '<button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept All</button>'
+    + '<button id="cookie-decline" class="cookie-btn">Decline</button>'
+    + '<a href="/privacy.html" class="cookie-link">Privacy Policy</a>'
+    + '</div>';
+  document.body.appendChild(banner);
+  setTimeout(function() { banner.classList.add('cookie-show'); }, 300);
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem('cookie-ok', '1');
+    banner.classList.remove('cookie-show');
+    setTimeout(function() { banner.remove(); }, 400);
+  });
+  document.getElementById('cookie-decline').addEventListener('click', function() {
+    localStorage.setItem('cookie-ok', 'declined');
+    banner.classList.remove('cookie-show');
+    setTimeout(function() { banner.remove(); }, 400);
+  });
+})();
+
 })();
