@@ -264,6 +264,8 @@ if (canonEl) canonEl.href = `https://americapulse.live/article.html?slug=${encod
 const ogT = document.getElementById('og-title'); if (ogT) ogT.content = article.title;
 const ogD = document.getElementById('og-desc'); if (ogD) ogD.content = article.excerpt || '';
 const ogI = document.getElementById('og-image'); if (ogI) ogI.content = artImg;
+const ogIW = document.getElementById('og-image-width'); if (ogIW) ogIW.content = '1200';
+const ogIH = document.getElementById('og-image-height'); if (ogIH) ogIH.content = '630';
 // Twitter Cards
 const twT = document.getElementById('twitter-title'); if (twT) twT.content = article.title;
 const twD = document.getElementById('twitter-desc'); if (twD) twD.content = article.excerpt || '';
