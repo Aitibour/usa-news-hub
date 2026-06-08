@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("ap-theme")||"light")</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latest News — AmericaPulse.live</title>
+  <meta name="description" content="The latest breaking news and top stories from AmericaPulse.live, updated continuously." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="canonical" href="https://americapulse.live/latest.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="alternate" type="application/rss+xml" title="AmericaPulse.live" href="/feed.xml" />
+</head>
+<body data-section="latest">
+  <div id="site-header"></div>
+  <main class="main-content" id="main-content" role="main">
+    <div class="container">
+
+      <div class="latest-header">
+        <div class="latest-title-row">
+          <h1 class="latest-heading"><span class="live-dot"></span> Latest News</h1>
+          <div class="latest-controls">
+            <span id="last-updated" class="last-updated"></span>
+            <button id="refresh-btn" class="refresh-btn" aria-label="Refresh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div class="latest-filter-row" id="latest-filters">
+          <button class="filter-chip chip-active" data-sec="">All</button>
+          <button class="filter-chip" data-sec="politics">Politics</button>
+          <button class="filter-chip" data-sec="business">Business</button>
+          <button class="filter-chip" data-sec="technology">Technology</button>
+          <button class="filter-chip" data-sec="sports">Sports</button>
+          <button class="filter-chip" data-sec="health">Health</button>
+          <button class="filter-chip" data-sec="world">World</button>
+          <button class="filter-chip" data-sec="entertainment">Entertainment</button>
+          <button class="filter-chip" data-sec="opinion">Opinion</button>
+        </div>
+      </div>
+
+      <div id="latest-new-banner" class="latest-new-banner" style="display:none">
+        <button id="show-new-btn">↑ <span id="new-count"></span> new stories — click to load</button>
+      </div>
+
+      <div id="latest-feed"></div>
+      <div id="latest-load-more"></div>
+
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles-meta.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    const feedEl    = document.getElementById('latest-feed');
+    const lmEl      = document.getElementById('latest-load-more');
+    const updatedEl = document.getElementById('last-updated');
+    const newBanner = document.getElementById('latest-new-banner');
+    const newCount  = document.getElementById('new-count');
+    const SECTION_COLORS = window.SECTION_COLORS || {};
+    const PAGE = 20;
+
+    let allArticles  = [];
+    let activeSection = '';
+    let shownCount   = PAGE;
+    let pendingNew   = [];
+
+    // ---- Helpers ----
+    function setUpdated() {
+      updatedEl.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', {hour:'numeric',minute:'2-digit'});
+    }
+
+    function renderRow(a) {
+      const color = SECTION_COLORS[a.section] || '#C8102E';
+      const slug  = (a.slug||'').replace(/[^a-zA-Z0-9-]/g,'');
+      const img   = typeof resolveArticleImage==='function' ? resolveArticleImage(a) : '';
+      const read  = typeof hasRead==='function' && hasRead(a.slug);
+      return `<article class="latest-row${read?' card-read':''}" data-slug="${slug}">
+        <div class="latest-row-img">
+          <img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'" />
+          ${read ? '<span class="read-badge" title="Read">✓</span>' : ''}
+        </div>
+        <div class="latest-row-body">
+          <div class="latest-row-meta">
+            <a class="card-tag" href="${a.section}.html" style="background:${color};text-decoration:none" onclick="event.stopPropagation()">${a.section||''}</a>
+            <time class="latest-time" title="${typeof formatDate==='function'?formatDate(a.date):a.date}">${typeof timeAgo==='function'?timeAgo(a.date):a.date}</time>
+          </div>
+          <h2 class="latest-row-title">${(a.title||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h2>
+          <p class="latest-row-excerpt">${(a.excerpt||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').slice(0,160)}</p>
+          <span class="latest-row-author">${typeof authorLink==='function'?authorLink(a.author||''):(a.author||'')} <span class="dot">•</span> ${a.readTime||5} min read</span>
+        </div>
+      </article>`;
+    }
+
+    function filtered() {
+      return activeSection ? allArticles.filter(a => a.section === activeSection) : allArticles;
+    }
+
+    function renderFeed(reset) {
+      if (reset) shownCount = PAGE;
+      const list = filtered();
+      const batch = list.slice(0, shownCount);
+      feedEl.innerHTML = batch.length
+        ? batch.map(renderRow).join('')
+        : '<p style="padding:40px 0;color:#888;text-align:center">No stories found.</p>';
+
+      // Load more
+      if (shownCount < list.length) {
+        lmEl.innerHTML = `<div class="load-more-wrap">
+          <button class="load-more-btn" id="lm-btn">Load More Stories</button>
+          <p class="load-more-count">${shownCount} of ${list.length} stories</p>
+        </div>`;
+        document.getElementById('lm-btn').addEventListener('click', function() {
+          shownCount = Math.min(shownCount + PAGE, list.length);
+          renderFeed(false);
+          // re-append rather than re-render for performance
+        });
+      } else {
+        lmEl.innerHTML = '';
+      }
+    }
+
+    // ---- Load data ----
+    async function load(silent) {
+      const db = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+      // Fetch live articles
+      let live = [];
+      try {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), 4000);
+        const r = await fetch('/.netlify/functions/get-articles?limit=20', { signal: ctrl.signal });
+        if (r.ok) { const d = await r.json(); live = d.articles || []; }
+      } catch(e) {}
+
+      const seen = new Set();
+      const merged = [];
+      for (const a of [...live, ...db]) {
+        if (!seen.has(a.slug)) { seen.add(a.slug); merged.push(a); }
+      }
+      merged.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+      if (silent && allArticles.length) {
+        // Check for genuinely new articles (newer than our newest)
+        const newestKnown = allArticles[0]?.date;
+        const brandNew = merged.filter(a => a.date > newestKnown);
+        if (brandNew.length) {
+          pendingNew = brandNew;
+          newCount.textContent = brandNew.length;
+          newBanner.style.display = 'block';
+        }
+      } else {
+        allArticles = merged;
+        renderFeed(true);
+      }
+      setUpdated();
+    }
+
+    // ---- Show new stories banner ----
+    document.getElementById('show-new-btn').addEventListener('click', function() {
+      allArticles = [...pendingNew, ...allArticles];
+      pendingNew = [];
+      newBanner.style.display = 'none';
+      renderFeed(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---- Section filter chips ----
+    document.getElementById('latest-filters').addEventListener('click', function(e) {
+      const btn = e.target.closest('.filter-chip');
+      if (!btn) return;
+      activeSection = btn.dataset.sec;
+      document.querySelectorAll('#latest-filters .filter-chip').forEach(b =>
+        b.classList.toggle('chip-active', b.dataset.sec === activeSection));
+      renderFeed(true);
+    });
+
+    // ---- Refresh button ----
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+      this.disabled = true;
+      load(false).finally(() => { this.disabled = false; });
+    });
+
+    // ---- Auto-refresh every 5 minutes ----
+    await load(false);
+    setInterval(() => load(true), 5 * 60 * 1000);
+  });
+  </script>
+</body>
+</html>

@@ -21,6 +21,7 @@ const navItems = [
 { id:'world', label:'World', href:'world.html' },
 { id:'entertainment', label:'Entertainment', href:'entertainment.html' },
 { id:'opinion', label:'Opinion', href:'opinion.html' },
+{ id:'latest', label:'Latest', href:'latest.html' },
 ];
 const navHTML = navItems.map(n =>
 `<li><a href="${n.href}" ${n.id === active ? 'class="active"' : ''}>${n.label}</a></li>`
