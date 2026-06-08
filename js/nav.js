@@ -70,25 +70,15 @@ const logoSVG = `
   </filter>
 </defs>
 
-<!-- ── CITY SKYLINE (light gray outline style) ── -->
-<g fill="#BBBBBB" opacity=".55">
-  <rect x="200" y="72" width="14" height="44"/>
-  <rect x="217" y="58" width="12" height="58"/>
-  <rect x="232" y="66" width="14" height="50"/>
-  <rect x="249" y="52" width="11" height="64"/>
-  <rect x="263" y="62" width="15" height="54"/>
-  <rect x="281" y="49" width="12" height="67"/>
-  <!-- Empire State Building -->
-  <rect x="298" y="28" width="22" height="88"/>
-  <polygon points="309,4 316,28 302,28"/>
-  <rect x="323" y="50" width="18" height="66"/>
-  <rect x="344" y="41" width="15" height="75"/>
-  <rect x="362" y="56" width="18" height="60"/>
-  <rect x="383" y="49" width="13" height="67"/>
-  <rect x="399" y="63" width="17" height="53"/>
-  <rect x="419" y="67" width="14" height="49"/>
-  <rect x="436" y="58" width="12" height="58"/>
-</g>
+<!-- ── CITY SKYLINE (outlined stroke style — no fill) ── -->
+<!-- Single connected path so the silhouette reads as one outline -->
+<path d="
+  M196,116 L196,72 L210,72 L210,58 L222,58 L222,66 L236,66 L236,52 L247,52 L247,62
+  L262,62 L262,49 L274,49 L274,28 L274,5 L283,5 L283,28 L296,28 L296,116
+  M296,50 L314,50 L314,41 L329,41 L329,56 L347,56 L347,49 L360,49 L360,63
+  L377,63 L377,67 L391,67 L391,58 L403,58 L403,116
+  M196,116 L403,116"
+  fill="none" stroke="#AAAAAA" stroke-width="1.5" stroke-linejoin="miter" opacity=".7"/>
 
 <!-- ── AMERICAN FLAG (angled -12°, drop shadow) ── -->
 <g transform="translate(8,12) rotate(-12,82,52)" filter="url(#lgo-sh)">
@@ -130,29 +120,29 @@ const logoSVG = `
 <path d="M220,76 L248,76 L254,63 L260,76 L275,76 L281,67 L287,76 L304,76 L314,76 L325,8 L338,108 L348,76 L558,76 L566,62 L573,76 L594,76"
   fill="none" stroke="url(#lgo-ekg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
 
-<!-- ── RIBBON: 3 thick curved RWB stripes ── -->
-<!-- Red (top) -->
-<path d="M558,34 Q628,24 682,38 Q700,43 722,50 L719,63 Q697,56 679,51 Q625,37 558,47 Z"
-  fill="url(#lgo-rib-r)"/>
+<!-- ── RIBBON: 3 thick solid RWB curved stripes ── -->
+<!-- Red (top) — solid, no fade, ends where star begins -->
+<path d="M558,35 Q626,25 678,39 Q696,44 714,52 L711,65 Q693,57 675,52 Q623,38 558,48 Z"
+  fill="#C8102E"/>
 <!-- White (middle) -->
-<path d="M558,47 Q625,37 679,51 Q697,56 719,63 L716,76 Q694,69 676,64 Q622,50 558,60 Z"
+<path d="M558,48 Q623,38 675,52 Q693,57 711,65 L708,78 Q690,70 672,65 Q620,51 558,61 Z"
   fill="white"/>
 <!-- Blue/navy (bottom) -->
-<path d="M558,60 Q622,50 676,64 Q694,69 716,76 L713,89 Q691,82 673,77 Q619,63 558,73 Z"
-  fill="url(#lgo-rib-b)"/>
-<!-- Stars on ribbon -->
-<text x="572" y="64" fill="white" font-size="16" font-family="serif">★</text>
-<text x="600" y="62" fill="white" font-size="13" font-family="serif" opacity=".85">★</text>
+<path d="M558,61 Q620,51 672,65 Q690,70 708,78 L705,91 Q687,83 669,78 Q617,64 558,74 Z"
+  fill="#002868"/>
+<!-- Stars on ribbon: large white star + smaller -->
+<text x="570" y="65" fill="white" font-size="17" font-family="serif">★</text>
+<text x="600" y="63" fill="white" font-size="14" font-family="serif" opacity=".9">★</text>
 
-<!-- ── SHOOTING STAR (right, outlined chrome style) ── -->
-<g transform="translate(714,26)">
-  <!-- Star outline — filled light silver with darker stroke -->
+<!-- ── SHOOTING STAR (right, clean outline style) ── -->
+<g transform="translate(710,24)">
+  <!-- Stroke-only star (no fill / very light fill like the brand) -->
   <polygon points="22,0 27,16 44,16 31,26 36,43 22,33 8,43 13,26 0,16 17,16"
-    fill="url(#lgo-star)" stroke="#AAAAAA" stroke-width="1.2" transform="scale(.88)"/>
-  <!-- Motion trail lines -->
-  <line x1="-3"  y1="9"  x2="-26" y2="9"  stroke="#BBBBBB" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="-3"  y1="15" x2="-34" y2="15" stroke="#BBBBBB" stroke-width="2"   stroke-linecap="round"/>
-  <line x1="-3"  y1="21" x2="-24" y2="21" stroke="#BBBBBB" stroke-width="1.5" stroke-linecap="round"/>
+    fill="white" fill-opacity=".6" stroke="#BBBBBB" stroke-width="2" transform="scale(.9)"/>
+  <!-- Motion trail lines (to the left) -->
+  <line x1="-4"  y1="10" x2="-28" y2="10" stroke="#BBBBBB" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="-4"  y1="17" x2="-36" y2="17" stroke="#BBBBBB" stroke-width="2"   stroke-linecap="round"/>
+  <line x1="-4"  y1="24" x2="-26" y2="24" stroke="#BBBBBB" stroke-width="1.5" stroke-linecap="round"/>
 </g>
 
 <!-- ── WORDMARK ── -->
