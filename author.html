@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Author — AmericaPulse.live</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles-all.min.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="alternate" type="application/rss+xml" title="AmericaPulse.live" href="/feed.xml" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="main-content" id="main-content" role="main">
+    <div class="container">
+      <div id="author-header" class="author-header"></div>
+      <div id="author-articles" class="cards-row four-col" style="margin-top:32px"></div>
+      <div id="author-load-more"></div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="data/articles-meta.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const name = (new URLSearchParams(window.location.search).get('name') || '').trim();
+    if (!name) { window.location.href = 'index.html'; return; }
+
+    document.title = `${name} — AmericaPulse.live`;
+
+    const all = typeof ARTICLES_DB !== 'undefined' ? ARTICLES_DB : ARTICLES_META;
+    const arts = all.filter(a => a.author === name)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    const sectionCounts = {};
+    arts.forEach(a => { sectionCounts[a.section] = (sectionCounts[a.section] || 0) + 1; });
+    const topSection = Object.entries(sectionCounts).sort((a,b) => b[1]-a[1])[0];
+    const accentColor = topSection ? (window.SECTION_COLORS?.[topSection[0]] || '#C8102E') : '#C8102E';
+
+    document.getElementById('author-header').innerHTML = `
+      <div class="author-profile">
+        <div class="author-avatar" style="background:${accentColor}">${initials}</div>
+        <div class="author-info">
+          <h1 class="author-name">${name.replace(/</g,'&lt;')}</h1>
+          <p class="author-byline">${arts.length} article${arts.length !== 1 ? 's' : ''} published${topSection ? ` &middot; Covers <a href="${topSection[0]}.html">${topSection[0].charAt(0).toUpperCase()+topSection[0].slice(1)}</a>` : ''}</p>
+        </div>
+      </div>`;
+
+    const container = document.getElementById('author-articles');
+    const PAGE = 12;
+    let shown = PAGE;
+
+    function renderBatch() {
+      const batch = arts.slice(0, shown);
+      container.innerHTML = batch.length
+        ? batch.map(a => renderCard(a, 'sm')).join('')
+        : '<p style="padding:24px;color:#888">No articles found for this author.</p>';
+      const lmWrap = document.getElementById('author-load-more');
+      if (shown < arts.length) {
+        lmWrap.innerHTML = `<div class="load-more-wrap">
+          <button class="load-more-btn" id="author-more-btn">Load More</button>
+          <p class="load-more-count">${shown} of ${arts.length} articles</p>
+        </div>`;
+        document.getElementById('author-more-btn').addEventListener('click', function() {
+          shown = Math.min(shown + PAGE, arts.length);
+          renderBatch();
+        });
+      } else {
+        lmWrap.innerHTML = '';
+      }
+    }
+
+    renderBatch();
+  });
+  </script>
+</body>
+</html>

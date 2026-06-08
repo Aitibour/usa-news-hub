@@ -31,6 +31,9 @@ if (days < 7) return `${days}d ago`;
 return formatDate(dateStr);
 }
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function authorLink(name) {
+  return `<a class="author-link" href="author.html?name=${encodeURIComponent(name)}" onclick="event.stopPropagation()">${esc(name)}</a>`;
+}
 function goArticle(slug) {
 const safe = safeSlug(slug);
 if (safe) window.location.href = `article.html?slug=${encodeURIComponent(safe)}`;
@@ -87,7 +90,7 @@ return `
 <h3 class="card-title">${esc(article.title)}</h3>
 <p class="card-excerpt">${esc(article.excerpt)}</p>
 <div class="card-meta">
-<span>${esc(article.author)}</span>
+<span>${authorLink(article.author)}</span>
 <time>${formatDate(article.date)}</time>
 <span>${article.readTime || 5} min read</span>
 </div>
@@ -103,7 +106,7 @@ return `
 <span class="card-tag" style="background:${color}">${capitalize(article.section)}</span>
 <h3 class="card-title-sm">${esc(article.title)}</h3>
 <div class="card-meta">
-<span>${esc(article.author)}</span>
+<span>${authorLink(article.author)}</span>
 <time title="${formatDate(article.date)}">${timeAgo(article.date)}</time>
 </div>
 </div>
@@ -314,7 +317,7 @@ el.innerHTML = `
 <h1 class="article-title">${esc(article.title)}</h1>
 <p class="article-excerpt">${esc(article.excerpt)}</p>
 <div class="article-meta">
-<span class="author-meta">By <strong>${esc(article.author)}</strong></span>
+<span class="author-meta">By <strong>${authorLink(article.author)}</strong></span>
 <span class="dot">•</span>
 <time>${formatDate(article.date)}</time>
 <span class="dot">•</span>
